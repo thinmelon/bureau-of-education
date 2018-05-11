@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="../style/common.css">
+    <title>政务公开</title>
+</head>
+<body>
+<div class="title-logo" style="background: url('../images/affairs/affairs_logo.png') no-repeat; "></div>
+<div id="menu"></div>
+<div id="post"></div>
+<div id="notices_board" class="notices_board">
+    <div id="notices_board_bar"></div>
+    <div class="list-item-more"></div>
+</div>
+<div id="weather-forecast"></div>
+<div id="intro-btn-usage"></div>
+<table id="cursor" cellpadding="0" cellspacing="0"></table>
+<div id="debug-message"></div>
+</body>
+<script type="application/javascript" src="../module/utility/assistant.js"></script>
+<script type="application/javascript" src="../module/utility/async.js"></script>
+<script type="application/javascript" src="../module/cms/cms.config.js"></script>
+<script type="application/javascript" src="../module/cms/cms.api.js"></script>
+<script type="application/javascript" src="../module/cursor.module.js"></script>
+<script type="application/javascript" src="../module/menu.module.js"></script>
+<script type="application/javascript" src="../module/post.module.js"></script>
+<script type="application/javascript" src="../module/list.module.js"></script>
+<script type="application/javascript" src="../module/transfer.module.js"></script>
+<script type="application/javascript">
+    function MenuComponent() {
+        MenuModule.call(this);
+
+        this.itemsPerLine = [2, 2];           // 每行所包含的元素数量
+        this.menuItemArray = [
+            {
+                left: 63,
+                top: 153,
+                width: 155,
+                height: 114,
+                bgImageSrc: 'url(../images/affairs/affairs_law.png) no-repeat',
+                resourceId: cmsConfig.affairsResourceIdArray[1].resourceId
+            },
+            {
+                left: 220,
+                top: 153,
+                width: 155,
+                height: 114,
+                bgImageSrc: 'url(../images/affairs/affairs_dynamic.png) no-repeat',
+                resourceId: cmsConfig.affairsResourceIdArray[2].resourceId
+            },
+            {
+                left: 63,
+                top: 270,
+                width: 155,
+                height: 114,
+                bgImageSrc: 'url(../images/affairs/affairs_info.png) no-repeat',
+                resourceId: cmsConfig.affairsResourceIdArray[3].resourceId
+            },
+            {
+                left: 220,
+                top: 270,
+                width: 155,
+                height: 114,
+                bgImageSrc: 'url(../images/affairs/affairs_post.png) no-repeat',
+                resourceId: cmsConfig.affairsResourceIdArray[4].resourceId
+            }
+        ]
+    }
+
+    function PostComponent() {
+        PostModule.call(this);
+
+        this.postItemArray = [
+            {
+                left: 379,
+                top: 153,
+                width: 303,
+                height: 233,
+                resourceId: cmsConfig.affairsResourceIdArray[5].resourceId,
+                bgImageSrc: '../images/affairs/affairs_ad.jpg',
+                element: "post-item-0",
+                url: ""
+            },
+            {
+                left: 60,
+                top: 385,
+                width: 619,
+                height: 235,
+                resourceId: cmsConfig.affairsResourceIdArray[6].resourceId,
+                bgImageSrc: '../images/affairs/affairs_ad_1.jpg',
+                element: "post-item-1",
+                url: ""
+            }
+        ];
+    }
+
+    function ListComponent() {
+        ListModule.call(this);
+
+        // 属性
+        this.focusPos = 0;
+        this.listItemNum = 8;
+
+        this.boardLeft = 691;
+        this.boardTop = 153;
+        this.boardWidth = 520;
+        this.boardHeight = 465;
+
+        this.itemLeft = 695;
+        this.itemTop = 198;
+        this.itemWidth = 500;
+        this.itemHeight = 42;
+
+        this.itemMoreLeft = 1030;
+        this.itemMoreTop = 570;
+        this.itemMoreWidth = 158;
+        this.itemMoreHeight = 42;
+
+        this.marqueeCount = 17;
+        this.noticesBoardBarWidth = 520;
+        this.noticesBoardBarHeight = 39;
+        this.noticesBoardBarBgSrc = 'url(../images/list/notice-bar.png) no-repeat';
+
+        this.resourceId = cmsConfig.affairsResourceIdArray[7].resourceId;
+
+        // 方法
+    }
+
+    function CursorComponent(menu, post, list) {
+        CursorModule.call(this);
+
+        // 属性
+        this.focusArea = 0;
+        this.menu = menu;
+        this.post = post;
+        this.list = list;
+
+        // 方法
+        this.moveX = function (direction) {
+            this.focusOut();
+            switch (this.focusArea) {
+                case 0:         // 菜单
+                    if (-1 === this.menu.moveX(direction)) {
+                        if (direction > 0) {
+                            this.focusArea = 1;
+                            this.post.focusPos = 0;
+                        } else {
+                            if (this.list.listItemTitleArray.length > 0) {
+                                this.focusArea = 2;
+                                this.list.focusPos = 0;
+                            } else {
+                                this.focusArea = 1;
+                                this.post.focusPos = 0;
+                            }
+                        }
+                    }
+                    break;
+                case 1:         // 海报
+                    if (direction < 0 && (this.post.focusPos === 0)) {
+                        this.focusArea = 0;
+                        this.menu.focusPosY = 0;          //  光标定位至首行
+                        this.menu.focusPosX = this.menu.itemsPerLine[this.menu.focusPosY] - 1;
+                    } else {
+                        if (this.list.listItemTitleArray.length > 0) {
+                            this.focusArea = 2;           // 移到文字列表区域
+                        } else {
+                            this.focusArea = 0;       //  移到菜单区域
+                            this.menu.focusPosY = 0;          //  光标定位至首行
+                            this.menu.focusPosX = 0;
+                        }
+                    }
+                    break;
+                case 2:         // 列表
+                    if (direction < 0) {
+                        this.focusArea = 1;   // 移到海报区域
+                        this.post.focusPos = 0;
+                    } else {
+                        this.focusArea = 0;   // 移到菜单区域
+                        this.menu.focusPosX = 0;
+                        this.menu.focusPosY = 0;
+                    }
+                    break;
+                case 3:         // 图片按键
+                    break;
+                default:
+                    break;
+            }
+            this.focusOn();
+        };
+
+        this.moveY = function (direction) {
+            this.focusOut();
+            switch (this.focusArea) {
+                case 0:         // 菜单
+                    if (-1 === this.menu.moveY(direction)) {
+                        this.focusArea = 1;   // 移到海报区域
+                        this.post.focusPos = 1;
+                    }
+                    break;
+                case 1:         // 海报
+                    this.post.moveY(direction);
+                    break;
+                case 2:         // 列表
+                    if (-1 === this.list.moveY(direction)) {
+                        if (direction > 0) {
+                            this.list.focusPos = 0;
+                        } else {
+                            this.list.focusPos = this.list.listItemTitleArray.length - 1;
+                        }
+                    }
+                    break;
+                case 3:         // 图片按键
+                    break;
+                default:
+                    break;
+            }
+            this.focusOn();
+        };
+    }
+
+    function TransferComponent(cursor) {
+        var that = this;
+
+        TransferModule.call(this);
+        // 属性
+        this.fileName = "affairs";
+        this.cursor = cursor;
+
+        // 方法
+        this.doBack = function () {
+            this.remove(this.fileName);
+            this.package([]);
+            window.location.href = "index.html" + this.package([]);
+        };
+
+        this.doSelect = function () {
+            var
+                i,
+                _num = 0,
+                postfix = "",
+                params = [];
+
+            this.remove(this.fileName);
+            switch (this.cursor.focusArea) {
+                case 0:         // 菜单
+                    for (i = 0; i < this.cursor.menu.focusPosY; i++) {
+                        _num += this.cursor.menu.itemsPerLine[i];
+                    }
+                    _num += this.cursor.menu.focusPosX;
+                    params = {
+                        "affairs": {
+                            focusArea: this.cursor.focusArea,
+                            focusPosX: this.cursor.menu.focusPosX,
+                            focusPosY: this.cursor.menu.focusPosY
+                        },
+                        "more": {
+                            resourceId: this.cursor.menu.menuItemArray[_num].resourceId,
+                            backURL: 'affairs.html',
+                            logoImageSrc: '../images/affairs/affairs_logo.png',
+                            pageIndex: 1
+                        }
+                    };
+                    postfix = this.package(params);
+                    this.cursor.menu.doSelect(postfix);
+                    break;
+                case 1:         // 海报
+                    this.cursor.post.doSelect();
+                    break;
+                case 2:         // 列表
+                    params = {
+                        "affairs": {
+                            focusArea: this.cursor.focusArea,
+                            focusPos: this.cursor.list.focusPos
+                        },
+                        "textures": {
+                            id: this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].id,
+                            isShowGraphics: true,
+                            backURL: 'affairs.html',
+                            logoImageSrc: '../images/affairs/affairs_logo.png'
+                        }
+                    };
+                    postfix = this.package(params);
+                    this.cursor.list.doSelect(postfix);
+                    break;
+                case 3:         // 图片按键
+                    break;
+                default:
+                    break;
+            }
+        };
+
+        this.onKeyDown = function (event) {
+            var code = getKeyCode(event);
+
+            switch (code) {
+                case "KEY_NUMBER1":
+                    that.toggle();
+                    return false;
+                case "KEY_UP":
+                    that.cursor.moveY(-1);
+                    return false;
+                case "KEY_DOWN":
+                    that.cursor.moveY(1);
+                    return false;
+                case "KEY_LEFT":
+                    that.cursor.moveX(-1);
+                    return false;
+                case "KEY_RIGHT":
+                    that.cursor.moveX(1);
+                    return false;
+                case "KEY_SELECT":
+                    that.doSelect();
+                    return false;
+                case "KEY_EXIT":
+                case "KEY_BACK":
+                    that.doBack();
+                    return false;
+                default:
+                    break;
+            }
+        }
+    }
+
+    window.onload = function () {
+        var
+            menuComponent = new MenuComponent(),
+            postComponent = new PostComponent(),
+            listComponent = new ListComponent(),
+            cursorComponent = new CursorComponent(menuComponent, postComponent, listComponent),
+            transferComponent = new TransferComponent(cursorComponent);
+
+        menuComponent.init();
+        postComponent.init();
+        listComponent.init(function () {
+            cursorComponent.focusOn();
+        });
+        cursorComponent.init();
+        transferComponent.init();
+
+        document.onkeydown = transferComponent.onKeyDown;
+    }
+</script>
+</html>
