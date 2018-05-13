@@ -108,7 +108,7 @@
         this.focusArea = 0;
         this.menu = menu;
         this.swiper = swiper;
-        this.fileName = 'PG-ONE';
+        this.fileName = 'PG-TWO';
     }
 
     function TransferComponent(cursor) {
@@ -126,11 +126,7 @@
             switch (this.cursor.focusArea) {
                 case 0:         // 菜单
                     if (this.cursor.menu.moveX(direction) === -1) {
-                        if (direction > 0) {
-                            this.cursor.focusArea = 6;
-                        } else {
-                            this.cursor.focusArea = 2;
-                        }
+                        this.cursor.focusArea = 6;
                     }
                     break;
                 case 6:         //  滚动图片
@@ -162,7 +158,7 @@
         this.doBack = function () {
             this.remove(this.cursor.fileName);
             this.package([]);
-//            window.location.href = 'index.html' + this.package([]);
+            window.location.href = 'index.html' + this.package([]);
         };
 
         this.doSelect = function () {

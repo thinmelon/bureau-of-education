@@ -48,8 +48,8 @@ function SwiperModule() {
      */
     this.focusOn = function () {
         clearInterval(this.timerId);
-        // document.getElementById("textures-graphics-image").src = cmsConfig.imgUrl + this.album[this.position].img;
-        document.getElementById('swiper').style.backgroundImage = this.album[this.position].img;
+        //document.getElementById("textures-graphics-image").src = cmsConfig.imgUrl + this.album[this.position].img;
+        document.getElementById('swiper').style.backgroundImage = cmsConfig.imgUrl + this.album[this.position].img;
         document.getElementById('swiper-index-' + this.position).style.backgroundColor = '#13934F';
         document.getElementById('swiper-index-' + this.position).style.borderColor = '#FFFF00';
     };
@@ -92,13 +92,13 @@ function SwiperModule() {
      */
     this.triggerTimer = function () {
         var that = this;
-        document.getElementById('swiper').style.backgroundImage = this.album[this.position].img;
+        document.getElementById('swiper').style.backgroundImage = cmsConfig.imgUrl + this.album[this.position].img;
         document.getElementById('swiper-index-' + this.position).style.backgroundColor = '#13934F';
 
         this.timerId = setInterval(function () {
             document.getElementById('swiper-index-' + that.position).style.backgroundColor = '';
             that.position = (that.position + 1) % that.album.length;
-            document.getElementById('swiper').style.backgroundImage = that.album[that.position].img;
+            document.getElementById('swiper').style.backgroundImage = cmsConfig.imgUrl + that.album[that.position].img;
             document.getElementById('swiper-index-' + that.position).style.backgroundColor = '#13934F';
         }, that.interval);
     };

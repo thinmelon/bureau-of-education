@@ -85,7 +85,7 @@
                     height: 164,
                     bgImageSrc: 'url(../images/index/6.png) no-repeat',
                     resourceId: 0,
-                    url: 'campus.html'
+                    url: 'more.html'
                 },
                 {
                     left: 689,
@@ -94,7 +94,7 @@
                     height: 164,
                     bgImageSrc: 'url(../images/index/7.png) no-repeat',
                     resourceId: 0,
-                    url: 'class.html'
+                    url: 'more.html'
                 },
                 {
                     left: 840,
@@ -103,7 +103,7 @@
                     height: 164,
                     bgImageSrc: 'url(../images/index/8.png) no-repeat',
                     resourceId: 0,
-                    url: 'detail.html'
+                    url: 'more.html'
                 }
             ]
         }];
@@ -120,12 +120,6 @@
             {
                 img: 'url(../images/index/9.png)'
             }
-//            {
-//                img: 'url(../images/chengxiang/1.jpg)'
-//            },
-//            {
-//                img: 'url(../images/chengxiang/2.jpg)'
-//            }
         ];
     }
 
@@ -174,12 +168,21 @@
                     }
                     break;
                 case 2:         // 列表
-                    this.cursor.list.moveX(direction);
+                    if (direction > 0) {
+                        this.cursor.focusArea = 0;
+                    } else {
+                        this.cursor.focusArea = 6;
+                    }
                     break;
                 case 6:         //  滚动图片
                     if (-1 === this.cursor.swiper.moveX(direction)) {
                         this.cursor.swiper.triggerTimer();
-                        this.cursor.focusArea = 0;
+                        if (direction > 0) {
+                            this.cursor.focusArea = 2;
+                        } else {
+                            this.cursor.focusArea = 0;
+                        }
+
                     }
                     break;
                 default:
@@ -216,57 +219,102 @@
 
             switch (this.cursor.focusArea) {
                 case 0:         // 菜单
-                    this.cursor.menu.doSelect();
-                    break;
-                case 2:         // 列表
-                    if (this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].flag === 0) {
-                        params = {
-                            "index": {
-                                focusArea: this.cursor.focusArea,
-                                focusPos: this.cursor.list.focusPos
-                            },
-                            "textures": {
-                                id: this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].id,
-                                isShowGraphics: true,
-                                backURL: 'index.html',
-                                logoImageSrc: '../images/index/index_logo.png'
-                            }
-                        };
-                    } else {
-                        params = {
-                            "index": {
-                                focusArea: this.cursor.focusArea,
-                                focusPos: this.cursor.list.focusPos
-                            },
-                            "more": {
-                                resourceId: this.cursor.list.resourceId,
-                                backURL: 'index.html',
-                                logoImageSrc: '../images/index/index_logo.png',
-                                pageIndex: 1
-                            }
+                    params = {
+                        /**
+                         * 一级页面
+                         */
+                        "PG-ONE": {
+                            focusArea: this.cursor.focusArea,
+                            focusPosX: this.cursor.menu.focusPosX,
+                            focusPosY: this.cursor.menu.focusPosY
+                        }
+                    };
+                    // 教育概况
+                    if (this.cursor.menu.focusPosX === 0 &&
+                        this.cursor.menu.focusPosY === 0
+                    ) {
+                        /**
+                         * 二级页面 跳转至图文页面
+                         * 传入参数
+                         */
+                        params.PG_TEXT = {
+                            id: 0,
+                            isShowGraphics: 'hide',
+                            backURL: 'index.html',
+                            logoImageSrc: '../images/index/title.png'
                         };
                     }
-//                    console.info(params);
+                    //  校园风采
+                    else if (this.cursor.menu.focusPosX === 3 &&
+                        this.cursor.menu.focusPosY === 2
+                    ) {
+                        /**
+                         * 二级页面 跳转至更多页面
+                         * 传入参数
+                         */
+                        params.PG_MORE = {
+                            backURL: 'index.html',                          //  返回页面
+                            logoImageSrc: '../images/campus/title.png',     //  页面标题图片
+                            sidebarTextImages: [                            //  侧边栏文字图片
+                                '../images/campus/1.png',
+                                '../images/campus/2.png',
+                                '../images/campus/3.png'
+                            ],
+                            sidebarResourceIds: [                           //  侧边栏文字对应的resourceId
+                                0, 1, 2
+                            ],
+                            pageIndex: 1                                    //  列表顶分页索引
+                        };
+                    }
+                    //  优质课堂
+                    else if (this.cursor.menu.focusPosX === 4 &&
+                        this.cursor.menu.focusPosY === 2
+                    ) {
+                        params.PG_MORE = {
+                            backURL: 'index.html',                          //  返回页面
+                            logoImageSrc: '../images/campus/title.png',     //  页面标题图片
+                            sidebarTextImages: [                            //  侧边栏文字图片
+                                '../images/class/1.png',
+                                '../images/class/2.png',
+                                '../images/class/3.png',
+                                '../images/class/4.png'
+                            ],
+                            sidebarResourceIds: [                           //  侧边栏文字对应的resourceId
+                                0, 1, 2, 3
+                            ],
+                            pageIndex: 1
+                        };
+                    }
+                    postfix = this.package(params);
+                    this.cursor.menu.doSelect(postfix);
+                    break;
+                case 2:         // 列表
+                    params = {
+                        "PG-ONE": {
+                            focusArea: this.cursor.focusArea,
+                            focusPos: this.cursor.list.focusPos
+                        }
+                    };
+                    if (this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].flag === 0) {
+                        params.PG_TEXT = {
+                            id: this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].id,
+                            isShowGraphics: "show",
+                            backURL: 'index.html',
+                            logoImageSrc: '../images/index/title.png'
+                        };
+                    } else {
+                        params.PG_MORE = {
+                            resourceId: this.cursor.list.resourceId,
+                            backURL: 'index.html',
+                            logoImageSrc: '../images/index/title.png',
+                            pageIndex: 1
+                        };
+                    }
                     postfix = this.package(params);
                     this.cursor.list.doSelect(postfix);
                     break;
                 case 6:         //  滚动图片
-                    params =
-                        {
-                            "index": {
-                                focusArea: this.cursor.focusArea,
-                                focusPos: this.cursor.post.focusPos
-                            },
-                            "video": {
-                                backURL: this.backUrl(),
-                                fileName: this.fileName,
-                                focusArea: this.cursor.focusArea,
-                                focusPos: this.cursor.post.focusPos,
-                                resourceId: this.cursor.post.postItemArray[this.cursor.post.focusPos].resourceId
-                            }
-                        };
-                    postfix = this.package(params);
-                    this.cursor.post.doSelect(postfix);
+
                     break;
                 default:
                     break;
@@ -326,16 +374,14 @@
             cursorComponent = new CursorComponent(menuComponent, swiperComponent, listComponent),
             transferComponent = new TransferComponent(cursorComponent);
 
+        transferComponent.init();
+        cursorComponent.init();
         menuComponent.init();
         swiperComponent.init();
         listComponent.init(function () {
             cursorComponent.focusOn();
         });
 
-        cursorComponent.init();
-        transferComponent.init();
-
-//        cursorComponent.focusOn();
         document.onkeydown = transferComponent.onKeyDown;
     };
 </script>

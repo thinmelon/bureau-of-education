@@ -15,19 +15,16 @@ function BarModule() {
         var
             i,
             length,
-            left,
             barItemWrapper,
             barItem,
             bar = document.getElementById('bar');
 
 
-        for (i = 0, left = 0, length = this.barItemArray.length; i < length; i++) {
+        for (i = 0, length = this.barItemArray.length; i < length; i++) {
             barItemWrapper = document.createElement('div');
             barItemWrapper.id = 'bar-item-wrapper-' + i;
             barItemWrapper.className = 'bar-item-wrapper';
-            barItemWrapper.style.left = left + 'px';
-            barItemWrapper.style.width = this.barItemArray[i].width + 'px';
-            left += this.barItemArray[i].width;
+            barItemWrapper.style.left = this.barItemLeft + (i * this.barItemPadding) + "px";
 
             barItem = document.createElement('div');
             barItem.id = 'bar-item-' + i;

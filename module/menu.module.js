@@ -106,6 +106,18 @@ function MenuModule() {
     };
 
     this.doSelect = function (postfix) {
-        window.location.href = this.menuItemArray[this.focusPosY * this.itemsPerLine[this.focusPosY] + this.focusPosX].url;
+        //console.log(this.focusPosX)
+        //console.log(this.focusPosY)
+        //console.log(this.focusPosY)
+        //console.log(this.focusPosY * this.itemsPerLine[this.focusPosY] + this.focusPosX);
+        //console.log(this.menuItemArray[this.focusPosY * this.itemsPerLine[this.focusPosY] + this.focusPosX].url + postfix);
+        var i, index = 0;
+        for (i = 0; i < this.focusPosY; i++) {
+            index += this.itemsPerLine[i];
+        }
+        index += this.focusPosX;
+        console.log(index);
+        window.location.href =
+            this.menuItemArray[index].url + postfix;
     };
 }

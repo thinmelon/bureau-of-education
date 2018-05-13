@@ -6,19 +6,19 @@
     <title>智慧党建</title>
 </head>
 <body>
-<div class="title-logo" style="background: url('../images/building/building_logo.png') no-repeat; "></div>
+<div class="title">
+    <img src="../images/building/title.png">
+</div>
 <div id="bar" class="bar"></div>
 <div id="menu"></div>
 <div id="post"></div>
-<div id="weather-forecast"></div>
-<div id="intro-btn-usage"></div>
 <table id="cursor" cellpadding="0" cellspacing="0"></table>
 <div id="debug-message"></div>
 </body>
-<script type="application/javascript" src="../module/utility/assistant.js"></script>
-<script type="application/javascript" src="../module/utility/async.js"></script>
-<script type="application/javascript" src="../module/cms/cms.config.js"></script>
-<script type="application/javascript" src="../module/cms/cms.api.js"></script>
+<script type="application/javascript" src="../utility/assistant.js"></script>
+<script type="application/javascript" src="../utility/async.js"></script>
+<script type="application/javascript" src="../cms/cms.config.js"></script>
+<script type="application/javascript" src="../cms/cms.api.js"></script>
 <script type="application/javascript" src="../module/cursor.module.js"></script>
 <script type="application/javascript" src="../module/bar.module.js"></script>
 <script type="application/javascript" src="../module/menu.module.js"></script>
@@ -59,41 +59,44 @@
     function MenuComponent() {
         MenuModule.call(this);
 
-        this.itemsPerLine = [2, 2];           // 每行所包含的元素数量
-        this.menuItemArray = [
-            {
-                left: 625,
-                top: 255,
-                width: 255,
-                height: 189,
-                bgImageSrc: 'url(../images/building/building_nation.png) no-repeat',
-                resourceId: cmsConfig.buildingResourceIdArray[7].resourceId
-            },
-            {
-                left: 883,
-                top: 255,
-                width: 255,
-                height: 189,
-                bgImageSrc: 'url(../images/building/building_local.png) no-repeat',
-                resourceId: cmsConfig.buildingResourceIdArray[8].resourceId
-            },
-            {
-                left: 625,
-                top: 448,
-                width: 255,
-                height: 189,
-                bgImageSrc: 'url(../images/building/building_learn.png) no-repeat',
-                resourceId: cmsConfig.buildingResourceIdArray[9].resourceId
-            },
-            {
-                left: 883,
-                top: 448,
-                width: 255,
-                height: 189,
-                bgImageSrc: 'url(../images/building/building_notice.png) no-repeat',
-                resourceId: cmsConfig.buildingResourceIdArray[10].resourceId
-            }
-        ]
+        this.menuPageArray = [{
+            itemsPerLine: [2, 2],           // 每行所包含的元素数量
+            menuItemArray: [
+                {
+                    left: 625,
+                    top: 255,
+                    width: 255,
+                    height: 189,
+                    bgImageSrc: 'url(../images/building/building_nation.png) no-repeat',
+                    resourceId: cmsConfig.buildingResourceIdArray[7].resourceId
+                },
+                {
+                    left: 883,
+                    top: 255,
+                    width: 255,
+                    height: 189,
+                    bgImageSrc: 'url(../images/building/building_local.png) no-repeat',
+                    resourceId: cmsConfig.buildingResourceIdArray[8].resourceId
+                },
+                {
+                    left: 625,
+                    top: 448,
+                    width: 255,
+                    height: 189,
+                    bgImageSrc: 'url(../images/building/building_learn.png) no-repeat',
+                    resourceId: cmsConfig.buildingResourceIdArray[9].resourceId
+                },
+                {
+                    left: 883,
+                    top: 448,
+                    width: 255,
+                    height: 189,
+                    bgImageSrc: 'url(../images/building/building_notice.png) no-repeat',
+                    resourceId: cmsConfig.buildingResourceIdArray[10].resourceId
+                }
+            ]
+        }];
+
     }
 
     function PostComponent() {
@@ -106,7 +109,7 @@
                 width: 523,
                 height: 380,
                 resourceId: cmsConfig.buildingResourceIdArray[11].resourceId,
-                bgImageSrc: '../images/city/city_mid_ad.jpg',
+                bgImageSrc: '../images/project/1.png',
                 element: "post-item-0",
                 url: ""
             }

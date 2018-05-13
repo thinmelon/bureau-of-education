@@ -8,7 +8,8 @@ var cmsConfig = {
     //serverUrl : "http://192.168.55.10:8080/manage/web/",		//  给电脑用的
     //imgUrl : "http://192.168.55.10:8080/manage/",
     serverUrl: "http://10.184.255.10:8080/manage/web/",		    //  给机顶盒用的
-    imgUrl: "http://10.184.255.10:8080/manage/",
+    //imgUrl: "http://10.184.255.10:8080/manage/",
+    imgUrl: "",                                                 //  测试
     backUrl: "",
 
     isPc: 1,                //显示审核预览：1；显示正式发布：0

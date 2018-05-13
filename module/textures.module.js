@@ -1,7 +1,4 @@
 function TexturesModule() {
-    // this.position = 0;
-    // this.size = 0;
-    // this.album = [];
     this.swiper = null;
     this.pager = null;
     /**
@@ -11,17 +8,19 @@ function TexturesModule() {
     /**
      *  模块初始化参数
      */
-    this.isShowGraphics = false;
+    this.isShowGraphics = 'show';
     this.backURL = '';
     this.logoImageSrc = '';
-    this.id = '';
+    this.resourceId = '';
 
     /**
      *  初始化
      */
     this.init = function () {
+        // 设置页面标题图片
+        document.getElementById("title-img").src = this.logoImageSrc;
         //  是否显示图片
-        if ('true' === this.isShowGraphics) {
+        if ('show' === this.isShowGraphics) {
             this.swiper = new SwiperModule();
             this.swiper.swiperTop = 225;
             this.swiper.swiperLeft = 130;
@@ -45,7 +44,7 @@ function TexturesModule() {
 
         showTitleForMarquee(data.title, document.getElementById('textures-title'), this.marqueeCount);
         document.getElementById('textures-text').innerHTML = data.content;
-        if ('true' === this.isShowGraphics) {
+        if ('show' === this.isShowGraphics) {
             // 加载滚动图片
             this.swiper.album = data.imgArr;
             this.swiper.init();

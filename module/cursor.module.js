@@ -19,6 +19,7 @@ function CursorModule() {
     this.button = null;         //  按键
     this.more = null;           //  列表页
     this.monitor = null;        //  视频监控
+    this.sidebar = null;        //  侧边栏
 
     // 方法
     this.init = function () {
@@ -73,13 +74,7 @@ function CursorModule() {
      *  聚焦
      */
     this.focusOn = function () {
-        // var cursor = document.getElementById("cursor");
-        // var cursorTop = document.getElementsByClassName('t')[0];
-        // var cursorBottom = document.getElementsByClassName('b')[0];
-        // document.getElementById("debug-message").innerHTML += "<br/>" + "cursor.module.js ==> focusOn | focusArea: " + this.focusArea;
-        // document.getElementById("debug-message").innerHTML += "<br/>" + "[Cursor] ScrollWidth: " + cursor.scrollWidth + " - ScrollHeight: " + cursor.scrollHeight;
-        // document.getElementById("debug-message").innerHTML += "<br/>" + "[Top] ScrollWidth: " + cursorTop.scrollWidth + " - ScrollHeight: " + cursorTop.scrollHeight;
-        // document.getElementById("debug-message").innerHTML += "<br/>" + "[Bottom] ScrollWidth: " + cursorBottom.scrollWidth + " - ScrollHeight: " + cursorBottom.scrollHeight;
+         var cursor = document.getElementById("cursor");
         switch (this.focusArea) {
             case 0:
                 this.menu.focusOn(cursor);
@@ -101,6 +96,9 @@ function CursorModule() {
                 break;
             case 6:
                 this.swiper.focusOn();
+                break;
+            case 7:
+                this.sidebar.focusOn(cursor);
                 break;
             default:
                 break;
@@ -134,6 +132,9 @@ function CursorModule() {
                 break;
             case 6:
                 this.swiper.focusOut();
+                break;
+            case 7:
+                this.sidebar.focusOut(cursor);
                 break;
             default:
                 break;

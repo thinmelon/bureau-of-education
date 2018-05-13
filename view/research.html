@@ -125,6 +125,10 @@
 
         // 属性
         this.focusPos = 0;
+        this.boardLeft = 940;
+        this.boardHeight = 480;
+        this.itemLeft = 950;
+        this.itemMoreLeft = 1088;
         this.listItemNum = 5;
         this.resourceId = cmsConfig.indexResourceIdArray[3].resourceId;
 
@@ -139,7 +143,7 @@
         this.menu = menu;
         this.swiper = swiper;
         this.list = list;
-        this.fileName = 'PG-ONE';
+        this.fileName = 'PG-TWO';
     }
 
     function TransferComponent(cursor) {
@@ -165,12 +169,21 @@
                     }
                     break;
                 case 2:         // 列表
-                    this.cursor.list.moveX(direction);
+                    if (direction > 0) {
+                        this.cursor.focusArea = 0;
+                    } else {
+                        this.cursor.focusArea = 6;
+                    }
                     break;
                 case 6:         //  滚动图片
                     if (-1 === this.cursor.swiper.moveX(direction)) {
                         this.cursor.swiper.triggerTimer();
-                        this.cursor.focusArea = 0;
+                        if (direction > 0) {
+                            this.cursor.focusArea = 2;
+                        } else {
+                            this.cursor.focusArea = 0;
+                        }
+
                     }
                     break;
                 default:
@@ -199,7 +212,7 @@
         this.doBack = function () {
             this.remove(this.cursor.fileName);
             this.package([]);
-//            window.location.href = 'index.html' + this.package([]);
+            window.location.href = 'index.html' + this.package([]);
         };
 
         this.doSelect = function () {

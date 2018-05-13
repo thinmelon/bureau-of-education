@@ -25,23 +25,50 @@ function MoreModule() {
     this.backURL = "";
 
     // 方法
-    this.init = function (pageIndex, callback) {
+    this.init = function (resourceId, pageIndex, callback) {
         var that = this;
 
         this.removeAllMoreItems();
+
         var testData = [
-          {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
-          {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
-          {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
-          {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
-          {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
-          {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
-          {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
-          {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21}
+            [
+                {assetid: 111, img: "../images/more/sample-item.png", title: "老师", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "老师", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "老师", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "老师", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "老师", flag: 0, id: 21}
+            ],
+            [
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学校", flag: 0, id: 21}
+            ],
+            [
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学生", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学生", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学生", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学生", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学生", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学生", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学生", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学生", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学生", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学生", flag: 0, id: 21},
+                {assetid: 111, img: "../images/more/sample-item.png", title: "学生", flag: 0, id: 21}
+            ],
+            []
         ];
+        this.resourceId = resourceId;
         this.pageIndex = pageIndex;
-        this.totalPages = 8;
-        this.addMoreItem(testData);
+        this.totalPages = 1;
+        document.getElementById("more-page-index-current").innerText = this.pageIndex.toString();
+        document.getElementById("more-page-index-total").innerText = this.totalPages.toString();
+        this.addMoreItem(testData[this.resourceId]);
         callback();
         // if (this.resourceId !== "") {
         //     cmsApi.getListItems(this.resourceId, 8, pageIndex, function (response) {
@@ -68,7 +95,7 @@ function MoreModule() {
             this.focusPosX = 0;
             this.focusPosY = 0;
             document.getElementById("debug-message").innerHTML += "<br/>" + "changePage ==> direction = " + direction + " | page index = " + index;
-            this.init(index, callback);
+            this.init(this.resourceId, index, callback);
         }
     };
 
@@ -77,7 +104,6 @@ function MoreModule() {
             parent = document.getElementById("content"),
             children = parent.childNodes;
 
-        console.info("more.module.js ==>  removeAllMoreItems");
         //每页最多显示两行
         this.moreItemArray[0] = [];
         this.moreItemArray[1] = [];
@@ -95,7 +121,7 @@ function MoreModule() {
             cardImage,
             cardText;
 
-        console.info("more.module.js ==> addMoreItem | image src" + this.logoImageSrc);
+        // 设置页面标题图片
         document.getElementById("self-define-logo").children[0].src = this.logoImageSrc;
 
         for (i = 0, length = data.length; i < length && i < maxItems; i++) {
@@ -103,8 +129,7 @@ function MoreModule() {
             card.className = 'more-page-item';
 
             cardImage = document.createElement('img');
-            // cardImage.src = cmsConfig.imgUrl + data[i].img;
-            cardImage.src = data[i].img;
+            cardImage.src = cmsConfig.imgUrl + data[i].img;
 
             cardText = document.createElement('div');
             cardText.id = "more-page-item-text-" + i;
@@ -186,6 +211,7 @@ function MoreModule() {
                 this.focusPosX = this.moreItemArray[this.focusPosY].length - 1;
             } else {
                 this.focusPosX = 0;
+                return -1;
             }
         } else {
             if (this.focusPosY === 0 && this.moreItemArray[1].length > 0) {
@@ -197,6 +223,7 @@ function MoreModule() {
 
         }
         console.info("more.module.js    ==>     moveX | X: " + this.focusPosX + " Y: " + this.focusPosY);
+        return 0;
     };
 
     this.moveY = function (_direction) {
@@ -224,7 +251,7 @@ function MoreModule() {
     this.doSelect = function (postfix) {
         switch (this.resourceType) {
             case "textures":
-                window.location.href = 'textures.html' + postfix;
+                window.location.href = 'detail.html' + postfix;
                 break;
             case "monitor":
                 window.location.href = 'monitor.html' + postfix;

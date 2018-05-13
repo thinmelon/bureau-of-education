@@ -31,21 +31,22 @@ function ListModule() {
 
     this.noticesBoardBarWidth = 323;
     this.noticesBoardBarHeight = 40;
-    this.noticesBoardBarBgSrc = 'url(../images/public/list-bar-bg.png) no-repeat';
+    this.noticesBoardBarBgSrc = 'url(../images/public/list-bar-bg.png)';
+    this.noticesBoardBarText = '最新动态';
 
     this.resourceId = "";
 
     this.init = function (callback) {
         var test = [
-         {assetID: 611, title: '"美丽莆田 社会治理"司法行政创新现场会', img: '', flag: 0, id: 111},
-         {assetID: 611, title: '建设美丽莆田行动纲要', img: '1', flag: 0, id: 111},
-         {assetID: 611, title: '美丽港城 冉冉起', img: '1', flag: 0, id: 111},
-         {assetID: 611, title: '"拱辰街道依法拆除违章建筑', img: '1', flag: 0, id: 111},
-         {assetID: 611, title: '开启“智慧物流” 助力物畅其流', flag: 0, id: 111},
-         {assetID: 611, title: '"美丽莆田 社会治理"司法行政创新现场会', flag: 0, id: 111},
-         {assetID: 611, title: '建设美丽莆田行动纲要', img: '1', flag: 0, id: 111},
-         {assetID: 611, title: '美丽港城 冉冉起', img: '1', flag: 0, id: 111},
-         {assetID: 611, title: '建设美丽莆田行动纲要', img: '1', flag: 0, id: 111}
+            {assetID: 611, title: '"美丽莆田 社会治理"司法行政创新现场会', img: '', flag: 0, id: 111},
+            {assetID: 611, title: '建设美丽莆田行动纲要', img: '1', flag: 0, id: 111},
+            {assetID: 611, title: '美丽港城 冉冉起', img: '1', flag: 0, id: 111},
+            {assetID: 611, title: '"拱辰街道依法拆除违章建筑', img: '1', flag: 0, id: 111},
+            {assetID: 611, title: '开启“智慧物流” 助力物畅其流', flag: 0, id: 111},
+            {assetID: 611, title: '"美丽莆田 社会治理"司法行政创新现场会', flag: 0, id: 111},
+            {assetID: 611, title: '建设美丽莆田行动纲要', img: '1', flag: 0, id: 111},
+            {assetID: 611, title: '美丽港城 冉冉起', img: '1', flag: 0, id: 111},
+            {assetID: 611, title: '建设美丽莆田行动纲要', img: '1', flag: 0, id: 111}
 
         ];
         this.addListItem(test);
@@ -76,6 +77,7 @@ function ListModule() {
         noticesBoardBar.style.background = this.noticesBoardBarBgSrc;
         noticesBoardBar.style.width = this.noticesBoardBarWidth + "px";
         noticesBoardBar.style.height = this.noticesBoardBarHeight + "px";
+        noticesBoardBar.innerText = this.noticesBoardBarText;
 
         callback();
     };
@@ -183,7 +185,7 @@ function ListModule() {
 
     this.doSelect = function (postfix) {
         if (this.listItemTitleArray[this.focusPos].flag === 0) {           // 图文详情
-            window.location.href = 'textures.html' + postfix;
+            window.location.href = 'detail.html' + postfix;
         } else {                                                            // 更多内容
             window.location.href = 'more.html' + postfix;
         }
