@@ -38,14 +38,14 @@ function ListModule() {
 
     this.init = function (callback) {
         var test = [
-            {assetID: 611, title: '"美丽莆田 社会治理"司法行政创新现场会', img: '', flag: 0, id: 111},
-            {assetID: 611, title: '建设美丽莆田行动纲要', img: '1', flag: 0, id: 111},
-            {assetID: 611, title: '美丽港城 冉冉起', img: '1', flag: 0, id: 111},
-            {assetID: 611, title: '"拱辰街道依法拆除违章建筑', img: '1', flag: 0, id: 111},
-            {assetID: 611, title: '开启“智慧物流” 助力物畅其流', flag: 0, id: 111},
-            {assetID: 611, title: '"美丽莆田 社会治理"司法行政创新现场会', flag: 0, id: 111},
-            {assetID: 611, title: '建设美丽莆田行动纲要', img: '1', flag: 0, id: 111},
-            {assetID: 611, title: '美丽港城 冉冉起', img: '1', flag: 0, id: 111},
+            {assetID: 611, title: '"关于2018年普通高考报名有关事项的补充通知', img: '', flag: 0, id: 111},
+            {assetID: 611, title: '莆田市成立第三届中学学科中心组', img: '1', flag: 0, id: 111},
+            {assetID: 611, title: '"学习贯彻党的十九大精神"宣传挂图网上展示', img: '1', flag: 0, id: 111},
+            {assetID: 611, title: '"省高校和网商安全网络安全知识竞赛举行', img: '1', flag: 0, id: 111},
+            {assetID: 611, title: '关于2018年普通高考报名有关事项的补充通知', flag: 0, id: 111},
+            {assetID: 611, title: '"莆田市成立第三届中学学科中心组', flag: 0, id: 111},
+            {assetID: 611, title: '"学习贯彻党的十九大精神"宣传挂图网上展示', img: '1', flag: 0, id: 111},
+            {assetID: 611, title: '莆田市成立第三届中学学科中心组', img: '1', flag: 0, id: 111},
             {assetID: 611, title: '建设美丽莆田行动纲要', img: '1', flag: 0, id: 111}
 
         ];

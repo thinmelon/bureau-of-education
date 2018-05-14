@@ -243,11 +243,9 @@
             cursorComponent = new CursorComponent(menuComponent, swiperComponent),
             transferComponent = new TransferComponent(cursorComponent);
 
+        transferComponent.init();
         menuComponent.init();
         swiperComponent.init();
-
-        cursorComponent.init();
-        transferComponent.init();
 
         cursorComponent.focusOn();
         document.onkeydown = transferComponent.onKeyDown;

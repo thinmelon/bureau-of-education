@@ -15,7 +15,7 @@
     <div id="notices_board_bar"></div>
     <div class="list-item-more"></div>
 </div>
-<table id="cursor" cellpadding="0" cellspacing="0"></table>
+<div id="cursor"></div>
 <div id="debug-message"></div>
 </body>
 </html>
@@ -382,7 +382,6 @@
             transferComponent = new TransferComponent(cursorComponent);
 
         transferComponent.init();
-        cursorComponent.init();
         menuComponent.init();
         swiperComponent.init();
         listComponent.init(function () {

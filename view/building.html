@@ -12,7 +12,7 @@
 <div id="bar" class="bar"></div>
 <div id="menu"></div>
 <div id="post"></div>
-<table id="cursor" cellpadding="0" cellspacing="0"></table>
+<div id="cursor"></div>
 <div id="debug-message"></div>
 </body>
 <script type="application/javascript" src="../utility/assistant.js"></script>
@@ -299,11 +299,10 @@
             cursorComponent = new CursorComponent(barComponent, menuComponent, postComponent),
             transferComponent = new TransferComponent(cursorComponent);
 
+        transferComponent.init();
         barComponent.init();
         menuComponent.init();
         postComponent.init();
-        cursorComponent.init();
-        transferComponent.init();
 
         cursorComponent.focusOn();
         document.onkeydown = transferComponent.onKeyDown;

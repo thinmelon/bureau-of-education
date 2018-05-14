@@ -15,7 +15,7 @@
     <div id="notices_board_bar"></div>
     <div class="list-item-more"></div>
 </div>
-<table id="cursor" cellpadding="0" cellspacing="0"></table>
+<div id="cursor"></div>
 <div id="debug-message"></div>
 </body>
 </html>
@@ -129,6 +129,7 @@
         this.boardHeight = 480;
         this.itemLeft = 950;
         this.itemMoreLeft = 1088;
+        this.itemMoreTop = 570;
         this.listItemNum = 5;
         this.resourceId = cmsConfig.indexResourceIdArray[3].resourceId;
 
@@ -183,7 +184,6 @@
                         } else {
                             this.cursor.focusArea = 0;
                         }
-
                     }
                     break;
                 default:
@@ -314,16 +314,13 @@
             cursorComponent = new CursorComponent(menuComponent, swiperComponent, listComponent),
             transferComponent = new TransferComponent(cursorComponent);
 
+        transferComponent.init();
         menuComponent.init();
         swiperComponent.init();
         listComponent.init(function () {
             cursorComponent.focusOn();
         });
 
-        cursorComponent.init();
-        transferComponent.init();
-
-//        cursorComponent.focusOn();
         document.onkeydown = transferComponent.onKeyDown;
     };
 </script>

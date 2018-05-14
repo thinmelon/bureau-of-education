@@ -1,6 +1,6 @@
 function CursorModule() {
     // 属性
-    this.fileName = '';
+    this.fileName = '';         // 当前页面名称
     /**
      *      menu    -   0
      *      post    -   1
@@ -22,54 +22,6 @@ function CursorModule() {
     this.sidebar = null;        //  侧边栏
 
     // 方法
-    this.init = function () {
-        var
-            table,
-            firstTR,
-            lt, t, rt,
-            secondTR,
-            l, r,
-            thirdTR,
-            lb, b, rb;
-
-        table = document.getElementById('cursor');
-
-        firstTR = document.createElement('tr');
-        lt = document.createElement('td');
-        t = document.createElement('td');
-        rt = document.createElement('td');
-        lt.className = 'lt';
-        t.className = 't';
-        rt.className = 'rt';
-        firstTR.appendChild(lt);
-        firstTR.appendChild(t);
-        firstTR.appendChild(rt);
-
-        secondTR = document.createElement('tr');
-        l = document.createElement('td');
-        r = document.createElement('td');
-        l.className = 'l';
-        r.className = 'r';
-        secondTR.appendChild(l);
-        secondTR.appendChild(document.createElement('td'));
-        secondTR.appendChild(r);
-
-        thirdTR = document.createElement('tr');
-        lb = document.createElement('td');
-        b = document.createElement('td');
-        rb = document.createElement('td');
-        lb.className = 'lb';
-        b.className = 'b';
-        rb.className = 'rb';
-        thirdTR.appendChild(lb);
-        thirdTR.appendChild(b);
-        thirdTR.appendChild(rb);
-
-        table.appendChild(firstTR);
-        table.appendChild(secondTR);
-        table.appendChild(thirdTR);
-    };
-
     /**
      *  聚焦
      */
