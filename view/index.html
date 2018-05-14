@@ -103,7 +103,7 @@
                     height: 164,
                     bgImageSrc: 'url(../images/index/8.png) no-repeat',
                     resourceId: 0,
-                    url: 'more.html'
+                    url: ''
                 }
             ]
         }];
@@ -272,7 +272,7 @@
                     ) {
                         params.PG_MORE = {
                             backURL: 'index.html',                          //  返回页面
-                            logoImageSrc: '../images/campus/title.png',     //  页面标题图片
+                            logoImageSrc: '../images/class/title.png',     //  页面标题图片
                             sidebarTextImages: [                            //  侧边栏文字图片
                                 '../images/class/1.png',
                                 '../images/class/2.png',
@@ -297,16 +297,23 @@
                     };
                     if (this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].flag === 0) {
                         params.PG_TEXT = {
-                            id: this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].id,
+                            resourceId: this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].id,
                             isShowGraphics: "show",
                             backURL: 'index.html',
                             logoImageSrc: '../images/index/title.png'
                         };
                     } else {
                         params.PG_MORE = {
-                            resourceId: this.cursor.list.resourceId,
                             backURL: 'index.html',
                             logoImageSrc: '../images/index/title.png',
+                            sidebarTextImages: [                            //  侧边栏文字图片
+                                '../images/campus/1.png',
+                                '../images/campus/2.png',
+                                '../images/campus/3.png'
+                            ],
+                            sidebarResourceIds: [                           //  侧边栏文字对应的resourceId
+                                0, 1, 2
+                            ],
                             pageIndex: 1
                         };
                     }

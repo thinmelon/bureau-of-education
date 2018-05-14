@@ -184,13 +184,13 @@ body {
 }
 
 /* ----  详情页 - 图文列表  ---- */
-.self-define-logo {
-    position: absolute;
-    left: 150px;
-    top: 70px;
-    width: 289px;
-    height: 84px;
-}
+/*.self-define-logo {*/
+    /*position: absolute;*/
+    /*left: 150px;*/
+    /*top: 70px;*/
+    /*width: 289px;*/
+    /*height: 84px;*/
+/*}*/
 
 .textures {
     position: absolute;
