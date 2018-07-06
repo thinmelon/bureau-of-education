@@ -15,17 +15,22 @@
     <div id="notices_board_bar"></div>
     <div class="list-item-more"></div>
 </div>
+<div id="weather-forecast"></div>
 <div id="cursor"></div>
 <div id="debug-message"></div>
 </body>
 </html>
 <script type="application/javascript" src="../utility/assistant.js"></script>
+<script type="application/javascript" src="../utility/async.js"></script>
 <script type="application/javascript" src="../cms/cms.config.js"></script>
+<script type="application/javascript" src="../cms/cms.api.js"></script>
+<script type="application/javascript" src="../cms/common.js"></script>
 <script type="application/javascript" src="../module/menu.module.js"></script>
 <script type="application/javascript" src="../module/swiper.module.js"></script>
 <script type="application/javascript" src="../module/list.module.js"></script>
 <script type="application/javascript" src="../module/cursor.module.js"></script>
 <script type="application/javascript" src="../module/transfer.module.js"></script>
+<script type="application/javascript" src="../module/weather.module.js"></script>
 <script type="application/javascript">
     function MenuComponent() {
         MenuModule.call(this);
@@ -49,7 +54,8 @@
                     height: 164,
                     bgImageSrc: 'url(../images/index/2.png) no-repeat',
                     resourceId: 0,
-                    url: 'building.html'
+                    url: 'http://10.215.1.24:8080/examTv/tvPtPortal.action?method=index'
+//                    url: 'http://10.171.255.227:8080/examTv/tvFzPortal.action?method=index'
                 },
                 {
                     left: 85,
@@ -211,7 +217,16 @@
         this.doBack = function () {
             this.remove(this.cursor.fileName);
             this.package([]);
-//            window.location.href = 'index.html' + this.package([]);
+
+            var backUrl = GMObj.pathManager.getBackURL(window.location.href);
+            if ('' !== backUrl && null !== backUrl && 0 !== backUrl) {
+                window.location.href = backUrl;
+            } else {
+                //UI 2.0 portal
+                if ('undefined' !== typeof(GlobalVarManager)) {
+                    window.location.href = GlobalVarManager.getItemStr('tvPortalUrl');
+                }
+            }
         };
 
         this.doSelect = function () {
@@ -223,74 +238,82 @@
                         /**
                          * 一级页面
                          */
-                        "PG-ONE": {
+                        'PG-ONE': {
                             focusArea: this.cursor.focusArea,
                             focusPosX: this.cursor.menu.focusPosX,
                             focusPosY: this.cursor.menu.focusPosY
                         }
                     };
-                    // 教育概况
+                    //  中考查询
                     if (this.cursor.menu.focusPosX === 0 &&
-                        this.cursor.menu.focusPosY === 0
+                        this.cursor.menu.focusPosY === 1
                     ) {
-                        /**
-                         * 二级页面 跳转至图文页面
-                         * 传入参数
-                         */
-                        params.PG_TEXT = {
-                            id: 0,
-                            isShowGraphics: 'hide',
-                            backURL: 'index.html',
-                            logoImageSrc: '../images/index/title.png'
-                        };
+                        GlobalVarManager.setItemStr('damiPtzz', window.location.href);
+                        this.cursor.menu.doSelect('');
+                    } else {
+                        // 教育概况
+                        if (this.cursor.menu.focusPosX === 0 &&
+                            this.cursor.menu.focusPosY === 0
+                        ) {
+                            /**
+                             * 二级页面 跳转至图文页面
+                             * 传入参数
+                             */
+                            params.PG_TEXT = {
+                                id: 0,
+                                isShowGraphics: 'hide',
+                                backURL: 'index.html',
+                                logoImageSrc: '../images/index/title.png'
+                            };
+                        }
+                        //  校园风采
+                        else if (this.cursor.menu.focusPosX === 3 &&
+                            this.cursor.menu.focusPosY === 2
+                        ) {
+                            /**
+                             * 二级页面 跳转至更多页面
+                             * 传入参数
+                             */
+                            params.PG_MORE = {
+                                backURL: 'index.html',                          //  返回页面
+                                logoImageSrc: '../images/campus/title.png',     //  页面标题图片
+                                sidebarTextImages: [                            //  侧边栏文字图片
+                                    '../images/campus/1.png',
+                                    '../images/campus/2.png',
+                                    '../images/campus/3.png'
+                                ],
+                                sidebarResourceIds: [                           //  侧边栏文字对应的resourceId
+                                    0, 1, 2
+                                ],
+                                pageIndex: 1                                    //  列表顶分页索引
+                            };
+                        }
+                        //  优质课堂
+                        else if (this.cursor.menu.focusPosX === 4 &&
+                            this.cursor.menu.focusPosY === 2
+                        ) {
+                            params.PG_MORE = {
+                                backURL: 'index.html',                          //  返回页面
+                                logoImageSrc: '../images/class/title.png',     //  页面标题图片
+                                sidebarTextImages: [                            //  侧边栏文字图片
+                                    '../images/class/1.png',
+                                    '../images/class/2.png',
+                                    '../images/class/3.png',
+                                    '../images/class/4.png'
+                                ],
+                                sidebarResourceIds: [                           //  侧边栏文字对应的resourceId
+                                    0, 1, 2, 3
+                                ],
+                                pageIndex: 1
+                            };
+                        }
+                        postfix = this.package(params);
+                        this.cursor.menu.doSelect(postfix);
                     }
-                    //  校园风采
-                    else if (this.cursor.menu.focusPosX === 3 &&
-                        this.cursor.menu.focusPosY === 2
-                    ) {
-                        /**
-                         * 二级页面 跳转至更多页面
-                         * 传入参数
-                         */
-                        params.PG_MORE = {
-                            backURL: 'index.html',                          //  返回页面
-                            logoImageSrc: '../images/campus/title.png',     //  页面标题图片
-                            sidebarTextImages: [                            //  侧边栏文字图片
-                                '../images/campus/1.png',
-                                '../images/campus/2.png',
-                                '../images/campus/3.png'
-                            ],
-                            sidebarResourceIds: [                           //  侧边栏文字对应的resourceId
-                                0, 1, 2
-                            ],
-                            pageIndex: 1                                    //  列表顶分页索引
-                        };
-                    }
-                    //  优质课堂
-                    else if (this.cursor.menu.focusPosX === 4 &&
-                        this.cursor.menu.focusPosY === 2
-                    ) {
-                        params.PG_MORE = {
-                            backURL: 'index.html',                          //  返回页面
-                            logoImageSrc: '../images/class/title.png',     //  页面标题图片
-                            sidebarTextImages: [                            //  侧边栏文字图片
-                                '../images/class/1.png',
-                                '../images/class/2.png',
-                                '../images/class/3.png',
-                                '../images/class/4.png'
-                            ],
-                            sidebarResourceIds: [                           //  侧边栏文字对应的resourceId
-                                0, 1, 2, 3
-                            ],
-                            pageIndex: 1
-                        };
-                    }
-                    postfix = this.package(params);
-                    this.cursor.menu.doSelect(postfix);
                     break;
                 case 2:         // 列表
                     params = {
-                        "PG-ONE": {
+                        'PG-ONE': {
                             focusArea: this.cursor.focusArea,
                             focusPos: this.cursor.list.focusPos
                         }
@@ -298,7 +321,7 @@
                     if (this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].flag === 0) {
                         params.PG_TEXT = {
                             resourceId: this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].id,
-                            isShowGraphics: "show",
+                            isShowGraphics: 'show',
                             backURL: 'index.html',
                             logoImageSrc: '../images/index/title.png'
                         };
@@ -321,7 +344,25 @@
                     this.cursor.list.doSelect(postfix);
                     break;
                 case 6:         //  滚动图片
-
+                    params =
+                        {
+                            /**
+                             * 一级页面
+                             */
+                            'PG-ONE': {
+                                focusArea: this.cursor.focusArea,
+                                focusPos: this.cursor.focusPos
+                            },
+                            'VIDEO': {
+                                backURL: this.backUrl(),
+                                focusArea: this.cursor.focusArea,
+                                focusPos: this.cursor.focusPos,
+//                                    resourceId: 698,
+                                assertId: 'OTHE0000000000814473'
+                            }
+                        };
+                    postfix = this.package(params);
+                    window.location.href = 'video.html' + postfix;
                     break;
                 default:
                     break;
@@ -379,7 +420,8 @@
             swiperComponent = new SwiperComponent(),
             listComponent = new ListComponent(),
             cursorComponent = new CursorComponent(menuComponent, swiperComponent, listComponent),
-            transferComponent = new TransferComponent(cursorComponent);
+            transferComponent = new TransferComponent(cursorComponent),
+            weatherModule = new WeatherModule();
 
         transferComponent.init();
         menuComponent.init();
@@ -389,5 +431,15 @@
         });
 
         document.onkeydown = transferComponent.onKeyDown;
+
+        weatherModule.init(function () {
+            if (weatherModule.temperature !== '') {
+                document.getElementById('weather-forecast').innerHTML += '<br/>' +
+                    '今日天气：  ' +
+                    '&nbsp;&nbsp;&nbsp;' + weatherModule.weather +
+                    '&nbsp;&nbsp;&nbsp;' + weatherModule.temperature +
+                    '&nbsp;&nbsp;&nbsp;' + weatherModule.windScale;
+            }
+        });
     };
 </script>

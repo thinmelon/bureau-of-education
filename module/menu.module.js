@@ -117,6 +117,7 @@ function MenuModule() {
         }
         index += this.focusPosX;
         console.log(index);
+        console.log(this.menuItemArray[index].url);
         window.location.href =
             this.menuItemArray[index].url + postfix;
     };

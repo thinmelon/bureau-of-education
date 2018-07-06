@@ -31,34 +31,34 @@ function TransferModule() {
                 this.cursor.focusArea = parseInt(value.focusArea);
                 switch (this.cursor.focusArea) {
                     case 0:         // 菜单
-                        if (value.hasOwnProperty('focusPosX') && value.hasOwnProperty('focusPosY')) {
+                        if (value.hasOwnProperty('focusPosX') && value.hasOwnProperty('focusPosY') && this.cursor.menu) {
                             this.cursor.menu.focusPosX = parseInt(value.focusPosX);
                             this.cursor.menu.focusPosY = parseInt(value.focusPosY);
                         }
                         break;
                     case 1:         // 海报
-                        if (value.hasOwnProperty('focusPos')) {
+                        if (value.hasOwnProperty('focusPos') && this.cursor.post) {
                             this.cursor.post.focusPos = parseInt(value.focusPos);
                         }
                         break;
                     case 2:         // 列表
-                        if (value.hasOwnProperty('focusPos')) {
+                        if (value.hasOwnProperty('focusPos') && this.cursor.list) {
                             this.cursor.list.focusPos = parseInt(value.focusPos);
                         }
                         break;
                     case 3:         // 图片按键
-                        if (value.hasOwnProperty('focusPos')) {
+                        if (value.hasOwnProperty('focusPos') && this.cursor.button) {
                             this.cursor.button.focusPos = parseInt(value.focusPos);
                         }
                         break;
                     case 4:         // 更多内容
-                        if (value.hasOwnProperty('focusPosX') && value.hasOwnProperty('focusPosY')) {
+                        if (value.hasOwnProperty('focusPosX') && value.hasOwnProperty('focusPosY') && this.cursor.more) {
                             this.cursor.more.focusPosX = parseInt(value.focusPosX);
                             this.cursor.more.focusPosY = parseInt(value.focusPosY);
                         }
                         break;
                     case 5:         // BAR
-                        if (value.hasOwnProperty('focusPos')) {
+                        if (value.hasOwnProperty('focusPos') && this.cursor.bar) {
                             this.cursor.bar.focusPos = parseInt(value.focusPos);
                         }
                         break;
@@ -112,12 +112,16 @@ function TransferModule() {
         var backUrl = '',
             value;
 
-        if (this.video) {
+        if (this.cursor.video && key === this.cursor.fileName) {
             value = jsonUtils.parse(rawData);
             console.dir(value);
             if (value.hasOwnProperty('resourceId')) {
-                this.video.resourceId = value.resourceId;
-                document.getElementById("debug-message").innerHTML += "<br/> " + "resourceId: " + this.video.resourceId;
+                this.cursor.video.resourceId = value.resourceId;
+                document.getElementById('debug-message').innerHTML += '<br/> ' + 'resourceId: ' + this.cursor.video.resourceId;
+            }
+            if (value.hasOwnProperty('assertId')) {
+                this.cursor.video.assertId = value.assertId;
+                document.getElementById('debug-message').innerHTML += '<br/> ' + 'assertId: ' + this.cursor.video.assertId;
             }
             if (value.hasOwnProperty('backURL')) {
                 backUrl = decodeURIComponent(value.backURL);
@@ -125,9 +129,14 @@ function TransferModule() {
                     && value.hasOwnProperty('focusArea')
                     && value.hasOwnProperty('focusPos')) {
                     backUrl += '?' + value.fileName + '=' + encodeURIComponent('{focusArea:' + value.focusArea + ',focusPos:' + value.focusPos + '}');
+                } else if (value.hasOwnProperty('fileName')
+                    && value.hasOwnProperty('focusArea')
+                    && value.hasOwnProperty('focusPosX')
+                    && value.hasOwnProperty('focusPosY')) {
+                    backUrl += '?' + value.fileName + '=' + encodeURIComponent('{focusArea:' + value.focusArea + ',focusPosX:' + value.focusPosX + ',focusPosY:' + value.focusPosY + '}');
                 }
-                this.video.backURL = encodeURIComponent(backUrl);
-                document.getElementById("debug-message").innerHTML += "<br/> " + "backURL: " + decodeURIComponent(this.video.backURL);
+                this.cursor.video.backURL = encodeURIComponent(backUrl);
+                document.getElementById('debug-message').innerHTML += '<br/> ' + 'backURL: ' + decodeURIComponent(this.cursor.video.backURL);
             }
         }
     };
@@ -146,7 +155,7 @@ function TransferModule() {
             console.dir(value);
             if (value.hasOwnProperty('assetid')) {
                 this.monitor.assetid = value.assetid;
-                document.getElementById("debug-message").innerHTML += "<br/> " + "assetid: " + this.monitor.assetid;
+                document.getElementById('debug-message').innerHTML += '<br/> ' + 'assetid: ' + this.monitor.assetid;
             }
             if (value.hasOwnProperty('backURL')) {
                 backUrl = decodeURIComponent(value.backURL);
@@ -156,7 +165,7 @@ function TransferModule() {
                     backUrl += '?' + value.fileName + '=' + encodeURIComponent('{focusArea:' + value.focusArea + ',focusPos:' + value.focusPos + '}');
                 }
                 this.monitor.backURL = encodeURIComponent(backUrl);
-                document.getElementById("debug-message").innerHTML += "<br/> " + "backURL: " + decodeURIComponent(this.monitor.backURL);
+                document.getElementById('debug-message').innerHTML += '<br/> ' + 'backURL: ' + decodeURIComponent(this.monitor.backURL);
             }
         }
     };
@@ -232,15 +241,15 @@ function TransferModule() {
             _url;
 
         _url = window.location.search;
-        document.getElementById("debug-message").innerHTML += "<br/> " + "search: " + decodeURIComponent(_url);
+        document.getElementById('debug-message').innerHTML += '<br/> ' + 'search: ' + decodeURIComponent(_url);
 
-        if (_url.indexOf("?") !== -1) {
+        if (_url.indexOf('?') !== -1) {
             var _str = _url.substr(1);              // 对query参数进行分解, 去掉最开始的 ?
-            var _subStrs = _str.split("&");         // 以 & 符号作为分隔符
+            var _subStrs = _str.split('&');         // 以 & 符号作为分隔符
             for (var i = 0; i < _subStrs.length; i++) {
-                key = _subStrs[i].split("=")[0];
-                rawData = decodeURIComponent(_subStrs[i].split("=")[1]);
-                document.getElementById("debug-message").innerHTML += "<br/> " + "key: " + key + ", rowData: " + rawData;
+                key = _subStrs[i].split('=')[0];
+                rawData = decodeURIComponent(_subStrs[i].split('=')[1]);
+                document.getElementById('debug-message').innerHTML += '<br/> ' + 'key: ' + key + ', rowData: ' + rawData;
 
                 // 记录参数，以备后续跳转时使用
                 this.record.push(jsonUtils.parse('{"' + key + '":"' + rawData + '"}'));
@@ -286,11 +295,11 @@ function TransferModule() {
             key,
             params = '?';
 
-        document.getElementById("debug-message").innerHTML += "<br/>" + "====>     package ";
+        document.getElementById('debug-message').innerHTML += '<br/>' + '====>     package ';
         index = 0;
         for (var i = 0, length = this.record.length; i < length; i++) {
             for (key in this.record[i]) {
-                document.getElementById("debug-message").innerHTML += "<br/>" + "KEY: " + key + " VALUE: " + this.record[i][key];
+                document.getElementById('debug-message').innerHTML += '<br/>' + 'KEY: ' + key + ' VALUE: ' + this.record[i][key];
                 if (index++ > 0) {
                     params += '&' + key + '=' + encodeURIComponent(this.record[i][key]);
                 } else {
@@ -300,7 +309,7 @@ function TransferModule() {
         }
 
         for (key in data) {
-            document.getElementById("debug-message").innerHTML += "<br/>" + "KEY: " + key + " VALUE: " + jsonUtils.stringify(data[key]);
+            document.getElementById('debug-message').innerHTML += '<br/>' + 'KEY: ' + key + ' VALUE: ' + jsonUtils.stringify(data[key]);
             if (index++ > 0) {
                 params += '&' + key + '=' + encodeURIComponent(jsonUtils.stringify(data[key]));
             } else {
@@ -335,10 +344,10 @@ function TransferModule() {
     };
 
     this.toggle = function () {
-        if (document.getElementById("debug-message").style.display === "block") {
-            document.getElementById("debug-message").style.display = "none";
+        if (document.getElementById('debug-message').style.display === 'block') {
+            document.getElementById('debug-message').style.display = 'none';
         } else {
-            document.getElementById("debug-message").style.display = "block";
+            document.getElementById('debug-message').style.display = 'block';
         }
     };
 }
