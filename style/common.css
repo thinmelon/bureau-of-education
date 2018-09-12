@@ -1,20 +1,32 @@
-
-body {
+/* ----  背景  ---- */
+.index-bg {
     position: absolute;
     left: 0;
     top: 0;
     width: 1280px;
     height: 720px;
     margin: 0;
-    background: url(../images/bg-img.jpg) no-repeat;
+    background: url(../images/bg.png) no-repeat;
+    background-size: 100%;
+}
+
+.background {
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 1280px;
+    height: 720px;
+    margin: 0;
+    background: url(../images/bg-img.png) no-repeat;
     background-size: 100%;
 }
 
 /* ----  标题LOGO  ---- */
-.title {
-    margin: 35px 0 0 81px;
-    width: 225px;
-    height: 40px;
+.title-logo {
+    /*background: url(../images/xiuyu.png) no-repeat;*/
+    margin: 54px 0 0 276px;
+    width: 97px;
+    height: 23px;
 }
 
 /* ----  内容版块  ---- */
@@ -22,29 +34,40 @@ body {
     margin: 0 auto;
 }
 
+.button-intro {
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    width: 558px;
+    height: 42px;
+    margin: 0 70px 30px 0;
+    background: url(../images/button-intro.png) no-repeat;
+}
+
 /* ----  栏目  ---- */
 .bar {
-    background: url(../images/bar/bar-bg.png) center no-repeat;
+    /*background: url(../images/bar/bar-bg.png) center no-repeat;*/
     position: absolute;
-    top: 160px;
-    left: 99px;
-    width: 1042px;
+    top: 85px;
+    left: 56px;
+    width: 1172px;
     height: 87px;
     margin: 0 auto;
 }
 
 .bar-item-wrapper {
     position: absolute;
-    top: 0;
-    width: 192px;
-    height: 87px;
+    top: 10px;
+    /*width: 154px;*/
+    height: 72px;
 }
 
 .bar-item {
-    font: 24px "Microsoft YaHei";
+    font: 21px "Microsoft YaHei";
     text-align: center;
     line-height: 39px;
-    margin: 24px;
+    margin: 10px;
+    /*padding-top: 14px;*/
 }
 
 /* ----  菜单  ---- */
@@ -78,18 +101,23 @@ body {
     border: 3px solid white;
     width: 25px;
     height: 25px;
+    /*display: inline;*/
+}
+
+/* ----  内部栏  ---- */
+.subBar {
+    position: absolute;
+    width: 1175px;
+    height: 49px;
+    top: 164px;
+    left: 56px;
+    /*background: url(../images/party/sub-bar.png);*/
 }
 
 /* ----  公告栏  ---- */
 .notices_board {
     position: absolute;
-    background: url(../images/public/list-bg.png);
-}
-
-#notices_board_bar {
-    text-align: center;
-    color: white;
-    font-size: 20pt;
+    background: url(../images/list/bg-list-item.png);
 }
 
 .list_item {
@@ -111,12 +139,12 @@ body {
 }
 
 .list-item-more {
-    position: absolute;
+    background: url(../images/list/list-item-more.png) no-repeat;
     width: 126px;
-    height: 18px;
+    height: 24px;
+    position: absolute;
     right: 35px;
     bottom: 20px;
-    background: url(../images/public/list-item-more.png) no-repeat;
 }
 
 /* ----  按键  ---- */
@@ -126,71 +154,69 @@ body {
 }
 
 /* ----  更多内容  ---- */
-.sidebar {
-    position: absolute;
-    left: 27px;
-    top: 106px;
-    width: 233px;
-    height: 315px;
-    background-image: url(../images/more/sidebar-bg.png);
-}
-
-.sidebar-wrapper {
-    margin: 20px 0 0 40px;
-}
-
 .more-page-content {
     position: absolute;
-    left: 257px;
-    top: 106px;
-    width: 1011px;
-    height: 545px;
+    left: 57px;
+    top: 136px;
+    width: 1171px;
+    height: 515px;
     line-height: 38px;
     text-align: center;
     color: #FFF;
     font-size: 23px;
-    background-image: url(../images/more/bg_more.png);
 }
 
 .more-page-item {
     position: absolute;
-    width: 182px;
-    height: 247px;
+    width: 268px;
+    height: 202px;
     visibility: visible;
 }
 
 .more-page-item img {
-    width: 182px;
-    height: 247px;
-}
-
-.more-page-index {
-    position: absolute;
-    right: 30px;
-    top: 150px;
-    font-size: 20pt;
-    font-weight: bold;
+    width: 268px;
+    height: 202px;
 }
 
 .more-page-item-text {
     position: absolute;
     left: 0;
-    /*top: 162px;*/
-    bottom: 0;
-    width: 182px;
+    top: 162px;
+    width: 268px;
     height: 46px;
     background-image: url(../images/more/more_page_item_text.png);
     overflow: hidden;
 }
 
+.more-page-index-img {
+    position: absolute;
+    left: 518px;
+    top: 604px;
+    width: 239px;
+    height: 23px;
+    background-image: url(../images/more/more_page_index_img.png);
+}
+
+.more-page-index-text {
+    position: absolute;
+    left: 88px;
+    top: 0;
+    width: 60px;
+    height: 23px;
+    line-height: 23px;
+    color: #000;
+    font-size: 23px;
+    text-align: center;
+}
+
 /* ----  详情页 - 图文列表  ---- */
-/*.self-define-logo {*/
-/*position: absolute;*/
-/*left: 150px;*/
-/*top: 70px;*/
-/*width: 289px;*/
-/*height: 84px;*/
-/*}*/
+.self-define-logo {
+    position: absolute;
+    left: 150px;
+    top: 70px;
+    width: 289px;
+    height: 84px;
+}
 
 .textures {
     position: absolute;
@@ -268,12 +294,12 @@ body {
 /* ----  底部栏  ---- */
 #weather-forecast {
     position: absolute;
-    bottom: 0;
-    left: 0;
+    right: 0;
+    top: 0;
     /*background: url(../images/weather_forecast.png) left no-repeat;*/
     width: 400px;
     height: 16px;
-    margin: 0 0 45px 60px;
+    margin: 60px 30px 0 0;
     font: 17px "Microsoft YaHei";
     z-index: 9999;
 }
@@ -297,13 +323,24 @@ body {
 /*background: #000000;*/
 /*}*/
 
+#notification {
+    position: absolute;
+    left: 56px;
+    top: 164px;
+    width: 792px;
+    height: 32px;
+    color: #FFFFFF;
+    font-size: 17pt;
+    background-color: #888888;
+}
+
 /* ----  焦点区  ---- */
 #cursor {
     position: absolute;
     z-index: 9999;
     opacity: 1;
     margin: -3px;
-    border: 3px solid yellow;
+    border: 3px solid #E58304;
     visibility: hidden;
 }
 

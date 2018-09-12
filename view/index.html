@@ -3,31 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <link rel="stylesheet" href="../style/common.css">
-    <title>首页</title>
+    <title>教育概况</title>
 </head>
-<body>
-<div class="title">
-    <img src="../images/index/title.png">
+<body bgcolor="transparent">
+<div class="background">
+    <div id="bar" class="bar"></div>
+    <div id="menu"></div>
+    <div id="swiper" class="swiper"></div>
+    <div id="weather-forecast"></div>
+    <div id="cursor"></div>
+    <div id="debug-message"></div>
 </div>
-<div id="menu"></div>
-<div id="swiper" class="swiper"></div>
-<div id="notices_board" class="notices_board">
-    <div id="notices_board_bar"></div>
-    <div class="list-item-more"></div>
-</div>
-<div id="weather-forecast"></div>
-<div id="cursor"></div>
-<div id="debug-message"></div>
 </body>
-</html>
 <script type="application/javascript" src="../utility/assistant.js"></script>
 <script type="application/javascript" src="../utility/async.js"></script>
 <script type="application/javascript" src="../cms/cms.config.js"></script>
 <script type="application/javascript" src="../cms/cms.api.js"></script>
-<script type="application/javascript" src="../cms/common.js"></script>
-<script type="application/javascript" src="../module/menu.module.js"></script>
+<script type="application/javascript" src="../module/bar.module.js"></script>
+<script type="application/javascript" src="../wrapper/bar.wrapper.js"></script>
 <script type="application/javascript" src="../module/swiper.module.js"></script>
-<script type="application/javascript" src="../module/list.module.js"></script>
+<script type="application/javascript" src="../module/menu.module.js"></script>
+<script type="application/javascript" src="../module/video.module.js"></script>
 <script type="application/javascript" src="../module/cursor.module.js"></script>
 <script type="application/javascript" src="../module/transfer.module.js"></script>
 <script type="application/javascript" src="../module/weather.module.js"></script>
@@ -36,80 +32,31 @@
         MenuModule.call(this);
 
         this.menuPageArray = [{
-            itemsPerLine: [1, 1, 6],           // 每行所包含的元素数量
+            itemsPerLine: [2, 1],           // 每行所包含的元素数量
             menuItemArray: [
                 {
-                    left: 85,
-                    top: 140,
-                    width: 145,
-                    height: 164,
+                    left: 56,
+                    top: 164,
+                    width: 476,
+                    height: 279,
                     bgImageSrc: 'url(../images/index/1.png) no-repeat',
-                    resourceId: 0,
-                    url: 'detail.html'
+                    resourceId: cmsConfig.indexResourceIdArray[1].resourceId
                 },
                 {
-                    left: 85,
-                    top: 310,
-                    width: 145,
-                    height: 164,
+                    left: 534,
+                    top: 164,
+                    width: 327,
+                    height: 277,
                     bgImageSrc: 'url(../images/index/2.png) no-repeat',
-                    resourceId: 0,
-                    url: 'http://10.215.1.24:8080/examTv/tvPtPortal.action?method=index'
-//                    url: 'http://10.171.255.227:8080/examTv/tvFzPortal.action?method=index'
+                    resourceId: 0
                 },
                 {
-                    left: 85,
-                    top: 480,
-                    width: 145,
-                    height: 164,
+                    left: 56,
+                    top: 448,
+                    width: 805,
+                    height: 160,
                     bgImageSrc: 'url(../images/index/3.png) no-repeat',
-                    resourceId: 0,
-                    url: 'affair.html'
-                },
-                {
-                    left: 236,
-                    top: 480,
-                    width: 145,
-                    height: 164,
-                    bgImageSrc: 'url(../images/index/4.png) no-repeat',
-                    resourceId: 0,
-                    url: 'research.html'
-                },
-                {
-                    left: 387,
-                    top: 480,
-                    width: 145,
-                    height: 164,
-                    bgImageSrc: 'url(../images/index/5.png) no-repeat',
-                    resourceId: 0,
-                    url: 'project.html'
-                },
-                {
-                    left: 538,
-                    top: 480,
-                    width: 145,
-                    height: 164,
-                    bgImageSrc: 'url(../images/index/6.png) no-repeat',
-                    resourceId: 0,
-                    url: 'more.html'
-                },
-                {
-                    left: 689,
-                    top: 480,
-                    width: 145,
-                    height: 164,
-                    bgImageSrc: 'url(../images/index/7.png) no-repeat',
-                    resourceId: 0,
-                    url: 'more.html'
-                },
-                {
-                    left: 840,
-                    top: 480,
-                    width: 323,
-                    height: 164,
-                    bgImageSrc: 'url(../images/index/8.png) no-repeat',
-                    resourceId: 0,
-                    url: ''
+                    resourceId: 0
                 }
             ]
         }];
@@ -118,36 +65,21 @@
     function SwiperComponent() {
         SwiperModule.call(this);
 
-        this.swiperTop = 140;
-        this.swiperLeft = 236;
-        this.swiperWidth = 600;
-        this.swiperHeight = 335;
-        this.album = [
-            {
-                img: 'url(../images/index/9.png)'
-            }
-        ];
-    }
-
-    function ListComponent() {
-        ListModule.call(this);
-
-        // 属性
-        this.focusPos = 0;
-        this.listItemNum = 5;
+        this.swiperTop = 164;
+        this.swiperLeft = 868;
+        this.swiperWidth = 359;
+        this.swiperHeight = 446;
         this.resourceId = cmsConfig.indexResourceIdArray[3].resourceId;
-
-        // 方法
     }
 
-    function CursorComponent(menu, swiper, list) {
+    function CursorComponent(bar, swiper, menu) {
         CursorModule.call(this);
 
         // 属性
-        this.focusArea = 0;
-        this.menu = menu;
+        this.focusArea = 5;
+        this.bar = bar;
         this.swiper = swiper;
-        this.list = list;
+        this.menu = menu;
         this.fileName = 'PG-ONE';
     }
 
@@ -165,30 +97,32 @@
             this.cursor.focusOut();
             switch (this.cursor.focusArea) {
                 case 0:         // 菜单
-                    if (this.cursor.menu.moveX(direction) === -1) {
-                        if (direction > 0) {
-                            this.cursor.focusArea = 6;
-                        } else {
-                            this.cursor.focusArea = 2;
-                        }
-                    }
-                    break;
-                case 2:         // 列表
-                    if (direction > 0) {
-                        this.cursor.focusArea = 0;
-                    } else {
+//                    if (this.cursor.menu.focusPosX === 0) {
+//                        this.cursor.focusArea = 6;
+//                    } else {
+//                        this.cursor.menu.moveX(direction);
+//                    }
+                    if (-1 === this.cursor.menu.moveX(direction)) {
                         this.cursor.focusArea = 6;
                     }
+                    break;
+                case 5:         // 栏目
+                    this.remove('PG-ONE');              // 清除同一级的路径记录
+                    params =
+                        {
+                            'PG-ONE': {
+                                focusArea: this.cursor.focusArea,
+                                focusPos: this.cursor.bar.focusPos + 1
+                            }
+                        };
+                    postfix = this.package(params);
+                    this.cursor.bar.moveX(direction, postfix);
                     break;
                 case 6:         //  滚动图片
                     if (-1 === this.cursor.swiper.moveX(direction)) {
                         this.cursor.swiper.triggerTimer();
-                        if (direction > 0) {
-                            this.cursor.focusArea = 2;
-                        } else {
-                            this.cursor.focusArea = 0;
-                        }
-
+                        this.cursor.focusArea = 0;
+                        this.cursor.menu.focusPosX = 0;
                     }
                     break;
                 default:
@@ -201,12 +135,18 @@
             this.cursor.focusOut();
             switch (this.cursor.focusArea) {
                 case 0:         // 菜单
-                    this.cursor.menu.moveY(direction);
+                    if (-1 === this.cursor.menu.moveY(direction)) {
+                        this.cursor.focusArea = 5;
+                    }
                     break;
-                case 2:         // 列表
-                    this.cursor.list.moveY(direction);
+                case 5:         // 栏目
+                    this.cursor.focusArea = 0;
                     break;
                 case 6:         //  滚动图片
+                    if (-1 === this.cursor.swiper.moveY(direction)) {
+                        this.cursor.swiper.triggerTimer();
+                        this.cursor.focusArea = 5;
+                    }
                     break;
                 default:
                     break;
@@ -218,147 +158,50 @@
             this.remove(this.cursor.fileName);
             this.package([]);
 
-            var backUrl = GMObj.pathManager.getBackURL(window.location.href);
-            if ('' !== backUrl && null !== backUrl && 0 !== backUrl) {
-                window.location.href = backUrl;
+            //UI 2.0 portal
+            if ("undefined" !== typeof(GlobalVarManager)) {
+                window.location.href = GlobalVarManager.getItemStr("tvPortalUrl");
             } else {
-                //UI 2.0 portal
-                if ('undefined' !== typeof(GlobalVarManager)) {
-                    window.location.href = GlobalVarManager.getItemStr('tvPortalUrl');
-                }
+                window.location.href = 'http://10.215.0.10:80/ui3/ui3/loading.htm?opk=4';
             }
         };
 
         this.doSelect = function () {
-            this.remove(this.cursor.fileName);
+            var
+                postfix = '',
+                params;
 
+            this.remove(this.cursor.fileName);
             switch (this.cursor.focusArea) {
                 case 0:         // 菜单
-                    params = {
-                        /**
-                         * 一级页面
-                         */
-                        'PG-ONE': {
-                            focusArea: this.cursor.focusArea,
-                            focusPosX: this.cursor.menu.focusPosX,
-                            focusPosY: this.cursor.menu.focusPosY
-                        }
-                    };
-                    //  中考查询
-                    if (this.cursor.menu.focusPosX === 0 &&
-                        this.cursor.menu.focusPosY === 1
-                    ) {
-                        GlobalVarManager.setItemStr('damiPtzz', window.location.href);
-                        this.cursor.menu.doSelect('');
-                    } else {
-                        // 教育概况
-                        if (this.cursor.menu.focusPosX === 0 &&
-                            this.cursor.menu.focusPosY === 0
-                        ) {
-                            /**
-                             * 二级页面 跳转至图文页面
-                             * 传入参数
-                             */
-                            params.PG_TEXT = {
-                                id: 0,
-                                isShowGraphics: 'hide',
-                                backURL: 'index.html',
-                                logoImageSrc: '../images/index/title.png'
-                            };
-                        }
-                        //  校园风采
-                        else if (this.cursor.menu.focusPosX === 3 &&
-                            this.cursor.menu.focusPosY === 2
-                        ) {
-                            /**
-                             * 二级页面 跳转至更多页面
-                             * 传入参数
-                             */
-                            params.PG_MORE = {
-                                backURL: 'index.html',                          //  返回页面
-                                logoImageSrc: '../images/campus/title.png',     //  页面标题图片
-                                sidebarTextImages: [                            //  侧边栏文字图片
-                                    '../images/campus/1.png',
-                                    '../images/campus/2.png',
-                                    '../images/campus/3.png'
-                                ],
-                                sidebarResourceIds: [                           //  侧边栏文字对应的resourceId
-                                    0, 1, 2
-                                ],
-                                pageIndex: 1                                    //  列表顶分页索引
-                            };
-                        }
-                        //  优质课堂
-                        else if (this.cursor.menu.focusPosX === 4 &&
-                            this.cursor.menu.focusPosY === 2
-                        ) {
-                            params.PG_MORE = {
-                                backURL: 'index.html',                          //  返回页面
-                                logoImageSrc: '../images/class/title.png',     //  页面标题图片
-                                sidebarTextImages: [                            //  侧边栏文字图片
-                                    '../images/class/1.png',
-                                    '../images/class/2.png',
-                                    '../images/class/3.png',
-                                    '../images/class/4.png'
-                                ],
-                                sidebarResourceIds: [                           //  侧边栏文字对应的resourceId
-                                    0, 1, 2, 3
-                                ],
-                                pageIndex: 1
-                            };
-                        }
-                        postfix = this.package(params);
-                        this.cursor.menu.doSelect(postfix);
-                    }
-                    break;
-                case 2:         // 列表
-                    params = {
-                        'PG-ONE': {
-                            focusArea: this.cursor.focusArea,
-                            focusPos: this.cursor.list.focusPos
-                        }
-                    };
-                    if (this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].flag === 0) {
-                        params.PG_TEXT = {
-                            resourceId: this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].id,
-                            isShowGraphics: 'show',
-                            backURL: 'index.html',
-                            logoImageSrc: '../images/index/title.png'
-                        };
-                    } else {
-                        params.PG_MORE = {
-                            backURL: 'index.html',
-                            logoImageSrc: '../images/index/title.png',
-                            sidebarTextImages: [                            //  侧边栏文字图片
-                                '../images/campus/1.png',
-                                '../images/campus/2.png',
-                                '../images/campus/3.png'
-                            ],
-                            sidebarResourceIds: [                           //  侧边栏文字对应的resourceId
-                                0, 1, 2
-                            ],
-                            pageIndex: 1
-                        };
-                    }
-                    postfix = this.package(params);
-                    this.cursor.list.doSelect(postfix);
-                    break;
-                case 6:         //  滚动图片
                     params =
                         {
-                            /**
-                             * 一级页面
-                             */
                             'PG-ONE': {
                                 focusArea: this.cursor.focusArea,
-                                focusPos: this.cursor.focusPos
+                                focusPosX: this.cursor.menu.focusPosX,
+                                focusPosY: this.cursor.menu.focusPosY
                             },
                             'VIDEO': {
                                 backURL: this.backUrl(),
                                 focusArea: this.cursor.focusArea,
-                                focusPos: this.cursor.focusPos,
-//                                    resourceId: 698,
-                                assertId: 'OTHE0000000000814473'
+                                focusPosX: this.cursor.menu.focusPosX,
+                                focusPosY: this.cursor.menu.focusPosY,
+                                resourceId: cmsConfig.indexResourceIdArray[1].resourceId
+                            }
+                        };
+                    postfix = this.package(params);
+                    window.location.href = 'video.html' + postfix;
+                    break;
+                case 6:
+                    params =
+                        {
+                            'PG-ONE': {
+                                focusArea: this.cursor.focusArea
+                            },
+                            'VIDEO': {
+                                backURL: this.backUrl(),
+                                focusArea: this.cursor.focusArea,
+                                assertId: this.cursor.swiper.album[this.cursor.swiper.position].assertId
                             }
                         };
                     postfix = this.package(params);
@@ -369,14 +212,7 @@
             }
         };
 
-        this.turnPage = function (_direction) {
-            if (0 === this.cursor.menu.turnPage(_direction)) {
-                this.cursor.menu.destroy();
-                this.cursor.menu.init();
-            }
-        };
-
-        this.onKeyDown = function (event) {
+        this.grapKeyEvent = function (event) {
             var code = getKeyCode(event);
 
             switch (code) {
@@ -402,40 +238,53 @@
                 case 'KEY_BACK':
                     that.doBack();
                     return false;
-                case 'KEY_PAGE_UP':
-                    that.turnPage(-1);
-                    break;
-                case 'KEY_PAGE_DOWN':
-                    that.turnPage(1);
-                    break;
+                    /*  小视频消息处理   */
+                case 5202:										// open success
+                case 13001:
+                    document.getElementById('debug-message').innerHTML += '<br/>' + '|||||||||||||  autoPlaySmallVideo  ||||||||||||| ';
+                    videoComponent.autoPlaySmallVideo();
+                    return false;
+                case 'IPANEL_PLAY_END':
+                    document.getElementById('debug-message').innerHTML += '<br/>' + '|||||||||||||  IPANEL_PLAY_END  ||||||||||||| ';
+                    videoComponent.stop();
+                    videoComponent.init();
+                    return false;
                 default:
                     break;
             }
+        };
+
+        this.onKeyDown = function (event) {
+//            that.autoJumping();
+            that.grapKeyEvent(event);
         };
     }
 
     window.onload = function () {
         var
-            menuComponent = new MenuComponent(),
+            barComponent = new BarComponent(),
             swiperComponent = new SwiperComponent(),
-            listComponent = new ListComponent(),
-            cursorComponent = new CursorComponent(menuComponent, swiperComponent, listComponent),
+            menuComponent = new MenuComponent(),
+            cursorComponent = new CursorComponent(barComponent, swiperComponent, menuComponent),
             transferComponent = new TransferComponent(cursorComponent),
             weatherModule = new WeatherModule();
 
-        transferComponent.init();
-        menuComponent.init();
-        swiperComponent.init();
-        listComponent.init(function () {
-            cursorComponent.focusOn();
-        });
+        document.onkeydown = transferComponent.onKeyDown;       //  按键事件处理
+//        document.onkeypress = transferComponent.grapKeyEvent;
+//        document.onirkeypress = transferComponent.grapKeyEvent;
+//        document.onsystemevent = transferComponent.grapKeyEvent;
 
-        document.onkeydown = transferComponent.onKeyDown;
+        transferComponent.init();
+        barComponent.init();
+        swiperComponent.init();
+        menuComponent.init();
+        cursorComponent.focusOn();
+//        transferComponent.autoJumping();
 
         weatherModule.init(function () {
             if (weatherModule.temperature !== '') {
-                document.getElementById('weather-forecast').innerHTML += '<br/>' +
-                    '今日天气：  ' +
+                document.getElementById('weather-forecast').innerHTML =
+                    '今日天气： ' +
                     '&nbsp;&nbsp;&nbsp;' + weatherModule.weather +
                     '&nbsp;&nbsp;&nbsp;' + weatherModule.temperature +
                     '&nbsp;&nbsp;&nbsp;' + weatherModule.windScale;
@@ -443,3 +292,4 @@
         });
     };
 </script>
+</html>

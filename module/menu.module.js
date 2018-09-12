@@ -50,7 +50,6 @@ function MenuModule() {
             _num += this.itemsPerLine[i];
         }
         _num += this.focusPosX;
-        console.info('menu.module.js | focusX:' + this.focusPosX + ' focusY:' + this.focusPosY + ' num:' + _num);
 
         cursor.style.visibility = 'visible';
         cursor.style.left = this.menuItemArray[_num].left + 'px';
@@ -106,19 +105,6 @@ function MenuModule() {
     };
 
     this.doSelect = function (postfix) {
-        //console.log(this.focusPosX)
-        //console.log(this.focusPosY)
-        //console.log(this.focusPosY)
-        //console.log(this.focusPosY * this.itemsPerLine[this.focusPosY] + this.focusPosX);
-        //console.log(this.menuItemArray[this.focusPosY * this.itemsPerLine[this.focusPosY] + this.focusPosX].url + postfix);
-        var i, index = 0;
-        for (i = 0; i < this.focusPosY; i++) {
-            index += this.itemsPerLine[i];
-        }
-        index += this.focusPosX;
-        console.log(index);
-        console.log(this.menuItemArray[index].url);
-        window.location.href =
-            this.menuItemArray[index].url + postfix;
+        window.location.href = 'more.html' + postfix;
     };
 }
