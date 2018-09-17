@@ -157,13 +157,7 @@
         this.doBack = function () {
             this.remove(this.cursor.fileName);
             this.package([]);
-
-            //UI 2.0 portal
-            if ("undefined" !== typeof(GlobalVarManager)) {
-                window.location.href = GlobalVarManager.getItemStr("tvPortalUrl");
-            } else {
-                window.location.href = 'http://10.215.0.10:80/ui3/ui3/loading.htm?opk=4';
-            }
+            window.location.href = 'http://10.215.0.10:80/ui3/ui3/loading.htm?opk=4';
         };
 
         this.doSelect = function () {
@@ -212,7 +206,7 @@
             }
         };
 
-        this.grapKeyEvent = function (event) {
+        this.onKeyDown = function (event) {
             var code = getKeyCode(event);
 
             switch (code) {
@@ -238,25 +232,9 @@
                 case 'KEY_BACK':
                     that.doBack();
                     return false;
-                    /*  小视频消息处理   */
-                case 5202:										// open success
-                case 13001:
-                    document.getElementById('debug-message').innerHTML += '<br/>' + '|||||||||||||  autoPlaySmallVideo  ||||||||||||| ';
-                    videoComponent.autoPlaySmallVideo();
-                    return false;
-                case 'IPANEL_PLAY_END':
-                    document.getElementById('debug-message').innerHTML += '<br/>' + '|||||||||||||  IPANEL_PLAY_END  ||||||||||||| ';
-                    videoComponent.stop();
-                    videoComponent.init();
-                    return false;
                 default:
                     break;
             }
-        };
-
-        this.onKeyDown = function (event) {
-//            that.autoJumping();
-            that.grapKeyEvent(event);
         };
     }
 
