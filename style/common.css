@@ -157,7 +157,7 @@
 .more-page-content {
     position: absolute;
     left: 57px;
-    top: 136px;
+    top: 168px;
     width: 1165px;
     height: 488px;
     line-height: 38px;
@@ -184,7 +184,7 @@
     left: 0;
     top: 62px;
     width: 370px;
-    height: 44px;
+    height: 42px;
     padding: 0 10px;
     /*background-image: url(../images/more/more_page_item_text.png);*/
     overflow: hidden;

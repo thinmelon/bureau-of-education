@@ -60,7 +60,7 @@ function BarComponent() {
             title: '新时代新征程',
             resourceId: 0,
             url: 'time.html',
-            left: 973,
+            left: 969,
             width: 197,
             height: 54,
             bgImageSrc: 'url(../images/bar/7.png) center no-repeat'

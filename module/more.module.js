@@ -7,14 +7,14 @@ function MoreModule() {
     this.columnsPerPage = 0;
     this.maxItemsPerPage = 30;
     this.maxColumnsPerPage = 3;
-    this.maxItemsPerColumn = 10;
+    this.maxItemsPerColumn = 9;
     this.focusPosX = 0;             //  默认定位在第一行第一项
     this.focusPosY = 0;
     this.pageIndex = 1;             //  当面页号
     this.totalPages = 1;            //  总页数
-    this.columnPadding = 390;
+    this.columnPadding = 395;
     this.itemWidth = 370;
-    this.itemHeight = 44;
+    this.itemHeight = 46;
     this.marqueeNumber = 15;
 
     this.moreItemArray = [];
@@ -61,7 +61,7 @@ function MoreModule() {
                 {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21},
                 {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21},
                 {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21},
-                {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21},
+                {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21}
                 // {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21},
                 // {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21},
                 // {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21},
@@ -201,20 +201,19 @@ function MoreModule() {
         } else {
             this.focusPosY = this.columnsPerPage - 1;
         }
-        console.info('more.module.js    ==>     moveX | X: ' + this.focusPosX + ' Y: ' + this.focusPosY);
     };
 
     this.moveY = function (_direction) {
         this.focusPosX += _direction;
         if (this.focusPosX >= 0 && this.focusPosX < this.moreItemArray[this.focusPosY].length) {
-
+            return 0;
         } else if (this.focusPosX < 0) {
             this.focusPosX = 0;
+            return -1;
         } else {
             this.focusPosX = this.moreItemArray[this.focusPosY].length - 1;
+            return -1;
         }
-
-        console.info('more.module.js    ==>     moveY | X: ' + this.focusPosX + ' Y: ' + this.focusPosY);
     };
 
     this.changePage = function (direction, callback) {

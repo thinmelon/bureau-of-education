@@ -44,7 +44,7 @@ function BarModule() {
         cursor.style.visibility = 'hidden';
     };
 
-    this.moveX = function (direction, postfix) {
+    this.moveX = function (direction, manual) {
         this.focusPos += direction;
         if (this.focusPos >= 0 && this.focusPos < this.barItemArray.length) {
 
@@ -53,13 +53,11 @@ function BarModule() {
         } else {
             this.focusPos = 0;
         }
-        // console.log(this.barItemArray[this.focusPos].url);
-        // console.log(postfix);
-        //document.getElementById('debug-message').innerHTML += '<br/>' + ' moveX: focusPos ==> ' + this.focusPos;
-        //if (this.focusPos === 6 || this.focusPos === 7) {
-        //    GMObj.pathManager.setBackURL(this.barItemArray[this.focusPos].url, 'http://10.184.255.11/fumei-xiuyu/view/topic.html' + postfix, postfix);
-        //}
-        window.location.href = this.barItemArray[this.focusPos].url;
+        if (manual) {
+
+        } else {
+            window.location.href = this.barItemArray[this.focusPos].url;
+        }
     };
 
     this.moveY = function (direction) {
@@ -67,6 +65,6 @@ function BarModule() {
     };
 
     this.doSelect = function (postfix) {
-        window.location.href = 'more.html' + postfix;
+        window.location.href = this.barItemArray[this.focusPos].url;
     };
 }
