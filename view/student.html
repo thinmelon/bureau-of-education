@@ -41,7 +41,7 @@
                     width: 524,
                     height: 445,
                     bgImageSrc: 'url(../images/student/1.png) no-repeat',
-                    resourceId: 0
+                    resourceId: cmsConfig.studentResourceIdArray[1].resourceId
                 }
             ]
         }];
@@ -67,7 +67,7 @@
         this.itemMoreWidth = 142;
         this.itemMoreHeight = 34;
         this.listItemNum = 8;
-        this.resourceId = cmsConfig.newsResourceIdArray[1].resourceId;
+        this.resourceId = cmsConfig.studentResourceIdArray[2].resourceId;
 
         // 方法
     }
@@ -165,7 +165,7 @@
                         window.location.href = 'video.html' + postfix;
                     } else {
                         params.PG_MORE = {
-                            resourceId: cmsConfig.newsResourceIdArray[1].resourceId,
+                            resourceId: cmsConfig.studentResourceIdArray[2].resourceId,
                             resourceType: 'video',
                             backURL: 'student.html',
                             logoImageSrc: '',

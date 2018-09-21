@@ -27,17 +27,17 @@ function SwiperModule() {
             this.album = [
                 {
                     img: 'url(../images/index/4.png)',
-                    resourceId: cmsConfig.indexResourceIdArray[4].resourceId,
+                    resourceId: cmsConfig.indexResourceIdArray[0].resourceId,
                     assertId: 111
                 },
                 {
                     img: 'url(../images/index/4.png)',
-                    resourceId: cmsConfig.indexResourceIdArray[5].resourceId,
+                    resourceId: cmsConfig.indexResourceIdArray[1].resourceId,
                     assertId: 111
                 },
                 {
                     img: 'url(../images/index/4.png)',
-                    resourceId: cmsConfig.indexResourceIdArray[6].resourceId
+                    resourceId: cmsConfig.indexResourceIdArray[2].resourceId
                 }
                 // {
                 //     img: 'url(../images/index/6.jpg)',
