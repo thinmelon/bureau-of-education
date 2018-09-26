@@ -6,7 +6,7 @@
     <title>教育概况</title>
 </head>
 <body bgcolor="transparent">
-<div class="background">
+<div class="index-bg">
     <div id="bar" class="bar"></div>
     <div id="menu"></div>
     <div id="swiper" class="swiper"></div>
@@ -32,19 +32,19 @@
         MenuModule.call(this);
 
         this.menuPageArray = [{
-            itemsPerLine: [2, 1],           // 每行所包含的元素数量
+            itemsPerLine: [1, 1],           // 每行所包含的元素数量
             menuItemArray: [
-                {
-                    left: 56,
-                    top: 164,
-                    width: 476,
-                    height: 279,
-                    bgImageSrc: 'url(../images/index/1.png) no-repeat',
-                    resourceId: cmsConfig.indexResourceIdArray[1].resourceId
-                },
+//                {
+//                    left: 56,
+//                    top: 164,
+//                    width: 476,
+//                    height: 279,
+//                    bgImageSrc: 'url(../images/index/1.png) no-repeat',
+//                    resourceId: cmsConfig.indexResourceIdArray[1].resourceId
+//                },
                 {
                     left: 534,
-                    top: 164,
+                    top: 172,
                     width: 327,
                     height: 277,
                     bgImageSrc: 'url(../images/index/2.png) no-repeat',
@@ -52,7 +52,7 @@
                 },
                 {
                     left: 56,
-                    top: 448,
+                    top: 454,
                     width: 805,
                     height: 160,
                     bgImageSrc: 'url(../images/index/3.png) no-repeat',
@@ -65,14 +65,14 @@
     function SwiperComponent() {
         SwiperModule.call(this);
 
-        this.swiperTop = 164;
+        this.swiperTop = 172;
         this.swiperLeft = 868;
         this.swiperWidth = 359;
         this.swiperHeight = 446;
         this.resourceId = cmsConfig.indexResourceIdArray[4].resourceId;
     }
 
-    function CursorComponent(bar, swiper, menu) {
+    function CursorComponent(bar, swiper, menu, video) {
         CursorModule.call(this);
 
         // 属性
@@ -80,7 +80,16 @@
         this.bar = bar;
         this.swiper = swiper;
         this.menu = menu;
+        this.video = video;
         this.fileName = 'PG-ONE';
+    }
+
+    function VideoComponent() {
+        VideoModule.call(this);
+
+        this.smallScreenPlay = true;
+//        this.resourceId = cmsConfig.indexResourceIdArray[1].resourceId;
+        this.assertId = 'FFMZ0000000000040026';
     }
 
     function TransferComponent(cursor) {
@@ -97,13 +106,10 @@
             this.cursor.focusOut();
             switch (this.cursor.focusArea) {
                 case 0:         // 菜单
-//                    if (this.cursor.menu.focusPosX === 0) {
-//                        this.cursor.focusArea = 6;
-//                    } else {
-//                        this.cursor.menu.moveX(direction);
-//                    }
-                    if (-1 === this.cursor.menu.moveX(direction)) {
-                        this.cursor.focusArea = 6;
+                    if (this.cursor.menu.focusPosY === 0 && direction < 0) {
+                        this.cursor.focusArea = 7;              //  小视频
+                    } else {
+                        this.cursor.focusArea = 6;              //  滚动图片
                     }
                     break;
                 case 5:         // 栏目
@@ -111,10 +117,18 @@
                     this.cursor.bar.moveX(direction);
                     break;
                 case 6:         //  滚动图片
-                    if (-1 === this.cursor.swiper.moveX(direction)) {
+                    if (-1 === this.cursor.swiper.moveX(direction) && direction < 0) {
                         this.cursor.swiper.triggerTimer();
                         this.cursor.focusArea = 0;
                         this.cursor.menu.focusPosX = 0;
+                        this.cursor.menu.focusPosY = 0;
+                    }
+                    break;
+                case 7:
+                    if (direction > 0) {
+                        this.cursor.focusArea = 0;
+                        this.cursor.menu.focusPosX = 0;
+                        this.cursor.menu.focusPosY = 0;
                     }
                     break;
                 default:
@@ -132,12 +146,21 @@
                     }
                     break;
                 case 5:         // 栏目
-                    this.cursor.focusArea = 0;
+                    this.cursor.focusArea = 7;
                     break;
                 case 6:         //  滚动图片
                     if (-1 === this.cursor.swiper.moveY(direction)) {
                         this.cursor.swiper.triggerTimer();
                         this.cursor.focusArea = 5;
+                    }
+                    break;
+                case 7:
+                    if (direction < 0) {
+                        this.cursor.focusArea = 5;
+                    } else {
+                        this.cursor.focusArea = 0;
+                        this.cursor.menu.focusPosX = 0;
+                        this.cursor.menu.focusPosY = 1;
                     }
                     break;
                 default:
@@ -193,6 +216,21 @@
                     postfix = this.package(params);
                     window.location.href = 'video.html' + postfix;
                     break;
+                case 7:
+                    params =
+                        {
+                            'PG-ONE': {
+                                focusArea: this.cursor.focusArea
+                            },
+                            'VIDEO': {
+                                backURL: this.backUrl(),
+                                focusArea: this.cursor.focusArea,
+                                resourceId: cmsConfig.indexResourceIdArray[1].resourceId
+                            }
+                        };
+                    postfix = this.package(params);
+                    window.location.href = 'video.html' + postfix;
+                    break;
                 default:
                     break;
             }
@@ -225,32 +263,73 @@
                     that.doBack();
                     return false;
                 default:
+                    that.videoPlayHandler(event);
                     break;
             }
         };
+
+        this.videoPlayHandler = function (event) {
+            var code = getKeyCode(event);
+
+            switch (code) {
+                    /*  开机认证的消息处理   */
+                case 22201:
+                    document.getElementById('debug-message').innerHTML += '<br/>' + '+++++++++++++ 认证成功  +++++++++++++';
+                    videoComponent.stop();
+                    videoComponent.init();
+                    return false;
+                case 22202:
+                    document.getElementById('debug-message').innerHTML += '<br/>' + '+++++++++++++ 认证失败  +++++++++++++';
+                    return false;
+                    /*  小视频消息处理   */
+                case 5202:										// open success
+                case 13001:
+                    document.getElementById('debug-message').innerHTML += '<br/>' + '|||||||||||||  autoPlaySmallVideo  ||||||||||||| ';
+                    videoComponent.autoPlaySmallVideo();
+                    return false;
+                case 'IPANEL_PLAY_END':
+                    document.getElementById('debug-message').innerHTML += '<br/>' + '|||||||||||||  IPANEL_PLAY_END  ||||||||||||| ';
+                    videoComponent.stop();
+                    videoComponent.init();
+                    return false;
+                default:
+                    break;
+            }
+        }
     }
+
+    var videoComponent = new VideoComponent();                  //  视频播放模块
 
     window.onload = function () {
         var
             barComponent = new BarComponent(),
             swiperComponent = new SwiperComponent(),
             menuComponent = new MenuComponent(),
-            cursorComponent = new CursorComponent(barComponent, swiperComponent, menuComponent),
+            cursorComponent = new CursorComponent(barComponent, swiperComponent, menuComponent, videoComponent),
             transferComponent = new TransferComponent(cursorComponent),
             weatherModule = new WeatherModule();
 
-        document.onkeydown = transferComponent.onKeyDown;       //  按键事件处理
-//        document.onkeypress = transferComponent.grapKeyEvent;
-//        document.onirkeypress = transferComponent.grapKeyEvent;
-//        document.onsystemevent = transferComponent.grapKeyEvent;
-
+        /**
+         *  添加按键事件处理
+         */
+        document.onkeydown = transferComponent.onKeyDown;           //  按键事件处理
+        document.onkeypress = transferComponent.videoPlayHandler;
+        document.onirkeypress = transferComponent.videoPlayHandler;
+        document.onsystemevent = transferComponent.videoPlayHandler;
+        /**
+         *  如果未自动播放，再次检查授权
+         */
+        setTimeout(function () {
+            videoComponent.checkOnceAgain();
+        }, 5000);
+        /**
+         *  初始化各模块
+         */
         transferComponent.init();
         barComponent.init();
         swiperComponent.init();
         menuComponent.init();
-        cursorComponent.focusOn();
-//        transferComponent.autoJumping();
-
+        videoComponent.init();
         weatherModule.init(function () {
             if (weatherModule.temperature !== '') {
                 document.getElementById('weather-forecast').innerHTML =
@@ -260,6 +339,14 @@
                     '&nbsp;&nbsp;&nbsp;' + weatherModule.windScale;
             }
         });
+        /**
+         *  光标定位
+         */
+        cursorComponent.focusOn();
+    };
+
+    window.onunload = function () {
+        videoComponent.stop();
     };
 </script>
 </html>

@@ -3,17 +3,13 @@
  */
 
 var cmsConfig = {
-    //serverUrl : "http://localhost:8080/manage/web/",
-    //imgUrl : "http://localhost:8080/manage/",
-    //serverUrl : "http://192.168.55.10:8080/manage/web/",		//  给电脑用的
-    //imgUrl : "http://192.168.55.10:8080/manage/",
-    serverUrl: 'http://10.184.255.10:8080/manage/web/',		    //  给机顶盒用的
+    serverUrl: 'http://10.184.255.10:8080/manage/web/',		            //  机顶盒
     imgUrl: 'http://10.184.255.10:8080/manage/',
     backUrl: '',
     index_back_url: '',
-    // environment: 'DEBUG',
-    environment: 'PRODUCT',
-    //
+    environment: 'DEBUG',
+    // environment: 'PRODUCT',
+
     /**
      * 教育概况
      */

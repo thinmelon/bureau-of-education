@@ -7,13 +7,14 @@ function VideoModule() {
 
     // 属性
     this.smallScreenPlay = false;                  //  对于 video.html 默认为全屏播放
+    this.isAutoPlaying = false;                    //  针对小视频，是否正在播放
     this.resourceId = '';
     this.assertId = '';
     this.backURL = '';
-    this.smallScreenLeft = 56;
-    this.smallScreenTop = 164;
-    this.smallScreenWidth = 792;
-    this.smallScreenHeight = 446;
+    this.smallScreenLeft = 54;
+    this.smallScreenTop = 168;
+    this.smallScreenWidth = 478;
+    this.smallScreenHeight = 281;
     this.mediaPlayer = null;
 
     if (cmsConfig.environment === 'DEBUG') {
@@ -153,10 +154,49 @@ function VideoModule() {
     };
 
     this.autoPlaySmallVideo = function () {
+        this.isAutoPlaying = true;
         cmsApi.playSmallScreenVideo(this.mediaPlayer);
     };
 
     this.stop = function () {
         cmsApi.stopSmallScreenVideo(this.mediaPlayer);
     };
+
+    this.checkOnceAgain = function () {
+        var that = this;
+
+        if (!this.isAutoPlaying) {
+            document.getElementById('debug-message').innerHTML += '<br/>' + '===>   checkOnceAgain';
+
+            cmsApi.checkAuthentication(this.ip, this.port, this.client, function (rawData) {
+                var
+                    authentication = parseDom(rawData);
+
+                if ('NavServerResponse' in authentication) {
+                    var message = authentication.NavServerResponse[0].message;
+                    var code = authentication.NavServerResponse[0].code;
+
+                    document.getElementById('debug-message').innerHTML += '<br/>' + 'checkOnceAgain ===> message' + message;
+                    document.getElementById('debug-message').innerHTML += '<br/>' + 'checkOnceAgain ===> code' + code;
+                }
+
+                if ('NavCheckResult' in authentication) {
+                    var account = authentication.NavCheckResult[0].account;
+                    document.getElementById('debug-message').innerHTML += '<br/>' + 'checkOnceAgain ===> account:' + account;
+
+                    GlobalVarManager.setItemStr("account", account);
+                    var vodAjaxInfo = that.ip + "&" + that.port + "&" + account;
+                    var vodAjaxInfoObj = '{"vodAjaxInfo":"' + vodAjaxInfo + '"}';
+                    setDataAccessProperty("info", "vodAjaxInfo", vodAjaxInfoObj, true);
+
+                    var frequency = authentication.NavCheckResult[0].ZoneFreqInfo[0].frequency;
+                    document.getElementById('debug-message').innerHTML += '<br/>' + 'checkOnceAgain ===> frequency:' + frequency;
+                    if (typeof frequency !== "undefined" && frequency !== "undefined" && frequency !== "") {
+                        GlobalVarManager.setItemStr("frequency", frequency);
+                        VOD.searchParams("IPQAMPointList=" + frequency + ",0;END");
+                    }
+                }
+            });
+        }
+    }
 }
