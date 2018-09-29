@@ -7,8 +7,8 @@ var cmsConfig = {
     imgUrl: 'http://10.184.255.10:8080/manage/',
     backUrl: '',
     index_back_url: '',
-    environment: 'DEBUG',
-    // environment: 'PRODUCT',
+    // environment: 'DEBUG',
+    environment: 'PRODUCT',
 
     /**
      * 教育概况
@@ -22,7 +22,9 @@ var cmsConfig = {
         {title: '左上海报', resourceId: '890'},
         {title: '中间海报', resourceId: '891'},
         {title: '左下海报', resourceId: '892'},
-        {title: '右侧海报', resourceId: '893'}
+
+        // ---------------  列表  ---------------  //
+        {title: '右侧列表', resourceId: '893'}
     ],
 
     /**

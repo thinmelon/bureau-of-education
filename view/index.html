@@ -9,8 +9,12 @@
 <div class="index-bg">
     <div id="bar" class="bar"></div>
     <div id="menu"></div>
-    <div id="swiper" class="swiper"></div>
+    <div id="notices_board" class="notices_board">
+        <div id="notices_board_bar"></div>
+        <div class="list-item-more"></div>
+    </div>
     <div id="weather-forecast"></div>
+    <div class="qrcode"></div>
     <div id="cursor"></div>
     <div id="debug-message"></div>
 </div>
@@ -21,8 +25,8 @@
 <script type="application/javascript" src="../cms/cms.api.js"></script>
 <script type="application/javascript" src="../module/bar.module.js"></script>
 <script type="application/javascript" src="../wrapper/bar.wrapper.js"></script>
-<script type="application/javascript" src="../module/swiper.module.js"></script>
 <script type="application/javascript" src="../module/menu.module.js"></script>
+<script type="application/javascript" src="../module/list.module.js"></script>
 <script type="application/javascript" src="../module/video.module.js"></script>
 <script type="application/javascript" src="../module/cursor.module.js"></script>
 <script type="application/javascript" src="../module/transfer.module.js"></script>
@@ -51,9 +55,9 @@
                     resourceId: cmsConfig.indexResourceIdArray[2].resourceId
                 },
                 {
-                    left: 56,
+                    left: 218,
                     top: 454,
-                    width: 805,
+                    width: 642,
                     height: 160,
                     bgImageSrc: 'url(../images/index/3.png) no-repeat',
                     resourceId: cmsConfig.indexResourceIdArray[3].resourceId
@@ -62,23 +66,38 @@
         }];
     }
 
-    function SwiperComponent() {
-        SwiperModule.call(this);
+    function ListComponent() {
+        ListModule.call(this);
 
-        this.swiperTop = 172;
-        this.swiperLeft = 868;
-        this.swiperWidth = 359;
-        this.swiperHeight = 446;
+        // 属性
+        this.focusPos = 0;
+        this.boardLeft = 865;
+        this.boardTop = 172;
+        this.boardWidth = 380;
+        this.boardHeight = 445;
+        this.noticesBoardBarWidth = 380;
+        this.noticesBoardBarHeight = 47;
+        this.itemLeft = 870;
+        this.itemTop = 222;
+        this.itemWidth = 370;
+        this.itemHeight = 32;
+        this.itemMoreLeft = 1068;
+        this.itemMoreTop = 565;
+        this.itemMoreWidth = 142;
+        this.itemMoreHeight = 34;
+        this.listItemNum = 8;
         this.resourceId = cmsConfig.indexResourceIdArray[4].resourceId;
+
+        // 方法
     }
 
-    function CursorComponent(bar, swiper, menu, video) {
+    function CursorComponent(bar, list, menu, video) {
         CursorModule.call(this);
 
         // 属性
         this.focusArea = 5;
         this.bar = bar;
-        this.swiper = swiper;
+        this.list = list;
         this.menu = menu;
         this.video = video;
         this.fileName = 'PG-ONE';
@@ -109,16 +128,15 @@
                     if (this.cursor.menu.focusPosY === 0 && direction < 0) {
                         this.cursor.focusArea = 7;              //  小视频
                     } else {
-                        this.cursor.focusArea = 6;              //  滚动图片
+                        this.cursor.focusArea = 2;              //  列表
                     }
                     break;
                 case 5:         // 栏目
                     this.remove('PG-ONE');              // 清除同一级的路径记录
                     this.cursor.bar.moveX(direction);
                     break;
-                case 6:         //  滚动图片
-                    if (-1 === this.cursor.swiper.moveX(direction) && direction < 0) {
-                        this.cursor.swiper.triggerTimer();
+                case 2:         //  列表
+                    if (direction < 0) {
                         this.cursor.focusArea = 0;
                         this.cursor.menu.focusPosX = 0;
                         this.cursor.menu.focusPosY = 0;
@@ -148,9 +166,8 @@
                 case 5:         // 栏目
                     this.cursor.focusArea = 7;
                     break;
-                case 6:         //  滚动图片
-                    if (-1 === this.cursor.swiper.moveY(direction)) {
-                        this.cursor.swiper.triggerTimer();
+                case 2:         //  滚动图片
+                    if (-1 === this.cursor.list.moveY(direction)) {
                         this.cursor.focusArea = 5;
                     }
                     break;
@@ -201,20 +218,34 @@
                     postfix = this.package(params);
                     window.location.href = 'video.html' + postfix;
                     break;
-                case 6:
-                    params =
-                        {
-                            'PG-ONE': {
-                                focusArea: this.cursor.focusArea
-                            },
-                            'VIDEO': {
-                                backURL: this.backUrl(),
-                                focusArea: this.cursor.focusArea,
-                                assertId: this.cursor.swiper.album[this.cursor.swiper.position].assertId
-                            }
+                case 2:         // 列表
+                    params = {
+                        'PG-ONE': {
+                            focusArea: this.cursor.focusArea,
+                            focusPos: this.cursor.list.focusPos
+                        }
+                    };
+                    if (this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].flag === 0) {
+                        params.VIDEO = {
+                            backURL: this.backUrl(),
+                            fileName: this.cursor.fileName,
+                            focusArea: this.cursor.focusArea,
+                            focusPos: this.cursor.list.focusPos,
+                            assertId: this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].assetID
                         };
-                    postfix = this.package(params);
-                    window.location.href = 'video.html' + postfix;
+                        postfix = this.package(params);
+                        window.location.href = 'video.html' + postfix;
+                    } else {
+                        params.PG_MORE = {
+                            resourceId: cmsConfig.studentResourceIdArray[2].resourceId,
+                            resourceType: 'video',
+                            backURL: 'index.html',
+                            logoImageSrc: '',
+                            pageIndex: 1
+                        };
+                        postfix = this.package(params);
+                        window.location.href = 'more.html' + postfix;
+                    }
                     break;
                 case 7:
                     params =
@@ -303,9 +334,9 @@
     window.onload = function () {
         var
             barComponent = new BarComponent(),
-            swiperComponent = new SwiperComponent(),
+            listComponent = new ListComponent(),
             menuComponent = new MenuComponent(),
-            cursorComponent = new CursorComponent(barComponent, swiperComponent, menuComponent, videoComponent),
+            cursorComponent = new CursorComponent(barComponent, listComponent, menuComponent, videoComponent),
             transferComponent = new TransferComponent(cursorComponent),
             weatherModule = new WeatherModule();
 
@@ -327,7 +358,6 @@
          */
         transferComponent.init();
         barComponent.init();
-        swiperComponent.init();
         menuComponent.init();
         videoComponent.init();
         weatherModule.init(function () {
@@ -342,7 +372,9 @@
         /**
          *  光标定位
          */
-        cursorComponent.focusOn();
+        listComponent.init(function () {
+            cursorComponent.focusOn();
+        });
     };
 
     window.onunload = function () {
