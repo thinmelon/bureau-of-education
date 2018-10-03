@@ -10,6 +10,7 @@ function CursorModule() {
      *      bar     -   5
      *      swiper  -   6
      *      video   -   7
+     *      sidebar -   8
      */
     this.focusArea = 0;
     this.bar = null;            //  菜单栏
@@ -21,6 +22,7 @@ function CursorModule() {
     this.more = null;           //  列表页
     this.monitor = null;        //  视频监控
     this.video = null;          //  小窗口视频
+    this.sidebar = null;        //  侧边栏
 
     /**
      *  聚焦
@@ -51,6 +53,9 @@ function CursorModule() {
                 break;
             case 7:
                 this.video.focusOn(cursor);
+                break;
+            case 8:
+                this.sidebar.focusOn(cursor);
                 break;
             default:
                 break;
@@ -87,6 +92,9 @@ function CursorModule() {
                 break;
             case 7:
                 this.video.focusOut(cursor);
+                break;
+            case 8:
+                this.sidebar.focusOut(cursor);
                 break;
             default:
                 break;

@@ -120,6 +120,9 @@ function VideoModule() {
                                         stream.StartResponse[0].rtsp.split(';'),
                                         that.mediaPlayer
                                     );
+                                    setTimeout(function () {
+                                        that.checkOnceAgain();
+                                    }, 5000);
                                 } else {
                                     //
                                     // 跳转至视频播放链接（全屏）
@@ -165,9 +168,8 @@ function VideoModule() {
     this.checkOnceAgain = function () {
         var that = this;
 
+        document.getElementById('debug-message').innerHTML += '<br/>' + '===>   checkOnceAgain | isAutoPlaying  ===> ' + this.isAutoPlaying;
         if (!this.isAutoPlaying) {
-            document.getElementById('debug-message').innerHTML += '<br/>' + '===>   checkOnceAgain';
-
             cmsApi.checkAuthentication(this.ip, this.port, this.client, function (rawData) {
                 var
                     authentication = parseDom(rawData);

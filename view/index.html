@@ -347,12 +347,7 @@
         document.onkeypress = transferComponent.videoPlayHandler;
         document.onirkeypress = transferComponent.videoPlayHandler;
         document.onsystemevent = transferComponent.videoPlayHandler;
-        /**
-         *  如果未自动播放，再次检查授权
-         */
-        setTimeout(function () {
-            videoComponent.checkOnceAgain();
-        }, 5000);
+        document.getElementById('debug-message').innerHTML += '<br/>' + '======================  启动初始化  ======================';
         /**
          *  初始化各模块
          */

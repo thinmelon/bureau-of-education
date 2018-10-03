@@ -184,7 +184,24 @@
                         _num += this.cursor.menu.itemsPerLine[i];
                     }
                     _num += this.cursor.menu.focusPosX;
-                    window.location.href = this.cursor.menu.menuItemArray[_num].url;
+
+                    params = {
+                        'PG-ONE': {
+                            focusArea: this.cursor.focusArea,
+                            focusPosX: this.cursor.menu.focusPosX,
+                            focusPosY: this.cursor.menu.focusPosY
+                        },
+                        'PG_MORE': {
+                            resourceId: 0,
+                            resourceType: 'video',
+                            backURL: 'class.html',
+                            logoImageSrc: '',
+                            pageIndex: 1
+                        }
+                    };
+                    postfix = this.package(params);
+                    window.location.href = 'sidebar.html' + postfix;
+//                    window.location.href = this.cursor.menu.menuItemArray[_num].url;
                     break;
                 default:
                     break;
