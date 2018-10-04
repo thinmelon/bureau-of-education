@@ -7,7 +7,7 @@ var cmsConfig = {
     imgUrl: 'http://10.184.255.10:8080/manage/',
     backUrl: '',
     index_back_url: '',
-    // environment: 'DEBUG',
+    //environment: 'DEBUG',
     environment: 'PRODUCT',
 
     /**
@@ -75,7 +75,8 @@ var cmsConfig = {
     classResourceIdArray: [
         {title: '名师课堂', resourceId: '896'},
         // ---------------  菜单  ---------------  //
-        {title: '教育讲坛', resourceId: '914'},
+        //{title: '教育讲坛', resourceId: '914'},
+        {title: '教育讲坛', resourceId: '769'},
         {title: '一师一优课', resourceId: '915'},
         {title: '教研', resourceId: '916'},
         {title: '培训', resourceId: '917'},

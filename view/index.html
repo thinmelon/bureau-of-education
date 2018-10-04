@@ -13,7 +13,6 @@
         <div id="notices_board_bar"></div>
         <div class="list-item-more"></div>
     </div>
-    <div id="weather-forecast"></div>
     <div class="qrcode"></div>
     <div id="cursor"></div>
     <div id="debug-message"></div>
@@ -30,7 +29,6 @@
 <script type="application/javascript" src="../module/video.module.js"></script>
 <script type="application/javascript" src="../module/cursor.module.js"></script>
 <script type="application/javascript" src="../module/transfer.module.js"></script>
-<script type="application/javascript" src="../module/weather.module.js"></script>
 <script type="application/javascript">
     function MenuComponent() {
         MenuModule.call(this);
@@ -51,7 +49,7 @@
                     top: 172,
                     width: 327,
                     height: 277,
-                    bgImageSrc: 'url(../images/index/2.png) no-repeat',
+                    bgImageSrc: 'url(../images/index/2.jpg) no-repeat',
                     resourceId: cmsConfig.indexResourceIdArray[2].resourceId
                 },
                 {
@@ -59,7 +57,7 @@
                     top: 454,
                     width: 642,
                     height: 160,
-                    bgImageSrc: 'url(../images/index/3.png) no-repeat',
+                    bgImageSrc: 'url(../images/index/3.jpg) no-repeat',
                     resourceId: cmsConfig.indexResourceIdArray[3].resourceId
                 }
             ]
@@ -337,8 +335,8 @@
             listComponent = new ListComponent(),
             menuComponent = new MenuComponent(),
             cursorComponent = new CursorComponent(barComponent, listComponent, menuComponent, videoComponent),
-            transferComponent = new TransferComponent(cursorComponent),
-            weatherModule = new WeatherModule();
+            transferComponent = new TransferComponent(cursorComponent);
+//            weatherModule = new WeatherModule();
 
         /**
          *  添加按键事件处理
@@ -355,15 +353,15 @@
         barComponent.init();
         menuComponent.init();
         videoComponent.init();
-        weatherModule.init(function () {
-            if (weatherModule.temperature !== '') {
-                document.getElementById('weather-forecast').innerHTML =
-                    '今日天气： ' +
-                    '&nbsp;&nbsp;&nbsp;' + weatherModule.weather +
-                    '&nbsp;&nbsp;&nbsp;' + weatherModule.temperature +
-                    '&nbsp;&nbsp;&nbsp;' + weatherModule.windScale;
-            }
-        });
+//        weatherModule.init(function () {
+//            if (weatherModule.temperature !== '') {
+//                document.getElementById('weather-forecast').innerHTML =
+//                    '今日天气： ' +
+//                    '&nbsp;&nbsp;&nbsp;' + weatherModule.weather +
+//                    '&nbsp;&nbsp;&nbsp;' + weatherModule.temperature +
+//                    '&nbsp;&nbsp;&nbsp;' + weatherModule.windScale;
+//            }
+//        });
         /**
          *  光标定位
          */

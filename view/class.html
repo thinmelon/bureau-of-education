@@ -33,6 +33,7 @@
             itemsPerLine: [2, 1, 1, 1],           // 每行所包含的元素数量
             menuItemArray: [
                 {
+                    name: '教育讲坛',
                     left: 56,
                     top: 164,
                     width: 136,
@@ -42,15 +43,17 @@
                     url: 'http://10.184.255.11//portal2/tm.htm?from=5&resourceId=149&backUrl=ptzz.html%3Farea%3D0%26m_pos%3D0'
                 },
                 {
+                    name: '海报',
                     left: 198,
                     top: 164,
                     width: 654,
                     height: 436,
-                    bgImageSrc: 'url(../images/class/5.png) no-repeat',
+                    bgImageSrc: 'url(../images/class/5.jpg) no-repeat',
                     resourceId: cmsConfig.classResourceIdArray[5].resourceId,
                     url: ''
                 },
                 {
+                    name: '一师一优课',
                     left: 56,
                     top: 274,
                     width: 136,
@@ -60,6 +63,7 @@
                     url: 'http://10.184.255.11//portal2/tm.htm?from=2&resourceId=178&backUrl=pxyx.htm%3Farea%3D0%26m_pos%3D2'
                 },
                 {
+                    name: '教研',
                     left: 56,
                     top: 388,
                     width: 136,
@@ -69,6 +73,7 @@
                     url: 'http://10.184.255.11/portal2/pxyx.htm'
                 },
                 {
+                    name: '培训',
                     left: 56,
                     top: 500,
                     width: 136,
@@ -184,23 +189,32 @@
                         _num += this.cursor.menu.itemsPerLine[i];
                     }
                     _num += this.cursor.menu.focusPosX;
-
                     params = {
                         'PG-ONE': {
                             focusArea: this.cursor.focusArea,
                             focusPosX: this.cursor.menu.focusPosX,
                             focusPosY: this.cursor.menu.focusPosY
-                        },
-                        'PG_MORE': {
+                        }
+                    };
+                    if (_num === 2) {
+                        params.PG_MORE = {
                             resourceId: 0,
                             resourceType: 'video',
                             backURL: 'class.html',
-                            logoImageSrc: '',
                             pageIndex: 1
-                        }
-                    };
-                    postfix = this.package(params);
-                    window.location.href = 'sidebar.html' + postfix;
+                        };
+                        postfix = this.package(params);
+                        window.location.href = 'sidebar.html' + postfix;
+                    } else {
+                        params.PG_MORE = {
+                            resourceId: this.cursor.menu.menuItemArray[_num].resourceId,
+                            resourceType: 'video',
+                            backURL: 'class.html',
+                            pageIndex: 1
+                        };
+                        postfix = this.package(params);
+                        window.location.href = 'more.html' + postfix;
+                    }
 //                    window.location.href = this.cursor.menu.menuItemArray[_num].url;
                     break;
                 default:

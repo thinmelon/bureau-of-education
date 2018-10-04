@@ -26,17 +26,17 @@ function SwiperModule() {
         if (cmsConfig.environment === 'DEBUG') {
             this.album = [
                 {
-                    img: 'url(../images/index/4.png)',
+                    img: 'url(../images/student/1.jpg)',
                     resourceId: cmsConfig.indexResourceIdArray[0].resourceId,
                     assertId: 111
                 },
                 {
-                    img: 'url(../images/index/4.png)',
+                    img: 'url(../images/student/1.jpg)',
                     resourceId: cmsConfig.indexResourceIdArray[1].resourceId,
                     assertId: 111
                 },
                 {
-                    img: 'url(../images/index/4.png)',
+                    img: 'url(../images/student/1.jpg)',
                     resourceId: cmsConfig.indexResourceIdArray[2].resourceId
                 }
                 // {
