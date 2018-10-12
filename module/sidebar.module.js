@@ -7,8 +7,7 @@ function SidebarModule() {
     // 属性
     this.focusPos = 0;
     this.sidebarItemArray = [];
-    this.sidebarTextImages = "";
-    this.sidebarResourceIds = "";
+    this.sidebarGroup = 0;
     // 样式
     this.sidebarLeft = 57;
     this.sidebarTop = 168;
@@ -22,6 +21,87 @@ function SidebarModule() {
             length,
             sidebarItem,
             sidebar = document.getElementById('sidebar');
+
+        if (this.sidebarGroup === 0) {
+            this.sidebarItemArray = [
+                {
+                    title: '小学',
+                    resourceId: 769,
+                    // resourceId: 2,
+                    left: 0,
+                    top: 0,
+                    width: 154,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/1.png) center no-repeat'
+                },
+                {
+                    title: '初中',
+                    resourceId: 770,
+                    left: 164,
+                    top: 0,
+                    width: 154,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/2.png) center no-repeat'
+                },
+                {
+                    title: '高中',
+                    resourceId: 769,
+                    left: 327,
+                    top: 0,
+                    width: 154,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/3.png) center no-repeat'
+                }
+            ];
+        } else if (this.sidebarGroup === 1) {
+            this.sidebarItemArray = [
+                {
+                    title: '朗诵专场',
+                    resourceId: 769,
+                    left: 0,
+                    top: 0,
+                    width: 154,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/4.png) center no-repeat'
+                },
+                {
+                    title: '器乐专场',
+                    resourceId: 770,
+                    left: 164,
+                    top: 0,
+                    width: 154,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/5.png) center no-repeat'
+                },
+                {
+                    title: '声乐专场',
+                    resourceId: 769,
+                    left: 327,
+                    top: 0,
+                    width: 151,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/6.png) center no-repeat'
+                },
+                {
+                    title: '舞蹈专场',
+                    resourceId: 770,
+                    left: 488,
+                    top: 0,
+                    width: 151,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/6.png) center no-repeat'
+                },
+                {
+                    title: '戏剧专场',
+                    resourceId: 769,
+                    left: 650,
+                    top: 0,
+                    width: 151,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/6.png) center no-repeat'
+                }
+            ];
+        }
 
         sidebar.style.left = this.sidebarLeft + 'px';
         sidebar.style.top = this.sidebarTop + 'px';

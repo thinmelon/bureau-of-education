@@ -125,7 +125,7 @@
             this.cursor.focusOut();
             switch (this.cursor.focusArea) {
                 case 0:         // 菜单
-                    if(-1===this.cursor.menu.moveY(direction)){
+                    if (-1 === this.cursor.menu.moveY(direction)) {
                         this.cursor.focusArea = 5;
                     }
                     break;
@@ -151,48 +151,10 @@
         };
 
         this.doSelect = function () {
-            var
-                postfix = '',
-                params;
-
             this.remove(this.cursor.fileName);
             switch (this.cursor.focusArea) {
                 case 2:         // 列表
-                    params = {
-                        'PG-ONE': {
-                            focusArea: this.cursor.focusArea,
-                            focusPos: this.cursor.list.focusPos
-                        }
-                    };
-                    if (this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].flag === 0) {
-                        params.VIDEO = {
-                            backURL: this.backUrl(),
-                            fileName: this.cursor.fileName,
-                            focusArea: this.cursor.focusArea,
-                            focusPos: this.cursor.list.focusPos,
-                            assertId: this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].assetID
-                        };
-                        postfix = this.package(params);
-                        window.location.href = 'video.html' + postfix;
-//                        params.PG_TEXT = {
-//                            resourceId: this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].id,
-//                            isShowGraphics: 'show',
-//                            backURL: 'teacher.html',
-//                            logoImageSrc: ''
-//                        };
-//                        postfix = this.package(params);
-//                        window.location.href = 'detail.html' + postfix;
-                    } else {
-                        params.PG_MORE = {
-                            resourceId: cmsConfig.teacherResourceIdArray[3].resourceId,
-                            resourceType: 'video',
-                            backURL: 'teacher.html',
-                            logoImageSrc: '',
-                            pageIndex: 1
-                        };
-                        postfix = this.package(params);
-                        window.location.href = 'more.html' + postfix;
-                    }
+                    this.cursor.list.doSelect(this, 'teacher.html', cmsConfig.teacherResourceIdArray[3].resourceId);
                     break;
                 default:
                     break;

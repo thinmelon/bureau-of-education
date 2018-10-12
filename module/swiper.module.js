@@ -64,6 +64,8 @@ function SwiperModule() {
                         that.render();
                     }
                 });
+            } else {
+                this.render();
             }
         }
     };
@@ -150,7 +152,7 @@ function SwiperModule() {
      */
     this.setBackgroundImage = function () {
         var bgImage = this.remoteImage ? 'url(' + cmsConfig.imgUrl + this.album[this.position].img + ')' : this.album[this.position].img;
-        document.getElementById('debug-message').innerHTML += '<br/>' + 'setBackgroundImage ==>  background image ====> ' + bgImage;
+        // document.getElementById('debug-message').innerHTML += '<br/>' + 'setBackgroundImage ==>  background image ====> ' + bgImage;
         document.getElementById('swiper').style.backgroundImage = bgImage;
         document.getElementById('swiper-index-' + this.position).style.backgroundColor = '#13934F';
     };
@@ -167,7 +169,7 @@ function SwiperModule() {
         this.timerId = setInterval(function () {
             document.getElementById('swiper-index-' + that.position).style.backgroundColor = '';
             that.position = (that.position + 1) % that.album.length;
-            document.getElementById('debug-message').innerHTML += '<br/>' + 'triggerTimer ==>  position ====> ' + that.position;
+            // document.getElementById('debug-message').innerHTML += '<br/>' + 'triggerTimer ==>  position ====> ' + that.position;
             that.setBackgroundImage();
         }, that.interval);
     };

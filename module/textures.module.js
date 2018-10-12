@@ -11,9 +11,7 @@ function TexturesModule() {
     /**
      *  模块初始化参数
      */
-    this.isShowGraphics = 'show';
     this.backURL = '';
-    this.logoImageSrc = '';
     this.id = '';
 
     /**

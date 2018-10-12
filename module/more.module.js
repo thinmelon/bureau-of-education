@@ -18,7 +18,7 @@ function MoreModule() {
     this.marqueeNumber = 15;
 
     this.moreItemArray = [];
-    this.resourceId = '';                   //  更多内容内的资源ID
+    this.resourceId = 0;                   //  更多内容内的资源ID
     this.resourceType = 'textures';         //  资源类型初始为图文形式
     this.backURL = '';                      //  回退地址
 
@@ -46,11 +46,12 @@ function MoreModule() {
 
         if (cmsConfig.environment === 'DEBUG') {
             var testData = [];
+
             if (this.resourceId === 2 || pageIndex === 2) {
                 testData = [
-                    {assetid: 111, img: '../images/news/3.jpg', title: '你你你你你你你你你你你你你你你', flag: 0, id: 21},
+                    {assetid: 111, img: '../images/news/3.jpg', title: '你你你你你你你你你你你你你你你', flag: 1, id: 21},
                     {assetid: 111, img: '../images/news/3.jpg', title: '你你你你你你你你你你你你', flag: 0, id: 21},
-                    {assetid: 111, img: '../images/news/3.jpg', title: '你你你你你你你你你你你你', flag: 0, id: 21},
+                    {assetid: 111, img: '../images/news/3.jpg', title: '你你你你你你你你你你你你', flag: 1, id: 21},
                     {assetid: 111, img: '../images/news/3.jpg', title: '你你你你你你你你你你你你', flag: 0, id: 21},
                     {assetid: 111, img: '../images/news/3.jpg', title: '你你你你你你你你你你你你', flag: 0, id: 21},
                     {assetid: 111, img: '../images/news/3.jpg', title: '你你你你你你你你你你你你', flag: 0, id: 21},
@@ -59,9 +60,9 @@ function MoreModule() {
                 ];
             } else if (this.resourceId === 3 || pageIndex === 3) {
                 testData = [
-                    {assetid: 111, img: '../images/news/3.jpg', title: '他他他他他他他他他他他他他他他', flag: 0, id: 21},
+                    {assetid: 111, img: '../images/news/3.jpg', title: '他他他他他他他他他他他他他他他', flag: 1, id: 21},
                     {assetid: 111, img: '../images/news/3.jpg', title: '他他他他他他他他他他他他', flag: 0, id: 21},
-                    {assetid: 111, img: '../images/news/3.jpg', title: '他他他他他他他他他他他他', flag: 0, id: 21},
+                    {assetid: 111, img: '../images/news/3.jpg', title: '他他他他他他他他他他他他', flag: 1, id: 21},
                     {assetid: 111, img: '../images/news/3.jpg', title: '他他他他他他他他他他他他', flag: 0, id: 21},
                     {assetid: 111, img: '../images/news/3.jpg', title: '他他他他他他他他他他他他', flag: 0, id: 21},
                     {assetid: 111, img: '../images/news/3.jpg', title: '他他他他他他他他他他他他', flag: 0, id: 21},
@@ -90,9 +91,9 @@ function MoreModule() {
                 ];
             } else {
                 testData = [
-                    {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我我我我我我', flag: 0, id: 21},
+                    {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我我我我我我', flag: 1, id: 21},
                     {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21},
-                    {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21},
+                    {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 1, id: 21},
                     {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21},
                     {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21},
                     {assetid: 111, img: '../images/news/3.jpg', title: '我我我我我我我我我我我', flag: 0, id: 21},
@@ -115,7 +116,7 @@ function MoreModule() {
             this.addMoreItem(testData);
             callback();
         } else {
-            if (this.resourceId !== '') {
+            if (this.resourceId !== 0) {
                 cmsApi.getListItems(this.resourceId, this.maxItemsPerPage, pageIndex, function (response) {
                     if ('1' === response.code || 1 === response.code) {
                         if (response.dataArray.length > 0) {
@@ -150,7 +151,6 @@ function MoreModule() {
     this.addMoreItem = function (data) {
         var i,
             length = data.length,
-            card,
             cardText;
 
         if (length < this.maxItemsPerPage) {
@@ -163,11 +163,7 @@ function MoreModule() {
         console.log('columnsPerPage =====> ' + this.columnsPerPage);
 
         for (i = 0; i < length && i < this.maxItemsPerPage; i++) {
-            // card = document.createElement('div');
-            // card.className = 'more-page-item';
-
             var columnNo = this.MathCeil(i + 1, this.maxItemsPerColumn) - 1;
-            //console.log('columnNo =====> ' + columnNo);
 
             cardText = document.createElement('div');
             cardText.id = 'more-page-item-text-' + i;

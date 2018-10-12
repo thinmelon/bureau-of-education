@@ -199,16 +199,16 @@
                     if (_num === 2) {
                         params.PG_MORE = {
                             resourceId: 0,
-                            resourceType: 'video',
                             backURL: 'class.html',
-                            pageIndex: 1
+                            pageIndex: 1,
+                            sidebarGroup: 0,
+                            sidebarFocusPos: 0
                         };
                         postfix = this.package(params);
                         window.location.href = 'sidebar.html' + postfix;
                     } else {
                         params.PG_MORE = {
                             resourceId: this.cursor.menu.menuItemArray[_num].resourceId,
-                            resourceType: 'video',
                             backURL: 'class.html',
                             pageIndex: 1
                         };

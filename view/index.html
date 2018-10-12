@@ -217,33 +217,7 @@
                     window.location.href = 'video.html' + postfix;
                     break;
                 case 2:         // 列表
-                    params = {
-                        'PG-ONE': {
-                            focusArea: this.cursor.focusArea,
-                            focusPos: this.cursor.list.focusPos
-                        }
-                    };
-                    if (this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].flag === 0) {
-                        params.VIDEO = {
-                            backURL: this.backUrl(),
-                            fileName: this.cursor.fileName,
-                            focusArea: this.cursor.focusArea,
-                            focusPos: this.cursor.list.focusPos,
-                            assertId: this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].assetID
-                        };
-                        postfix = this.package(params);
-                        window.location.href = 'video.html' + postfix;
-                    } else {
-                        params.PG_MORE = {
-                            resourceId: cmsConfig.studentResourceIdArray[2].resourceId,
-                            resourceType: 'video',
-                            backURL: 'index.html',
-                            logoImageSrc: '',
-                            pageIndex: 1
-                        };
-                        postfix = this.package(params);
-                        window.location.href = 'more.html' + postfix;
-                    }
+                    this.cursor.list.doSelect(this, 'index.html', cmsConfig.indexResourceIdArray[4].resourceId);
                     break;
                 case 7:
                     params =

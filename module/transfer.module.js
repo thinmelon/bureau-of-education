@@ -98,7 +98,6 @@ function TransferModule() {
         // 判断cursor模块不为空 并且 参数等于当前页面的深度
         if (this.cursor && key === this.cursor.fileName) {
             value = jsonUtils.parse(rawData);
-            console.dir(value);
 
             if (value.hasOwnProperty('focusArea')) {
                 // 光标所在区域
@@ -154,21 +153,20 @@ function TransferModule() {
         var value;
 
         if (this.cursor.textures && key === this.cursor.fileName) {
-            document.getElementById('debug-message').innerHTML += '<br/>' + 'Transfer ==>  setTextureModule';
             value = jsonUtils.parse(rawData);
 
             // 是否显示图片
-            if (value.hasOwnProperty('isShowGraphics')) {
-                this.cursor.textures.isShowGraphics = value.isShowGraphics;
-            }
+            // if (value.hasOwnProperty('isShowGraphics')) {
+            //     this.cursor.textures.isShowGraphics = value.isShowGraphics;
+            // }
             // 返回路径
             if (value.hasOwnProperty('backURL')) {
                 this.cursor.textures.backURL = value.backURL;
             }
             // 页面标题图片
-            if (value.hasOwnProperty('logoImageSrc')) {
-                this.cursor.textures.logoImageSrc = value.logoImageSrc;
-            }
+            // if (value.hasOwnProperty('logoImageSrc')) {
+            //     this.cursor.textures.logoImageSrc = value.logoImageSrc;
+            // }
             // 图文数据的资源请求id
             if (value.hasOwnProperty('resourceId')) {
                 this.cursor.textures.resourceId = value.resourceId;
@@ -188,7 +186,7 @@ function TransferModule() {
 
         if (this.cursor.video && key === this.cursor.fileName) {
             value = jsonUtils.parse(rawData);
-            console.dir(value);
+
             if (value.hasOwnProperty('resourceId')) {
                 this.cursor.video.resourceId = value.resourceId;
                 document.getElementById('debug-message').innerHTML += '<br/> ' + 'resourceId: ' + this.cursor.video.resourceId;
@@ -204,18 +202,32 @@ function TransferModule() {
                     && value.hasOwnProperty('focusPos')) {
                     backUrl += '?' + value.fileName + '=' + encodeURIComponent('{focusArea:' + value.focusArea + ',focusPos:' + value.focusPos + '}');
                 }
+                //  针对 多级内容 页面
+                else if (value.hasOwnProperty('fileName')
+                    && value.hasOwnProperty('focusArea')
+                    && value.hasOwnProperty('focusPosX')
+                    && value.hasOwnProperty('focusPosY')
+                    && value.hasOwnProperty('resourceId')
+                    && value.hasOwnProperty('morePageBackURL')
+                    && value.hasOwnProperty('pageIndex')
+                    && value.hasOwnProperty('sidebarGroup')
+                    && value.hasOwnProperty('sidebarFocusPos')) {
+                    backUrl += '?' + value.fileName + '='
+                        + encodeURIComponent('{focusArea:' + value.focusArea + ',focusPosX:' + value.focusPosX + ',focusPosY:' + value.focusPosY
+                            + ',resourceId:' + value.resourceId + ',backURL:\'' + value.morePageBackURL + '\',pageIndex:' + value.pageIndex
+                            + ',sidebarGroup:' + value.sidebarGroup + ',sidebarFocusPos:' + value.sidebarFocusPos + '}');
+                }
                 //  针对 更多内容 页面
                 else if (value.hasOwnProperty('fileName')
                     && value.hasOwnProperty('focusArea')
                     && value.hasOwnProperty('focusPosX')
                     && value.hasOwnProperty('focusPosY')
                     && value.hasOwnProperty('resourceId')
-                    && value.hasOwnProperty('resourceType')
                     && value.hasOwnProperty('morePageBackURL')
                     && value.hasOwnProperty('pageIndex')) {
                     backUrl += '?' + value.fileName + '='
                         + encodeURIComponent('{focusArea:' + value.focusArea + ',focusPosX:' + value.focusPosX + ',focusPosY:' + value.focusPosY
-                            + ',resourceId:' + value.resourceId + ',resourceType:\'' + value.resourceType + '\',backURL:\'' + value.morePageBackURL + '\',pageIndex:' + value.pageIndex + '}');
+                            + ',resourceId:' + value.resourceId + ',backURL:\'' + value.morePageBackURL + '\',pageIndex:' + value.pageIndex + '}');
                 }
                 else if (value.hasOwnProperty('fileName')
                     && value.hasOwnProperty('focusArea')
@@ -240,7 +252,7 @@ function TransferModule() {
 
         if (this.monitor) {
             value = jsonUtils.parse(rawData);
-            console.dir(value);
+
             if (value.hasOwnProperty('assetid')) {
                 this.monitor.assetid = value.assetid;
                 document.getElementById('debug-message').innerHTML += '<br/> ' + 'assetid: ' + this.monitor.assetid;
@@ -268,22 +280,18 @@ function TransferModule() {
 
         if (this.cursor.more && key === this.cursor.fileName) {
             value = jsonUtils.parse(rawData);
-            console.dir(value);
+
             // 页面列表项的资源请求id
             if (value.hasOwnProperty('resourceId')) {
-                this.cursor.more.resourceId = value.resourceId;
+                this.cursor.more.resourceId = parseInt(value.resourceId);
             }
             // 更多页面元素的资源类型： 图文 或者 视频监控
-            if (value.hasOwnProperty('resourceType')) {
-                this.cursor.more.resourceType = value.resourceType;
-            }
+            // if (value.hasOwnProperty('resourceType')) {
+            //     this.cursor.more.resourceType = value.resourceType;
+            // }
             // 返回地址
             if (value.hasOwnProperty('backURL')) {
                 this.cursor.more.backURL = value.backURL;
-            }
-            // 页面标题元素
-            if (value.hasOwnProperty('logoImageSrc')) {
-                this.cursor.more.logoImageSrc = value.logoImageSrc;
             }
             // 当前分页索引
             if (value.hasOwnProperty('pageIndex')) {
@@ -304,16 +312,12 @@ function TransferModule() {
             value = jsonUtils.parse(rawData);
             console.dir(value);
             // 位置
-            if (value.hasOwnProperty('focusPos')) {
-                this.cursor.sidebar.focusPos = parseInt(value.focusPos);
+            if (value.hasOwnProperty('sidebarFocusPos')) {
+                this.cursor.sidebar.focusPos = parseInt(value.sidebarFocusPos);
             }
-            // 侧边栏的文字图片数组
-            if (value.hasOwnProperty('sidebarTextImages')) {
-                this.cursor.sidebar.sidebarTextImages = value.sidebarTextImages;
-            }
-            // 侧边栏的文字图片的资源请求id数组
-            if (value.hasOwnProperty('sidebarResourceIds')) {
-                this.cursor.sidebar.sidebarResourceIds = value.sidebarResourceIds;
+            // 显示内容组
+            if (value.hasOwnProperty('sidebarGroup')) {
+                this.cursor.sidebar.sidebarGroup = parseInt(value.sidebarGroup);
             }
         }
     };
