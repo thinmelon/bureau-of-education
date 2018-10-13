@@ -185,8 +185,6 @@
         };
 
         this.doBack = function () {
-            this.remove(this.cursor.fileName);
-            this.package([]);
             window.location.href = 'http://10.215.0.10:80/ui3/ui3/loading.htm?opk=4';
         };
 
@@ -278,8 +276,7 @@
                     /*  开机认证的消息处理   */
                 case 22201:
                     document.getElementById('debug-message').innerHTML += '<br/>' + '+++++++++++++ 认证成功  +++++++++++++';
-                    videoComponent.stop();
-                    videoComponent.init();
+                    videoComponent.loopSmallVideo();
                     return false;
                 case 22202:
                     document.getElementById('debug-message').innerHTML += '<br/>' + '+++++++++++++ 认证失败  +++++++++++++';
@@ -292,8 +289,7 @@
                     return false;
                 case 'IPANEL_PLAY_END':
                     document.getElementById('debug-message').innerHTML += '<br/>' + '|||||||||||||  IPANEL_PLAY_END  ||||||||||||| ';
-                    videoComponent.stop();
-                    videoComponent.init();
+                    videoComponent.loopSmallVideo();
                     return false;
                 default:
                     break;
@@ -319,7 +315,7 @@
         document.onkeypress = transferComponent.videoPlayHandler;
         document.onirkeypress = transferComponent.videoPlayHandler;
         document.onsystemevent = transferComponent.videoPlayHandler;
-        document.getElementById('debug-message').innerHTML += '<br/>' + '======================  启动初始化  ======================';
+//        document.getElementById('debug-message').innerHTML += '<br/>' + '======================  启动初始化  ======================';
         /**
          *  初始化各模块
          */
@@ -346,6 +342,7 @@
 
     window.onunload = function () {
         videoComponent.stop();
+        videoComponent.destroy();
     };
 </script>
 </html>
