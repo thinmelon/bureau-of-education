@@ -89,7 +89,7 @@ function SidebarModule() {
                     top: 0,
                     width: 151,
                     height: 47,
-                    bgImageSrc: 'url(../images/sidebar/6.png) center no-repeat'
+                    bgImageSrc: 'url(../images/sidebar/7.png) center no-repeat'
                 },
                 {
                     title: '戏剧专场',
@@ -98,7 +98,7 @@ function SidebarModule() {
                     top: 0,
                     width: 151,
                     height: 47,
-                    bgImageSrc: 'url(../images/sidebar/6.png) center no-repeat'
+                    bgImageSrc: 'url(../images/sidebar/8.png) center no-repeat'
                 }
             ];
         }
