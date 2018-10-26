@@ -198,20 +198,20 @@
         };
 
         this.doSelect = function () {
-            this.remove(this.cursor.fileName);
+            var i,
+                _num = 0,
+                sidebarGroup,
+                params = {
+                    'PG-ONE': {
+                        focusArea: this.cursor.focusArea,
+                        focusPosX: this.cursor.menu.focusPosX,
+                        focusPosY: this.cursor.menu.focusPosY
+                    }
+                };
 
+            this.remove(this.cursor.fileName);
             switch (this.cursor.focusArea) {
                 case 0:         // 菜单
-                    var i,
-                        _num = 0,
-                        params = {
-                            'PG-ONE': {
-                                focusArea: this.cursor.focusArea,
-                                focusPosX: this.cursor.menu.focusPosX,
-                                focusPosY: this.cursor.menu.focusPosY
-                            }
-                        };
-
                     for (i = 0; i < this.cursor.menu.focusPosY; i++) {
                         _num += this.cursor.menu.itemsPerLine[i];
                     }
@@ -226,12 +226,13 @@
                         postfix = this.package(params);
                         window.location.href = 'video.html' + postfix;
                     }
-                    else if (_num === 5) {
+                    else if (_num === 4 || _num === 5) {        //  书香校园、墨香校园
+                        _num === 4 ? sidebarGroup = 1 : sidebarGroup = 2;
                         params.PG_MORE = {
                             resourceId: 0,
                             backURL: 'company.html',
                             pageIndex: 1,
-                            sidebarGroup: 1,
+                            sidebarGroup: sidebarGroup,
                             sidebarFocusPos: 0
                         };
                         postfix = this.package(params);

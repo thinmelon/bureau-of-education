@@ -26,7 +26,7 @@ function SidebarModule() {
             this.sidebarItemArray = [
                 {
                     title: '小学',
-                    resourceId: 769,
+                    resourceId: 983,
                     // resourceId: 2,
                     left: 0,
                     top: 0,
@@ -36,7 +36,7 @@ function SidebarModule() {
                 },
                 {
                     title: '初中',
-                    resourceId: 770,
+                    resourceId: 984,
                     left: 164,
                     top: 0,
                     width: 154,
@@ -45,7 +45,7 @@ function SidebarModule() {
                 },
                 {
                     title: '高中',
-                    resourceId: 769,
+                    resourceId: 985,
                     left: 327,
                     top: 0,
                     width: 154,
@@ -53,11 +53,11 @@ function SidebarModule() {
                     bgImageSrc: 'url(../images/sidebar/3.png) center no-repeat'
                 }
             ];
-        } else if (this.sidebarGroup === 1) {
+        } else if (this.sidebarGroup === 2) {
             this.sidebarItemArray = [
                 {
                     title: '朗诵专场',
-                    resourceId: 769,
+                    resourceId: 976,
                     left: 0,
                     top: 0,
                     width: 154,
@@ -66,7 +66,7 @@ function SidebarModule() {
                 },
                 {
                     title: '器乐专场',
-                    resourceId: 770,
+                    resourceId: 977,
                     left: 164,
                     top: 0,
                     width: 154,
@@ -75,7 +75,7 @@ function SidebarModule() {
                 },
                 {
                     title: '声乐专场',
-                    resourceId: 769,
+                    resourceId: 978,
                     left: 327,
                     top: 0,
                     width: 151,
@@ -84,7 +84,7 @@ function SidebarModule() {
                 },
                 {
                     title: '舞蹈专场',
-                    resourceId: 770,
+                    resourceId: 981,
                     left: 488,
                     top: 0,
                     width: 151,
@@ -93,12 +93,69 @@ function SidebarModule() {
                 },
                 {
                     title: '戏剧专场',
-                    resourceId: 769,
+                    resourceId: 980,
                     left: 650,
                     top: 0,
                     width: 151,
                     height: 47,
                     bgImageSrc: 'url(../images/sidebar/8.png) center no-repeat'
+                }
+            ];
+        } else if (this.sidebarGroup === 1) {
+            this.sidebarItemArray = [
+                {
+                    title: '一年级',
+                    resourceId: 1007,
+                    left: 0,
+                    top: 0,
+                    width: 154,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/9.png) center no-repeat'
+                },
+                {
+                    title: '二年级',
+                    resourceId: 1008,
+                    left: 164,
+                    top: 0,
+                    width: 154,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/10.png) center no-repeat'
+                },
+                {
+                    title: '三年级',
+                    resourceId: 1009,
+                    left: 327,
+                    top: 0,
+                    width: 151,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/11.png) center no-repeat'
+                },
+                {
+                    title: '四年级',
+                    resourceId: 1010,
+                    left: 488,
+                    top: 0,
+                    width: 151,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/12.png) center no-repeat'
+                },
+                {
+                    title: '五年级',
+                    resourceId: 1011,
+                    left: 650,
+                    top: 0,
+                    width: 151,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/13.png) center no-repeat'
+                },
+                {
+                    title: '六年级',
+                    resourceId: 1012,
+                    left: 812,
+                    top: 0,
+                    width: 151,
+                    height: 47,
+                    bgImageSrc: 'url(../images/sidebar/14.png) center no-repeat'
                 }
             ];
         }

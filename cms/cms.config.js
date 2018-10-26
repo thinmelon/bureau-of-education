@@ -36,7 +36,7 @@ var cmsConfig = {
         {title: '名师目录', resourceId: '903'},
         {title: '特色校园', resourceId: '904'},
         {title: '书香校园', resourceId: '905'},
-        {title: '墨香校园', resourceId: '906'},
+        {title: '墨香校园', resourceId: '975'},
         {title: '智慧校园', resourceId: '907'},
         {title: '校企合作', resourceId: '908'},
 
