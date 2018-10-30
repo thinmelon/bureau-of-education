@@ -24,7 +24,7 @@
 <script type="application/javascript" src="../module/bar.module.js"></script>
 <script type="application/javascript" src="../wrapper/bar.wrapper.js"></script>
 <script type="application/javascript" src="../module/menu.module.js"></script>
-<script type="application/javascript" src="../module/swiper.module.js"></script>
+<!--<script type="application/javascript" src="../module/swiper.module.js"></script>-->
 <script type="application/javascript" src="../module/list.module.js"></script>
 <script type="application/javascript" src="../module/cursor.module.js"></script>
 <script type="application/javascript" src="../module/transfer.module.js"></script>
@@ -201,13 +201,14 @@
             cursorComponent = new CursorComponent(barComponent, menuComponent, listComponent),
             transferComponent = new TransferComponent(cursorComponent);
 
+        document.onkeydown = transferComponent.onKeyDown;
+
         transferComponent.init();
         barComponent.init();
         menuComponent.init();
         listComponent.init(function () {
             cursorComponent.focusOn();
         });
-        document.onkeydown = transferComponent.onKeyDown;
     };
 </script>
 </html>

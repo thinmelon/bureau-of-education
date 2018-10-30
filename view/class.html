@@ -9,7 +9,11 @@
 <div class="background">
     <div id="bar" class="bar"></div>
     <div id="menu"></div>
-    <div id="swiper" class="swiper"></div>
+    <!--<div id="swiper" class="swiper"></div>-->
+    <div id="notices_board" class="notices_board">
+        <div id="notices_board_bar"></div>
+        <div class="list-item-more"></div>
+    </div>
     <div id="cursor"></div>
     <div id="debug-message"></div>
 </div>
@@ -22,6 +26,7 @@
 <script type="application/javascript" src="../wrapper/bar.wrapper.js"></script>
 <script type="application/javascript" src="../module/swiper.module.js"></script>
 <script type="application/javascript" src="../module/menu.module.js"></script>
+<script type="application/javascript" src="../module/list.module.js"></script>
 <script type="application/javascript" src="../module/cursor.module.js"></script>
 <script type="application/javascript" src="../module/transfer.module.js"></script>
 <script type="application/javascript" src="../cms/common.js"></script>
@@ -86,24 +91,50 @@
         }];
     }
 
-    function SwiperComponent() {
-        SwiperModule.call(this);
+    //    function SwiperComponent() {
+    //        SwiperModule.call(this);
+    //
+    //        this.swiperTop = 164;
+    //        this.swiperLeft = 858;
+    //        this.swiperWidth = 371;
+    //        this.swiperHeight = 436;
+    //        this.resourceId = cmsConfig.classResourceIdArray[6].resourceId;
+    //    }
 
-        this.swiperTop = 164;
-        this.swiperLeft = 858;
-        this.swiperWidth = 371;
-        this.swiperHeight = 436;
+    function ListComponent() {
+        ListModule.call(this);
+
+        // 属性
+        this.focusPos = 0;
+        this.boardLeft = 865;
+        this.boardTop = 164;
+        this.boardWidth = 360;
+        this.boardHeight = 445;
+        this.noticesBoardBarWidth = 360;
+        this.noticesBoardBarHeight = 47;
+        this.itemLeft = 870;
+        this.itemTop = 218;
+        this.itemWidth = 330;
+        this.itemHeight = 32;
+        this.itemMoreLeft = 1060;
+        this.itemMoreTop = 560;
+        this.itemMoreWidth = 142;
+        this.itemMoreHeight = 34;
+        this.listItemNum = 8;
         this.resourceId = cmsConfig.classResourceIdArray[6].resourceId;
+
+        // 方法
     }
 
-    function CursorComponent(bar, swiper, menu) {
+    function CursorComponent(bar, list, menu) {
         CursorModule.call(this);
 
         // 属性
         this.focusArea = 5;
         this.bar = bar;
         this.bar.focusPos = 3;
-        this.swiper = swiper;
+//        this.swiper = swiper;
+        this.list = list;
         this.menu = menu;
         this.fileName = 'PG-ONE';
     }
@@ -124,7 +155,7 @@
                 case 0:         // 菜单
                     if (-1 === this.cursor.menu.moveX(direction) && direction > 0) {
                         if (this.cursor.menu.focusPosY === 0) {
-                            this.cursor.focusArea = 6;
+                            this.cursor.focusArea = 2;
                         } else {
                             this.cursor.focusArea = 0;
                             this.cursor.menu.focusPosX = 1;
@@ -132,16 +163,23 @@
                         }
                     }
                     break;
+                case 2:         //  列表
+                    if (direction < 0) {
+                        this.cursor.focusArea = 0;
+                        this.cursor.menu.focusPosX = 1;
+                        this.cursor.menu.focusPosY = 0;
+                    }
+                    break;
                 case 5:         // 栏目
                     this.remove('PG-ONE');              // 清除同一级的路径记录
                     this.cursor.bar.moveX(direction);
                     break;
-                case 6:         //  滚动图片
-                    if (-1 === this.cursor.swiper.moveX(direction)) {
-                        this.cursor.swiper.triggerTimer();
-                        this.cursor.focusArea = 0;
-                    }
-                    break;
+//                case 6:         //  滚动图片
+//                    if (-1 === this.cursor.swiper.moveX(direction)) {
+//                        this.cursor.swiper.triggerTimer();
+//                        this.cursor.focusArea = 0;
+//                    }
+//                    break;
                 default:
                     break;
             }
@@ -156,15 +194,20 @@
                         this.cursor.focusArea = 5;
                     }
                     break;
+                case 2:         //  列表
+                    if (-1 === this.cursor.list.moveY(direction)) {
+                        this.cursor.focusArea = 5;
+                    }
+                    break;
                 case 5:         // 栏目
                     this.cursor.focusArea = 0;
                     this.cursor.menu.focusPosX = 0;
                     this.cursor.menu.focusPosY = 0;
                     break;
-                case 6:         //  滚动图片
-                    this.cursor.swiper.triggerTimer();
-                    this.cursor.focusArea = 5;
-                    break;
+//                case 6:         //  滚动图片
+//                    this.cursor.swiper.triggerTimer();
+//                    this.cursor.focusArea = 5;
+//                    break;
                 default:
                     break;
             }
@@ -217,6 +260,9 @@
                     }
 //                    window.location.href = this.cursor.menu.menuItemArray[_num].url;
                     break;
+                case 2:         //  列表
+                    this.cursor.list.doSelect(this, 'class.html', cmsConfig.classResourceIdArray[6].resourceId);
+                    break;
                 default:
                     break;
             }
@@ -257,17 +303,23 @@
     window.onload = function () {
         var
             barComponent = new BarComponent(),
-            swiperComponent = new SwiperComponent(),
+//            swiperComponent = new SwiperComponent(),
+            listComponent = new ListComponent(),
             menuComponent = new MenuComponent(),
-            cursorComponent = new CursorComponent(barComponent, swiperComponent, menuComponent),
+            cursorComponent = new CursorComponent(barComponent, listComponent, menuComponent),
             transferComponent = new TransferComponent(cursorComponent);
         document.onkeydown = transferComponent.onKeyDown;
 
         transferComponent.init();
         barComponent.init();
-        swiperComponent.init();
+//        swiperComponent.init();
         menuComponent.init();
-        cursorComponent.focusOn();
+        /**
+         *  光标定位
+         */
+        listComponent.init(function () {
+            cursorComponent.focusOn();
+        });
     };
 </script>
 </html>

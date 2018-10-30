@@ -9,7 +9,11 @@
 <div class="background">
     <div id="bar" class="bar"></div>
     <div id="menu"></div>
-    <div id="swiper" class="swiper"></div>
+    <!--<div id="swiper" class="swiper"></div>-->
+    <div id="notices_board" class="notices_board">
+        <div id="notices_board_bar"></div>
+        <div class="list-item-more"></div>
+    </div>
     <div id="cursor"></div>
     <div id="debug-message"></div>
 </div>
@@ -20,7 +24,8 @@
 <script type="application/javascript" src="../cms/cms.api.js"></script>
 <script type="application/javascript" src="../module/bar.module.js"></script>
 <script type="application/javascript" src="../wrapper/bar.wrapper.js"></script>
-<script type="application/javascript" src="../module/swiper.module.js"></script>
+<!--<script type="application/javascript" src="../module/swiper.module.js"></script>-->
+<script type="application/javascript" src="../module/list.module.js"></script>
 <script type="application/javascript" src="../module/menu.module.js"></script>
 <script type="application/javascript" src="../module/cursor.module.js"></script>
 <script type="application/javascript" src="../module/transfer.module.js"></script>
@@ -99,24 +104,49 @@
         }];
     }
 
-    function SwiperComponent() {
-        SwiperModule.call(this);
+    function ListComponent() {
+        ListModule.call(this);
 
-        this.swiperTop = 164;
-        this.swiperLeft = 56;
-        this.swiperWidth = 580;
-        this.swiperHeight = 354;
+        // 属性
+        this.focusPos = 0;
+        this.boardLeft = 56;
+        this.boardTop = 164;
+        this.boardWidth = 580;
+        this.boardHeight = 354;
+        this.noticesBoardBarWidth = 580;
+        this.noticesBoardBarHeight = 47;
+        this.itemLeft = 66;
+        this.itemTop = 212;
+        this.itemWidth = 570;
+        this.itemHeight = 42;
+        this.itemMoreLeft = 468;
+        this.itemMoreTop = 465;
+        this.itemMoreWidth = 142;
+        this.itemMoreHeight = 42;
+        this.listItemNum = 6;
         this.resourceId = cmsConfig.companyResourceIdArray[7].resourceId;
+
+        // 方法
     }
 
-    function CursorComponent(bar, swiper, menu) {
+    //    function SwiperComponent() {
+    //        SwiperModule.call(this);
+    //
+    //        this.swiperTop = 164;
+    //        this.swiperLeft = 56;
+    //        this.swiperWidth = 580;
+    //        this.swiperHeight = 354;
+    //        this.resourceId = cmsConfig.companyResourceIdArray[7].resourceId;
+    //    }
+
+    function CursorComponent(bar, list, menu) {
         CursorModule.call(this);
 
         // 属性
         this.focusArea = 5;
         this.bar = bar;
         this.bar.focusPos = 1;
-        this.swiper = swiper;
+        this.list = list;
         this.menu = menu;
         this.fileName = 'PG-ONE';
     }
@@ -137,27 +167,34 @@
                 case 0:         // 菜单
                     if (-1 === this.cursor.menu.moveX(direction)) {
                         if (this.cursor.menu.focusPosY === 0) {
-                            this.cursor.focusArea = 6;
+                            this.cursor.focusArea = 2;
                         }
+                    }
+                    break;
+                case 2:         //  列表
+                    if (direction > 0) {
+                        this.cursor.focusArea = 0;
+                        this.cursor.menu.focusPosX = 0;
+                        this.cursor.menu.focusPosY = 0;
                     }
                     break;
                 case 5:         // 栏目
                     this.remove('PG-ONE');              // 清除同一级的路径记录
                     this.cursor.bar.moveX(direction);
                     break;
-                case 6:         //  滚动图片
-                    if (-1 === this.cursor.swiper.moveX(direction)) {
-                        this.cursor.swiper.triggerTimer();
-                        this.cursor.focusArea = 0;
-                        if (direction < 0) {
-                            this.cursor.menu.focusPosX = 1;
-                            this.cursor.menu.focusPosY = 0;
-                        } else {
-                            this.cursor.menu.focusPosX = 0;
-                            this.cursor.menu.focusPosY = 0;
-                        }
-                    }
-                    break;
+//                case 6:         //  滚动图片
+//                    if (-1 === this.cursor.swiper.moveX(direction)) {
+//                        this.cursor.swiper.triggerTimer();
+//                        this.cursor.focusArea = 0;
+//                        if (direction < 0) {
+//                            this.cursor.menu.focusPosX = 1;
+//                            this.cursor.menu.focusPosY = 0;
+//                        } else {
+//                            this.cursor.menu.focusPosX = 0;
+//                            this.cursor.menu.focusPosY = 0;
+//                        }
+//                    }
+//                    break;
                 default:
                     break;
             }
@@ -172,19 +209,30 @@
                         this.cursor.focusArea = 5;
                     }
                     break;
-                case 5:         // 栏目
-                    this.cursor.focusArea = 6;
-                    break;
-                case 6:         //  滚动图片
-                    this.cursor.swiper.triggerTimer();
-                    if (direction < 0) {
-                        this.cursor.focusArea = 5;
-                    } else {
-                        this.cursor.focusArea = 0;
-                        this.cursor.menu.focusPosX = 0;
-                        this.cursor.menu.focusPosY = 1;
+                case 2:         //  列表
+                    if (-1 === this.cursor.list.moveY(direction)) {
+                        if (direction < 0) {
+                            this.cursor.focusArea = 5;
+                        } else {
+                            this.cursor.focusArea = 0;
+                            this.cursor.menu.focusPosX = 0;
+                            this.cursor.menu.focusPosY = 1;
+                        }
                     }
                     break;
+                case 5:         // 栏目
+                    this.cursor.focusArea = 2;
+                    break;
+//                case 6:         //  滚动图片
+//                    this.cursor.swiper.triggerTimer();
+//                    if (direction < 0) {
+//                        this.cursor.focusArea = 5;
+//                    } else {
+//                        this.cursor.focusArea = 0;
+//                        this.cursor.menu.focusPosX = 0;
+//                        this.cursor.menu.focusPosY = 1;
+//                    }
+//                    break;
                 default:
                     break;
             }
@@ -248,6 +296,9 @@
                         window.location.href = 'more.html' + postfix;
                     }
                     break;
+                case 2:         //  列表
+                    this.cursor.list.doSelect(this, 'company.html', cmsConfig.companyResourceIdArray[7].resourceId);
+                    break;
                 default:
                     break;
             }
@@ -288,18 +339,20 @@
     window.onload = function () {
         var
             barComponent = new BarComponent(),
-            swiperComponent = new SwiperComponent(),
+            listComponent = new ListComponent(),
             menuComponent = new MenuComponent(),
-            cursorComponent = new CursorComponent(barComponent, swiperComponent, menuComponent),
+            cursorComponent = new CursorComponent(barComponent, listComponent, menuComponent),
             transferComponent = new TransferComponent(cursorComponent);
 
         document.onkeydown = transferComponent.onKeyDown;
 
         transferComponent.init();
         barComponent.init();
-        swiperComponent.init();
+//        swiperComponent.init();
         menuComponent.init();
-        cursorComponent.focusOn();
+        listComponent.init(function () {
+            cursorComponent.focusOn();
+        });
 //
 //        cmsApi.fetchServerImage(
 //            menuComponent,

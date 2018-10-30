@@ -43,7 +43,7 @@ function VideoModule() {
         document.getElementById('debug-message').innerHTML += '<br/>' + '  Assert ID ==> ' + this.assertId;
 
         //  小屏播放，创建播放器对象
-        if (this.smallScreenPlay) {
+        if (this.smallScreenPlay && cmsConfig.environment === 'PRODUCT') {
             this.mediaPlayer = cmsApi.createMediaPlayer(
                 this.smallScreenLeft,
                 this.smallScreenTop,

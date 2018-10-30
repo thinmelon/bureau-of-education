@@ -140,7 +140,7 @@
                         this.cursor.menu.focusPosY = 0;
                     }
                     break;
-                case 7:
+                case 7:         //  视频
                     if (direction > 0) {
                         this.cursor.focusArea = 0;
                         this.cursor.menu.focusPosX = 0;
@@ -164,7 +164,7 @@
                 case 5:         // 栏目
                     this.cursor.focusArea = 7;
                     break;
-                case 2:         //  滚动图片
+                case 2:         //  列表
                     if (-1 === this.cursor.list.moveY(direction)) {
                         this.cursor.focusArea = 5;
                     }
@@ -196,28 +196,38 @@
             this.remove(this.cursor.fileName);
             switch (this.cursor.focusArea) {
                 case 0:         // 菜单
-                    params =
-                        {
-                            'PG-ONE': {
-                                focusArea: this.cursor.focusArea,
-                                focusPosX: this.cursor.menu.focusPosX,
-                                focusPosY: this.cursor.menu.focusPosY
-                            },
-                            'VIDEO': {
-                                backURL: this.backUrl(),
-                                focusArea: this.cursor.focusArea,
-                                focusPosX: this.cursor.menu.focusPosX,
-                                focusPosY: this.cursor.menu.focusPosY,
-                                resourceId: cmsConfig.indexResourceIdArray[1].resourceId
-                            }
+                    var i,
+                        _num = 0;
+
+                    for (i = 0; i < this.cursor.menu.focusPosY; i++) {
+                        _num += this.cursor.menu.itemsPerLine[i];
+                    }
+                    _num += this.cursor.menu.focusPosX;
+                    params = {
+                        'PG-ONE': {
+                            focusArea: this.cursor.focusArea,
+                            focusPosX: this.cursor.menu.focusPosX,
+                            focusPosY: this.cursor.menu.focusPosY
+                        }
+                    };
+                    if (_num === 0) {
+                        params.PG_MORE = {
+                            resourceId: 0,
+                            backURL: 'class.html',
+                            pageIndex: 1,
+                            sidebarGroup: 0,
+                            sidebarFocusPos: 0
                         };
-                    postfix = this.package(params);
-                    window.location.href = 'video.html' + postfix;
+                        postfix = this.package(params);
+                        window.location.href = 'sidebar.html' + postfix;
+                    } else {
+                        window.location.href = 'student.html';
+                    }
                     break;
-                case 2:         // 列表
+                case 2:         //  列表
                     this.cursor.list.doSelect(this, 'index.html', cmsConfig.indexResourceIdArray[4].resourceId);
                     break;
-                case 7:
+                case 7:         //  视频
                     params =
                         {
                             'PG-ONE': {

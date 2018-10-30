@@ -40,7 +40,13 @@ function MoreModule() {
     };
 
     this.init = function (pageIndex, callback) {
-        var that = this;
+        var i,
+            that = this;
+
+        //每页最多显示两行
+        for (i = 0; i < this.maxColumnsPerPage; i++) {
+            this.moreItemArray[i] = [];
+        }
 
         this.removeAllMoreItems();
 
@@ -137,11 +143,6 @@ function MoreModule() {
         var i,
             parent = document.getElementById('content'),
             children = parent.childNodes;
-
-        //每页最多显示两行
-        for (i = 0; i < this.maxColumnsPerPage; i++) {
-            this.moreItemArray[i] = [];
-        }
 
         for (i = children.length - 1; i >= 0; i--) {
             parent.removeChild(children[i]);
