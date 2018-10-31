@@ -185,29 +185,41 @@
         };
 
         this.doSelect = function () {
-            var
-                postfix = '',
-                params;
+            var i,
+                _num = 0,
+                sidebarGroup,
+                params = {
+                    'PG-ONE': {
+                        focusArea: this.cursor.focusArea,
+                        focusPosX: this.cursor.menu.focusPosX,
+                        focusPosY: this.cursor.menu.focusPosY
+                    }
+                };
 
             this.remove(this.cursor.fileName);
             switch (this.cursor.focusArea) {
-                case 2:         // 列表
-                    params =
-                        {
-                            /**
-                             * 一级页面
-                             */
-                            'PG-ONE': {
-                                focusArea: this.cursor.focusArea,
-                                focusPos: this.cursor.list.focusPos
-                            },
-                            'PG_TEXT': {
-                                resourceId: this.cursor.list.listItemTitleArray[this.cursor.list.focusPos].id,
-                                backURL: 'service.html',
-                            }
-                        };
+                case 0:         // 菜单
+                    for (i = 0; i < this.cursor.menu.focusPosY; i++) {
+                        _num += this.cursor.menu.itemsPerLine[i];
+                    }
+                    _num += this.cursor.menu.focusPosX;
+
+                    params.PG_MORE = {
+                        resourceId: this.cursor.menu.menuItemArray[_num].resourceId,
+                        backURL: 'service.html',
+                        pageIndex: 1
+                    };
                     postfix = this.package(params);
-                    window.location.href = 'detail.html' + postfix;
+                    window.location.href = 'more.html' + postfix;
+                    break;
+                case 6:         //  滚动图片
+                    params.PG_MORE = {
+                        resourceId: this.cursor.menu.menuItemArray[this.cursor.swiper.position].resourceId,
+                        backURL: 'service.html',
+                        pageIndex: 1
+                    };
+                    postfix = this.package(params);
+                    window.location.href = 'more.html' + postfix;
                     break;
                 default:
                     break;

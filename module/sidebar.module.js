@@ -112,7 +112,7 @@ function SidebarModule() {
                 },
                 {
                     title: '朗诵',
-                    resourceId: 1012,
+                    resourceId: 976,
                     left: 975,
                     top: 0,
                     width: 151,
@@ -124,7 +124,7 @@ function SidebarModule() {
             this.sidebarItemArray = [
                 {
                     title: '器乐',
-                    resourceId: 976,
+                    resourceId: 977,
                     left: 0,
                     top: 0,
                     width: 108,
@@ -133,7 +133,7 @@ function SidebarModule() {
                 },
                 {
                     title: '声乐',
-                    resourceId: 977,
+                    resourceId: 978,
                     left: 118,
                     top: 0,
                     width: 108,
@@ -142,7 +142,7 @@ function SidebarModule() {
                 },
                 {
                     title: '舞蹈',
-                    resourceId: 978,
+                    resourceId: 980,
                     left: 235,
                     top: 0,
                     width: 108,
@@ -160,7 +160,7 @@ function SidebarModule() {
                 },
                 {
                     title: '美术',
-                    resourceId: 980,
+                    resourceId: 1014,
                     left: 470,
                     top: 0,
                     width: 108,
@@ -169,7 +169,7 @@ function SidebarModule() {
                 },
                 {
                     title: '书法',
-                    resourceId: 980,
+                    resourceId: 1015,
                     left: 588,
                     top: 0,
                     width: 108,
@@ -178,7 +178,7 @@ function SidebarModule() {
                 },
                 {
                     title: '民间',
-                    resourceId: 980,
+                    resourceId: 1016,
                     left: 705,
                     top: 0,
                     width: 108,
@@ -187,7 +187,7 @@ function SidebarModule() {
                 },
                 {
                     title: '体育',
-                    resourceId: 980,
+                    resourceId: 1017,
                     left: 823,
                     top: 0,
                     width: 108,
@@ -196,7 +196,7 @@ function SidebarModule() {
                 },
                 {
                     title: '摄影',
-                    resourceId: 980,
+                    resourceId: 1018,
                     left: 940,
                     top: 0,
                     width: 108,
@@ -205,7 +205,7 @@ function SidebarModule() {
                 },
                 {
                     title: '其它',
-                    resourceId: 980,
+                    resourceId: 1019,
                     left: 1058,
                     top: 0,
                     width: 108,
