@@ -112,7 +112,7 @@ function SidebarModule() {
                 },
                 {
                     title: '朗诵',
-                    resourceId: 976,
+                    resourceId: 1013,
                     left: 975,
                     top: 0,
                     width: 151,

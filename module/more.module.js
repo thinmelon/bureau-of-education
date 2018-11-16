@@ -40,19 +40,11 @@ function MoreModule() {
     };
 
     this.init = function (pageIndex, callback) {
-        var i,
-            that = this;
-
-        //每页最多显示两行
-        for (i = 0; i < this.maxColumnsPerPage; i++) {
-            this.moreItemArray[i] = [];
-        }
+        var that = this,
+            testData = [];
 
         this.removeAllMoreItems();
-
         if (cmsConfig.environment === 'DEBUG') {
-            var testData = [];
-
             if (this.resourceId === 2 || pageIndex === 2) {
                 testData = [
                     {assetid: 111, img: '../images/news/3.jpg', title: '你你你你你你你你你你你你你你你', flag: 1, id: 21},
@@ -125,6 +117,7 @@ function MoreModule() {
             if (this.resourceId !== 0) {
                 cmsApi.getListItems(this.resourceId, this.maxItemsPerPage, pageIndex, function (response) {
                     if ('1' === response.code || 1 === response.code) {
+                        that.removeAllMoreItems();
                         if (response.dataArray.length > 0) {
                             that.pageIndex = pageIndex;
                             that.totalPages = response.total_page;
@@ -143,6 +136,11 @@ function MoreModule() {
         var i,
             parent = document.getElementById('content'),
             children = parent.childNodes;
+
+        //  每页最多显示两行
+        for (i = 0; i < this.maxColumnsPerPage; i++) {
+            this.moreItemArray[i] = [];
+        }
 
         for (i = children.length - 1; i >= 0; i--) {
             parent.removeChild(children[i]);

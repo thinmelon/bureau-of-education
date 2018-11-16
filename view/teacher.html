@@ -151,8 +151,32 @@
         };
 
         this.doSelect = function () {
+            var i,
+                _num = 0,
+                params = {
+                    'PG-ONE': {
+                        focusArea: this.cursor.focusArea,
+                        focusPosX: this.cursor.menu.focusPosX,
+                        focusPosY: this.cursor.menu.focusPosY
+                    }
+                };
+
             this.remove(this.cursor.fileName);
             switch (this.cursor.focusArea) {
+                case 0:         // 菜单
+                    for (i = 0; i < this.cursor.menu.focusPosY; i++) {
+                        _num += this.cursor.menu.itemsPerLine[i];
+                    }
+                    _num += this.cursor.menu.focusPosX;
+
+                    params.PG_MORE = {
+                        resourceId: this.cursor.menu.menuItemArray[_num].resourceId,
+                        backURL: 'teacher.html',
+                        pageIndex: 1
+                    };
+                    postfix = this.package(params);
+                    window.location.href = 'more.html' + postfix;
+                    break;
                 case 2:         // 列表
                     this.cursor.list.doSelect(this, 'teacher.html', cmsConfig.teacherResourceIdArray[3].resourceId);
                     break;
