@@ -204,13 +204,17 @@
                     }
                     _num += this.cursor.menu.focusPosX;
 
-                    params.PG_MORE = {
-                        resourceId: this.cursor.menu.menuItemArray[_num].resourceId,
-                        backURL: 'service.html',
-                        pageIndex: 1
-                    };
-                    postfix = this.package(params);
-                    window.location.href = 'more.html' + postfix;
+                    if (_num === 5) {
+
+                    } else {
+                        params.PG_MORE = {
+                            resourceId: this.cursor.menu.menuItemArray[_num].resourceId,
+                            backURL: 'service.html',
+                            pageIndex: 1
+                        };
+                        postfix = this.package(params);
+                        window.location.href = 'more.html' + postfix;
+                    }
                     break;
                 case 6:         //  滚动图片
                     params.PG_MORE = {

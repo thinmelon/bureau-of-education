@@ -266,13 +266,13 @@
                     _num += this.cursor.menu.focusPosX;
 
                     if (_num === 0 || _num === 1) {             // 中间两个海报关联的是视频资源
-                        params.VIDEO = {
-                            backURL: this.backUrl(),
-                            focusArea: this.cursor.focusArea,
-                            resourceId: this.cursor.menu.menuItemArray[_num].resourceId
-                        };
-                        postfix = this.package(params);
-                        window.location.href = 'video.html' + postfix;
+//                        params.VIDEO = {
+//                            backURL: this.backUrl(),
+//                            focusArea: this.cursor.focusArea,
+//                            resourceId: this.cursor.menu.menuItemArray[_num].resourceId
+//                        };
+//                        postfix = this.package(params);
+//                        window.location.href = 'video.html' + postfix;
                     }
                     else if (_num === 4 || _num === 5) {        //  书香校园、墨香校园
                         _num === 4 ? sidebarGroup = 1 : sidebarGroup = 2;
