@@ -116,7 +116,7 @@
                         };
                         params.PG_TEXT = {
                             resourceId: this.cursor.more.moreItemArray[this.cursor.more.focusPosY][this.cursor.more.focusPosX].id,
-                            backURL: 'more.html',
+                            backURL: 'more.html'
                         };
                         postfix = this.package(params);
                         window.location.href = 'detail.html' + postfix;
@@ -150,7 +150,7 @@
             var code = getKeyCode(event);
 
             switch (code) {
-                case 'KEY_NUMBER1':
+                case 'KEY_NUMBER9':
                     that.toggle();
                     return false;
                 case 'KEY_UP':
@@ -165,9 +165,11 @@
                 case 'KEY_RIGHT':
                     that.cursor.moveX(1);
                     return false;
+                case 'KEY_NUMBER1':
                 case 'KEY_PAGE_UP':
                     that.cursor.changePage(-1);
                     return false;
+                case 'KEY_NUMBER3':
                 case 'KEY_PAGE_DOWN':
                     that.cursor.changePage(1);
                     return false;
