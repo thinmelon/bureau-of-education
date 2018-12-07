@@ -50,10 +50,16 @@
 
         // 方法
         this.moveX = function (direction) {
+            var that = this;
+
             this.focusOut();
             switch (this.focusArea) {
                 case 4:             //  更多内容
-                    this.more.moveX(direction);
+                    if (-1 === this.more.moveX(direction)) {
+                        this.more.changePage(direction, function () {
+                            that.focusOn();
+                        });
+                    }
                     break;
                 case 5:             //  菜单栏
                     this.bar.moveX(direction, true);
@@ -183,7 +189,7 @@
             var code = getKeyCode(event);
 
             switch (code) {
-                case 'KEY_NUMBER1':
+                case 'KEY_NUMBER9':
                     that.toggle();
                     return false;
                 case 'KEY_UP':
@@ -198,11 +204,11 @@
                 case 'KEY_RIGHT':
                     that.cursor.moveX(1);
                     return false;
-                case 'KEY_NUMBER3':
+                case 'KEY_NUMBER1':
                 case 'KEY_PAGE_UP':
                     that.cursor.changePage(-1);
                     return false;
-                case 'KEY_NUMBER4':
+                case 'KEY_NUMBER3':
                 case 'KEY_PAGE_DOWN':
                     that.cursor.changePage(1);
                     return false;

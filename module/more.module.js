@@ -159,8 +159,6 @@ function MoreModule() {
         }
 
         this.columnsPerPage = this.MathCeil(this.itemsPerPage, this.maxItemsPerColumn);
-        console.log('columnsPerPage =====> ' + this.columnsPerPage);
-
         for (i = 0; i < length && i < this.maxItemsPerPage; i++) {
             var columnNo = this.MathCeil(i + 1, this.maxItemsPerColumn) - 1;
 
@@ -221,9 +219,12 @@ function MoreModule() {
             }
         } else if (this.focusPosY < 0) {
             this.focusPosY = 0;
+            return -1;
         } else {
             this.focusPosY = this.columnsPerPage - 1;
+            return -1;
         }
+        return 0;
     };
 
     this.moveY = function (_direction) {

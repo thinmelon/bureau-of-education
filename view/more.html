@@ -43,10 +43,16 @@
 
         // 方法
         this.moveX = function (direction) {
+            var that = this;
+
             this.focusOut();
             switch (this.focusArea) {
                 case 4:
-                    this.more.moveX(direction);
+                    if (-1 === this.more.moveX(direction)) {
+                        this.more.changePage(direction, function () {
+                            that.focusOn();
+                        });
+                    }
                     break;
                 case 5:
                     this.bar.moveX(direction, true);
