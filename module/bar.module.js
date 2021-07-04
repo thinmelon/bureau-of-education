@@ -15,41 +15,36 @@ function BarModule() {
         var
             i,
             length,
+            left,
             barItemWrapper,
-            barItem,
             bar = document.getElementById('bar');
 
 
-        for (i = 0, length = this.barItemArray.length; i < length; i++) {
+        for (i = 0, left = 0, length = this.barItemArray.length; i < length; i++) {
             barItemWrapper = document.createElement('div');
             barItemWrapper.id = 'bar-item-wrapper-' + i;
             barItemWrapper.className = 'bar-item-wrapper';
-            barItemWrapper.style.left = this.barItemLeft + (i * this.barItemPadding) + "px";
-
-            barItem = document.createElement('div');
-            barItem.id = 'bar-item-' + i;
-            barItem.className = 'bar-item';
-            barItem.innerHTML = this.barItemArray[i].title;
-
-            barItemWrapper.appendChild(barItem);
+            barItemWrapper.style.left = this.barItemArray[i].left + 'px';
+            barItemWrapper.style.width = this.barItemArray[i].width + 'px';
+            barItemWrapper.style.height = this.barItemArray[i].height + 'px';
+            barItemWrapper.style.background = this.barItemArray[i].bgImageSrc;
             bar.appendChild(barItemWrapper);
         }
-
     };
 
-    this.focusOn = function () {
-        console.info('bar.module.js ==> focusOn | focusPos: ' + this.focusPos);
-        document.getElementById('bar-item-wrapper-' + this.focusPos).style.background =
-            'url(../images/bar/highlight.png) center no-repeat';
-        document.getElementById('bar-item-' + this.focusPos).style.color = '#FFF';
+    this.focusOn = function (cursor) {
+        cursor.style.visibility = 'visible';
+        cursor.style.left = 55 + this.barItemArray[this.focusPos].left + 'px';
+        cursor.style.top = '95px';
+        cursor.style.width = this.barItemArray[this.focusPos].width + 'px';
+        cursor.style.height = this.barItemArray[this.focusPos].height + 'px';
     };
 
-    this.focusOut = function () {
-        document.getElementById('bar-item-wrapper-' + this.focusPos).style.background = '';
-        document.getElementById('bar-item-' + this.focusPos).style.color = '#000';
+    this.focusOut = function (cursor) {
+        cursor.style.visibility = 'hidden';
     };
 
-    this.moveX = function (direction) {
+    this.moveX = function (direction, manual) {
         this.focusPos += direction;
         if (this.focusPos >= 0 && this.focusPos < this.barItemArray.length) {
 
@@ -58,6 +53,11 @@ function BarModule() {
         } else {
             this.focusPos = 0;
         }
+        if (manual) {
+
+        } else {
+            window.location.href = this.barItemArray[this.focusPos].url;
+        }
     };
 
     this.moveY = function (direction) {
@@ -65,6 +65,6 @@ function BarModule() {
     };
 
     this.doSelect = function (postfix) {
-        window.location.href = 'more.html' + postfix;
+        window.location.href = this.barItemArray[this.focusPos].url;
     };
 }

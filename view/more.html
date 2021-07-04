@@ -6,87 +6,77 @@
     <title>更多内容</title>
 </head>
 <body>
-<div id="self-define-logo" class="title">
-    <img src="" alt="logo"/>
-</div>
-<div class="sidebar">
-    <div id="sidebar-wrapper" class="sidebar-wrapper">
+<div class="background">
+    <div id="bar" class="bar"></div>
+    <div id="content" class="more-page-content"></div>
+    <div class="more-page-index-img">
+        <div id="more-page-index-text" class="more-page-index-text">
+        </div>
     </div>
+    <div id="cursor"></div>
+    <div id="debug-message"></div>
 </div>
-<div id="content" class="more-page-content"></div>
-<div class="more-page-index">
-    <div id="more-page-index-current"></div>
-    <div>/</div>
-    <div id="more-page-index-total"></div>
-</div>
-<div id="cursor"></div>
-<div id="debug-message"></div>
 </body>
 <script type="application/javascript" src="../utility/assistant.js"></script>
 <script type="application/javascript" src="../utility/async.js"></script>
 <script type="application/javascript" src="../cms/cms.config.js"></script>
 <script type="application/javascript" src="../cms/cms.api.js"></script>
+<script type="application/javascript" src="../module/bar.module.js"></script>
+<script type="application/javascript" src="../wrapper/bar.wrapper.js"></script>
 <script type="application/javascript" src="../module/cursor.module.js"></script>
-<script type="application/javascript" src="../module/sidebar.module.js"></script>
 <script type="application/javascript" src="../module/more.module.js"></script>
 <script type="application/javascript" src="../module/pager.module.js"></script>
 <script type="application/javascript" src="../module/transfer.module.js"></script>
 <script>
-    function CursorComponent(more, sidebar) {
+    function MoreComponent() {
+        MoreModule.call(this);
+    }
+
+    function CursorComponent(bar, more) {
         CursorModule.call(this);
 
         // 属性
-        this.focusArea = 7;                 //  光标默认定位在侧边栏
-        this.more = more;                   //  注入更多内容模块
-        this.sidebar = sidebar;             //  注入侧边栏模块
-        this.fileName = 'PG_MORE';          //  设定文件名，用于路由导航
+        this.focusArea = 4;
+        this.bar = bar;
+        this.more = more;
+        this.fileName = 'PG_MORE';
 
         // 方法
         this.moveX = function (direction) {
+            var that = this;
+
             this.focusOut();
             switch (this.focusArea) {
-                case 4:         // 菜单
+                case 4:
                     if (-1 === this.more.moveX(direction)) {
-                        this.focusArea = 7;
+                        this.more.changePage(direction, function () {
+                            that.focusOn();
+                        });
                     }
                     break;
-                case 7:         // 侧边栏
-                    if (-1 === this.sidebar.moveX(direction) &&
-                        direction > 0) {
-                        this.focusArea = 4;
-                    }
+                case 5:
+                    this.bar.moveX(direction, true);
                     break;
                 default:
                     break;
             }
-
             this.focusOn();
         };
 
         this.moveY = function (direction) {
             this.focusOut();
             switch (this.focusArea) {
-                case 4:         // 菜单
-                    this.more.moveY(direction);
+                case 4:
+                    if (-1 === this.more.moveY(direction)) {
+                        this.focusArea = 5;
+                    }
                     break;
-                case 7:         // 侧边栏
-                    this.sidebar.moveY(direction);
-                    /**
-                     * 传入参数：
-                     *      -   更多内容页资源请求id
-                     *      -   分页索引
-                     *      -   回调函数
-                     */
-                    this.more.init(
-                        this.sidebar.sidebarItemArray[this.sidebar.focusPos].resourceId,
-                        0,
-                        function () {
-                        });
+                case 5:
+                    this.focusArea = 4;
                     break;
                 default:
                     break;
             }
-
             this.focusOn();
         };
 
@@ -115,56 +105,58 @@
         this.doSelect = function () {
             var
                 postfix,
-                params;
+                params = {};
 
-            if (this.cursor.focusArea !== 4) {
-                return;
-            }
-
-            // 移除当前文件参数
             this.remove(this.cursor.fileName);
-            // 判断资源类型
-            switch (this.cursor.more.resourceType) {
-                case 'textures':
-                    params = {
-                        'PG_MORE': {
-                            /**
-                             *  更多页面模块的相关参数设置
-                             */
-                            focusPosX: this.cursor.more.focusPosX,                      //  光标在更多页面内的位置
+
+            switch (this.cursor.focusArea) {
+                case 4:
+                    if (this.cursor.more.moreItemArray[this.cursor.more.focusPosY][this.cursor.more.focusPosX].flag === 0) {
+                        params.PG_MORE = {
+                            focusArea: this.cursor.focusArea,
+                            focusPosX: this.cursor.more.focusPosX,
                             focusPosY: this.cursor.more.focusPosY,
-                            resourceId: this.cursor.more.resourceId,                    //  更多内容的页面资源请求id
-                            backURL: this.cursor.more.backURL,                          //  返回地址
-                            logoImageSrc: this.cursor.more.logoImageSrc,                //  页面的标题图片
-                            pageIndex: this.cursor.more.pageIndex,                      //  当前内容页的分布索引
-                            /**
-                             *  侧边栏模块的相关参数设置
-                             */
-                            focusArea: this.cursor.focusArea,                           //  进入页面后，光标的定位区域
-                            focusPos: this.cursor.sidebar.focusPos,                     //  光标在侧边栏内的位置
-                            sidebarTextImages: this.cursor.sidebar.sidebarTextImages,   //  侧边栏的文字图片数组
-                            sidebarResourceIds: this.cursor.sidebar.sidebarResourceIds  //  侧边栏的资源请求id
-                        },
-                        'PG_TEXT': {
+                            resourceId: this.cursor.more.resourceId,
+                            backURL: this.cursor.more.backURL,
+                            pageIndex: this.cursor.more.pageIndex
+                        };
+                        params.PG_TEXT = {
                             resourceId: this.cursor.more.moreItemArray[this.cursor.more.focusPosY][this.cursor.more.focusPosX].id,
-                            isShowGraphics: true,
-                            backURL: 'more.html',
-                            logoImageSrc: this.cursor.more.logoImageSrc
-                        }
-                    };
+                            backURL: 'more.html'
+                        };
+                        postfix = this.package(params);
+                        window.location.href = 'detail.html' + postfix;
+                    } else if (this.cursor.more.moreItemArray[this.cursor.more.focusPosY][this.cursor.more.focusPosX].flag === 1) {
+                        params.VIDEO = {
+                            backURL: this.backUrl(),
+                            fileName: this.cursor.fileName,
+                            focusArea: this.cursor.focusArea,
+                            focusPosX: this.cursor.more.focusPosX,
+                            focusPosY: this.cursor.more.focusPosY,
+                            resourceId: this.cursor.more.resourceId,
+                            morePageBackURL: this.cursor.more.backURL,
+                            pageIndex: this.cursor.more.pageIndex,
+                            assertId: this.cursor.more.moreItemArray[this.cursor.more.focusPosY][this.cursor.more.focusPosX].assetid
+                        };
+                        postfix = this.package(params);
+                        window.location.href = 'video.html' + postfix;
+                    } else {
+
+                    }
+                    break;
+                case 5:
+                    this.cursor.bar.doSelect();
                     break;
                 default:
                     break;
             }
-            postfix = this.package(params);
-            this.cursor.more.doSelect(postfix);
         };
 
         this.onKeyDown = function (event) {
             var code = getKeyCode(event);
 
             switch (code) {
-                case 'KEY_NUMBER1':
+                case 'KEY_NUMBER9':
                     that.toggle();
                     return false;
                 case 'KEY_UP':
@@ -179,9 +171,11 @@
                 case 'KEY_RIGHT':
                     that.cursor.moveX(1);
                     return false;
+                case 'KEY_NUMBER1':
                 case 'KEY_PAGE_UP':
                     that.cursor.changePage(-1);
                     return false;
+                case 'KEY_NUMBER3':
                 case 'KEY_PAGE_DOWN':
                     that.cursor.changePage(1);
                     return false;
@@ -200,22 +194,18 @@
 
     window.onload = function () {
         var
-            moreComponent = new MoreModule(),
-            sidebarComponent = new SidebarModule(),
-            cursorComponent = new CursorComponent(moreComponent, sidebarComponent),
+            barComponent = new BarComponent(),
+            moreComponent = new MoreComponent(),
+            cursorComponent = new CursorComponent(barComponent, moreComponent),
             transferComponent = new TransferComponent(cursorComponent);
 
+        document.onkeydown = transferComponent.onKeyDown;
 
         transferComponent.init();
-        sidebarComponent.init();
-        moreComponent.init(
-            sidebarComponent.sidebarItemArray[sidebarComponent.focusPos].resourceId,
-            moreComponent.pageIndex,
-            function () {
-                cursorComponent.focusOn();
-            });
-
-        document.onkeydown = transferComponent.onKeyDown;
+        barComponent.init();
+        moreComponent.init(moreComponent.pageIndex, function () {
+            cursorComponent.focusOn();
+        });
     };
 </script>
 </html>

@@ -1,6 +1,6 @@
 function CursorModule() {
     // 属性
-    this.fileName = '';         // 当前页面名称
+    this.fileName = '';
     /**
      *      menu    -   0
      *      post    -   1
@@ -9,6 +9,8 @@ function CursorModule() {
      *      more    -   4
      *      bar     -   5
      *      swiper  -   6
+     *      video   -   7
+     *      sidebar -   8
      */
     this.focusArea = 0;
     this.bar = null;            //  菜单栏
@@ -19,14 +21,14 @@ function CursorModule() {
     this.button = null;         //  按键
     this.more = null;           //  列表页
     this.monitor = null;        //  视频监控
+    this.video = null;          //  小窗口视频
     this.sidebar = null;        //  侧边栏
 
-    // 方法
     /**
      *  聚焦
      */
     this.focusOn = function () {
-         var cursor = document.getElementById("cursor");
+        var cursor = document.getElementById("cursor");
         switch (this.focusArea) {
             case 0:
                 this.menu.focusOn(cursor);
@@ -44,12 +46,15 @@ function CursorModule() {
                 this.more.focusOn(cursor);
                 break;
             case 5:
-                this.bar.focusOn();
+                this.bar.focusOn(cursor);
                 break;
             case 6:
                 this.swiper.focusOn();
                 break;
             case 7:
+                this.video.focusOn(cursor);
+                break;
+            case 8:
                 this.sidebar.focusOn(cursor);
                 break;
             default:
@@ -80,12 +85,15 @@ function CursorModule() {
                 this.more.focusOut(cursor);
                 break;
             case 5:
-                this.bar.focusOut();
+                this.bar.focusOut(cursor);
                 break;
             case 6:
                 this.swiper.focusOut();
                 break;
             case 7:
+                this.video.focusOut(cursor);
+                break;
+            case 8:
                 this.sidebar.focusOut(cursor);
                 break;
             default:

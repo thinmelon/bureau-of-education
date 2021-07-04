@@ -45,16 +45,16 @@ function Postman() {
          500: 服务器内部错误
          * */
         this.xhr.onreadystatechange = function () {
-            document.getElementById("debug-message").innerHTML += "<br/>" + "readyState ==> " + that.xhr.readyState + " status ==>  " + that.xhr.status;
+            // document.getElementById("debug-message").innerHTML += "<br/>" + "readyState ==> " + that.xhr.readyState + " status ==>  " + that.xhr.status;
             var
                 contentType = "";
 
             if (that.xhr.readyState === 4) {
                 if (that.xhr.status === 200) {
                     contentType = that.xhr.getResponseHeader("Content-type");
-                    // document.getElementById("debug-message").innerHTML += "<br/>" + " ==>  success ==> Content-Type: " + contentType + " ResponseType: " + that.xhr.responseType;
-                    // document.getElementById("debug-message").innerHTML += "<br/>" + " responseXML: " + that.xhr.responseXML + " Type: " + typeof(that.xhr.responseXML);
-                    // document.getElementById("debug-message").innerHTML += "<br/>" + " responseText: " + that.xhr.responseText + " Type: " + typeof(that.xhr.responseText);
+                    //document.getElementById("debug-message").innerHTML += "<br/>" + " ==>  success ==> Content-Type: " + contentType + " ResponseType: " + that.xhr.responseType;
+                    //document.getElementById("debug-message").innerHTML += "<br/>" + " responseXML: " + that.xhr.responseXML + " Type: " + typeof(that.xhr.responseXML);
+                    //document.getElementById("debug-message").innerHTML += "<br/>" + " responseText: " + that.xhr.responseText + " Type: " + typeof(that.xhr.responseText);
                     if (contentType && contentType.indexOf("xml") >= 0) {
                         _successCallback(that.xhr.responseXML);
                     } else {
@@ -66,10 +66,10 @@ function Postman() {
                         }
                     }
                 } else if (that.xhr.status === 404) {
-                    // document.getElementById("debug-message").innerHTML += "<br/>" + " ==>  failed";
+                    //document.getElementById("debug-message").innerHTML += "<br/>" + " ==>  failed";
                     _failedCallback("资源未找到");
                 } else {
-                    // document.getElementById("debug-message").innerHTML += "<br/>" + " ==>  failed";
+                    //document.getElementById("debug-message").innerHTML += "<br/>" + " ==>  failed";
                     _failedCallback("错误");
                 }
             }
@@ -96,8 +96,9 @@ function Postman() {
 
     this.abortRequest = function () {
         if (this.xhr !== null) {
-            // document.getElementById("debug-message").innerHTML += "<br/>" + "postman    ==>    abortRequest";
+            //document.getElementById("debug-message").innerHTML += "<br/>" + "postman    ==>    abortRequest";
             this.xhr.abort();        // 中止异步请求
+            this.xhr = null;
         }
     }
 }

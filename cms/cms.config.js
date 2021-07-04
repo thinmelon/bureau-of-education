@@ -3,154 +3,156 @@
  */
 
 var cmsConfig = {
-    //serverUrl : "http://localhost:8080/manage/web/",
-    //imgUrl : "http://localhost:8080/manage/",
-    //serverUrl : "http://192.168.55.10:8080/manage/web/",		//  给电脑用的
-    //imgUrl : "http://192.168.55.10:8080/manage/",
-    serverUrl: "http://10.184.255.10:8080/manage/web/",		    //  给机顶盒用的
-    //imgUrl: "http://10.184.255.10:8080/manage/",
-    imgUrl: "",                                                 //  测试
-    backUrl: "",
-
-    isPc: 1,                //显示审核预览：1；显示正式发布：0
-    areaId: "21",           //主栏目ID
-    index_back_url: "",
+    serverUrl: 'http://10.184.255.10:8080/manage/web/',		            //  机顶盒
+    imgUrl: 'http://10.184.255.10:8080/manage/',
+    backUrl: '',
+    index_back_url: '',
+    // environment: 'DEBUG',
+    environment: 'PRODUCT',
 
     /**
-     * 首页
+     * 教育概况
      */
     indexResourceIdArray: [
-        {title: "首页", resourceId: ""},
+        {title: '教育概况', resourceId: '885'},
         // ---------------  菜单  ---------------  //
 
 
         // ---------------  海报（播放视频）  ---------------  //
-        {title: "左侧海报", resourceId: "698"},
-        {title: "右侧海报", resourceId: "701"},
+        {title: '左上海报', resourceId: '890'},
+        {title: '中间海报', resourceId: '891'},
+        {title: '左下海报', resourceId: '892'},
 
         // ---------------  列表  ---------------  //
-        {title: "通知公告", resourceId: "700"}
+        {title: '右侧列表', resourceId: '893'}
     ],
 
     /**
-     * 走进拱辰
+     *  校园风采
      */
-    introResourceIdArray: [
-        {title: "走进拱辰", resourceId: "664"},
+    companyResourceIdArray: [
+        {title: '校园风采', resourceId: '894'},
         // ---------------  菜单  ---------------  //
+        {title: '名师目录', resourceId: '903'},
+        {title: '特色校园', resourceId: '904'},
+        {title: '书香校园', resourceId: '905'},
+        {title: '墨香校园', resourceId: '975'},
+        {title: '智慧校园', resourceId: '907'},
+        {title: '校企合作', resourceId: '908'},
 
         // ---------------  海报（播放视频）  ---------------  //
-
-        // ---------------  正文  ---------------  //
-        {title: "简介", resourceId: "665"}
-    ],
-
-    /**
-     * 平安建设
-     */
-    peaceResourceIdArray: [
-        {title: "平安建设", resourceId: "666"},
-        // ---------------  菜单  ---------------  //
-        {title: "法制建设", resourceId: "678"},
-        {title: "民生保障", resourceId: "679"},
-        {title: "公共安防", resourceId: "680"},
-        {title: "群众权益", resourceId: "681"},
-        {title: "信息服务", resourceId: "682"},
-        {title: "平安文化", resourceId: "683"},
-
-        // ---------------  海报（播放视频）  ---------------  //
-        {title: "顶部海报", resourceId: "684"},
-        {title: "底部海报", resourceId: "702"},
+        {title: '左侧海报', resourceId: '900'},
+        {title: '中间海报', resourceId: '901'},
+        {title: '右侧海报', resourceId: '902'}
 
         // ---------------  列表  ---------------  //
-        {title: "最新信息", resourceId: "703"}
+
+        // ---------------  滚动页  ---------------  //
+
     ],
 
-
     /**
-     * 政务公开
+     *  教师风采
      */
-    affairsResourceIdArray: [
-        {title: "政务公开", resourceId: "667"},
+    teacherResourceIdArray: [
+        {title: '教师风采', resourceId: '895'},
+
         // ---------------  菜单  ---------------  //
-        {title: "政策法规", resourceId: "691"},
-        {title: "工作动态", resourceId: "692"},
-        {title: "政府信息", resourceId: "693"},
-        {title: "公示公告", resourceId: "694"},
+        {title: '名师风采', resourceId: '910'},
+        {title: '劳动模范', resourceId: '911'},
 
         // ---------------  海报（播放视频）  ---------------  //
-        {title: "顶部海报", resourceId: ""},
-        {title: "底部海报", resourceId: ""},
 
         // ---------------  列表  ---------------  //
-        {title: "通知公告", resourceId: "671"}
+        {title: '最新动态', resourceId: '909'}
+
+        // ---------------  滚动页  ---------------  //
     ],
 
     /**
-     * 智慧党建
+     * 名师课堂
      */
-    buildingResourceIdArray: [
-        {title: "智慧党建", resourceId: "660"},
+    classResourceIdArray: [
+        {title: '名师课堂', resourceId: '896'},
         // ---------------  菜单  ---------------  //
-        {title: "党的声音", resourceId: "710"},
-        {title: "党建常识", resourceId: "695"},
-        {title: "党的历程", resourceId: "709"},
-        {title: "党风廉政", resourceId: "711"},
-        {title: "拱辰先锋", resourceId: "696"},
-        {title: "两学一做", resourceId: "697"},
-        {title: "全国党员远教", resourceId: "713"},
-        {title: "地市党员远教", resourceId: "712"},
-        {title: "专题学习", resourceId: "714"},
-        {title: "通知公告", resourceId: ""},
+        {title: '教育讲坛', resourceId: '914'},
+        // {title: '教育讲坛', resourceId: '769'},
+        {title: '一师一优课', resourceId: '915'},
+        {title: '教研', resourceId: '916'},
+        {title: '培训', resourceId: '917'},
 
         // ---------------  海报（播放视频）  ---------------  //
-        {title: "左侧海报", resourceId: "672"}
+        {title: '左侧海报', resourceId: '912'},
+        {title: '右侧海报', resourceId: '913'}
 
         // ---------------  列表  ---------------  //
+
+        // ---------------  滚动页  ---------------  //
     ],
 
+
     /**
-     * 文明创建
+     *  学生风采
      */
-    cityResourceIdArray: [
-        {title: "文明创建", resourceId: "662"},
+    studentResourceIdArray: [
+        {title: '学生风采', resourceId: '897'},
+
         // ---------------  菜单  ---------------  //
-        {title: "文明聚集", resourceId: "685"},
-        {title: "美丽乡村", resourceId: "686"},
-        {title: "道德建设", resourceId: "687"},
-        {title: "传统文化", resourceId: "688"},
-        {title: "城市管理", resourceId: "689"},
-        {title: "主题活动", resourceId: "690"},
-        {title: "志愿者服务", resourceId: ""},
 
         // ---------------  海报（播放视频）  ---------------  //
-        {title: "顶部海报", resourceId: "704"},
-        {title: "底部海报", resourceId: "706"},
+        {title: '左侧海报', resourceId: '918'},
 
         // ---------------  列表  ---------------  //
-        {title: "最新消息", resourceId: "663"}
+        {title: '最新动态', resourceId: '919'}
+
+        // ---------------  滚动页  ---------------  //
+
     ],
 
     /**
-     * 服务大厅
+     *  教育服务
      */
     serviceResourceIdArray: [
-        {title: "服务大厅", resourceId: "669"},
+        {title: '教育服务', resourceId: '898'},
         // ---------------  菜单  ---------------  //
-        {title: "办事流程", resourceId: "675"},
-        {title: "公共服务", resourceId: "676"},
-        {title: "公积金查询", resourceId: ""},
+        {title: '小升初招生', resourceId: '922'},
+        {title: '中考中招', resourceId: '923'},
+        {title: '高考高招', resourceId: '924'},
+        {title: '学生资助', resourceId: '925'},
+        {title: '公费师范生', resourceId: '926'},
 
         // ---------------  海报（播放视频）  ---------------  //
-        {title: "左侧海报", resourceId: "707"},
-        {title: "右侧海报", resourceId: "708"},
+        {title: '左侧海报', resourceId: '920'},
+        {title: '右侧海报', resourceId: '921'}
 
         // ---------------  列表  ---------------  //
-        {title: "最新消息", resourceId: "670"}
+
+        // ---------------  滚动页  ---------------  //
     ],
 
-    operator: "",
-    weather: "",
-    temperature: "",
-    windScale: ""
+    /**
+     *  新时代新征程
+     */
+    timeResourceIdArray: [
+        {title: '新时代新征程', resourceId: '899'},
+
+        // ---------------  菜单  ---------------  //
+        {title: '智慧党建', resourceId: '929'},
+        {title: '工作典型', resourceId: '930'},
+        {title: '专题学习', resourceId: '931'},
+        {title: '通知公告', resourceId: '932'},
+
+        // ---------------  海报（播放视频）  ---------------  //
+        {title: '左侧海报', resourceId: '927'},
+        {title: '右下海报', resourceId: '928'}
+
+        // ---------------  列表  ---------------  //
+
+        // ---------------  滚动页  ---------------  //
+    ],
+
+    operator: '',
+    weather: '',
+    temperature: '',
+    windScale: ''
 };

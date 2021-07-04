@@ -13,11 +13,64 @@ function SwiperModule() {
     this.position = 0;              //  当前图片在图集内的位置
     this.interval = 3000;           //  图片滚动的时间间隔
     this.timerId = 0;               //  timer ID
+    this.remoteImage = false;       //  图片是否存在CMS上
+    this.resourceId = 0;            //  资源 ID
+    this.maxCount = 5;              //  海报上限
 
     /**
      *  初始化
      */
     this.init = function () {
+        var that = this;
+
+        if (cmsConfig.environment === 'DEBUG') {
+            this.album = [
+                {
+                    img: 'url(../images/student/1.jpg)',
+                    resourceId: cmsConfig.indexResourceIdArray[0].resourceId,
+                    assertId: 111
+                },
+                {
+                    img: 'url(../images/student/1.jpg)',
+                    resourceId: cmsConfig.indexResourceIdArray[1].resourceId,
+                    assertId: 111
+                },
+                {
+                    img: 'url(../images/student/1.jpg)',
+                    resourceId: cmsConfig.indexResourceIdArray[2].resourceId
+                }
+                // {
+                //     img: 'url(../images/index/6.jpg)',
+                //     resourceId: cmsConfig.indexResourceIdArray[7].resourceId
+                // },
+                // {
+                //     img: 'url(../images/index/7.jpg)',
+                //     resourceId: cmsConfig.indexResourceIdArray[8].resourceId
+                // }
+            ];
+            this.render();
+        } else {
+            if (this.resourceId !== 0) {
+                cmsApi.getListItems(this.resourceId, this.maxCount, 1, function (response) {
+                    if (response.hasOwnProperty('code') && ('1' === response.code || 1 === response.code)) {
+                        //document.getElementById('debug-message').innerHTML += '<br/>' + response;
+                        that.remoteImage = true;        //  显示服务器上的图片
+                        for (var j = 0, length = response.dataArray.length; (j < length) && (j < that.maxCount); j++) {
+                            that.album.push({
+                                img: response.dataArray[j].img,
+                                assertId: response.dataArray[j].assetid
+                            });
+                        }
+                        that.render();
+                    }
+                });
+            } else {
+                this.render();
+            }
+        }
+    };
+
+    this.render = function () {
         var swiper = document.getElementById('swiper');
         // 初始化滑块视图容器
         swiper.style.top = this.swiperTop + 'px';
@@ -38,9 +91,7 @@ function SwiperModule() {
         }
         swiper.appendChild(swiperIndexGroup);
         // 启动图片循环播放
-        if (this.album.length > 0) {
-            this.triggerTimer();
-        }
+        this.triggerTimer();
     };
 
     /**
@@ -48,9 +99,9 @@ function SwiperModule() {
      */
     this.focusOn = function () {
         clearInterval(this.timerId);
-        //document.getElementById("textures-graphics-image").src = cmsConfig.imgUrl + this.album[this.position].img;
-        document.getElementById('swiper').style.backgroundImage = cmsConfig.imgUrl + this.album[this.position].img;
-        document.getElementById('swiper-index-' + this.position).style.backgroundColor = '#13934F';
+        // document.getElementById('swiper').style.backgroundImage =
+        //     this.remoteImage ? cmsConfig.imgUrl + this.album[this.position].img : this.album[this.position].img;
+        this.setBackgroundImage();
         document.getElementById('swiper-index-' + this.position).style.borderColor = '#FFFF00';
     };
 
@@ -83,8 +134,27 @@ function SwiperModule() {
      *  纵向移动光标
      * @returns {number}
      */
-    this.moveY = function () {
-        return -1;
+    this.moveY = function (direction) {
+        this.position += direction;
+        if (this.position >= 0 && this.position < this.album.length) {
+            return 0;
+        } else if (this.position < 0) {
+            this.position = 0;
+            return -1;
+        } else {
+            this.position = this.album.length - 1;
+            return -1;
+        }
+    };
+
+    /**
+     * 设置背景图片
+     */
+    this.setBackgroundImage = function () {
+        var bgImage = this.remoteImage ? 'url(' + cmsConfig.imgUrl + this.album[this.position].img + ')' : this.album[this.position].img;
+        // document.getElementById('debug-message').innerHTML += '<br/>' + 'setBackgroundImage ==>  background image ====> ' + bgImage;
+        document.getElementById('swiper').style.backgroundImage = bgImage;
+        document.getElementById('swiper-index-' + this.position).style.backgroundColor = '#13934F';
     };
 
     /**
@@ -92,14 +162,15 @@ function SwiperModule() {
      */
     this.triggerTimer = function () {
         var that = this;
-        document.getElementById('swiper').style.backgroundImage = cmsConfig.imgUrl + this.album[this.position].img;
+
+        this.setBackgroundImage();
         document.getElementById('swiper-index-' + this.position).style.backgroundColor = '#13934F';
 
         this.timerId = setInterval(function () {
             document.getElementById('swiper-index-' + that.position).style.backgroundColor = '';
             that.position = (that.position + 1) % that.album.length;
-            document.getElementById('swiper').style.backgroundImage = cmsConfig.imgUrl + that.album[that.position].img;
-            document.getElementById('swiper-index-' + that.position).style.backgroundColor = '#13934F';
+            // document.getElementById('debug-message').innerHTML += '<br/>' + 'triggerTimer ==>  position ====> ' + that.position;
+            that.setBackgroundImage();
         }, that.interval);
     };
 }
